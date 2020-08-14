@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "607777227741",
+    "firebase_url": "https://waitinglistapps.firebaseio.com",
+    "project_id": "waitinglistapps",
+    "storage_bucket": "waitinglistapps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607777227741:android:6a308acb65d0e4856a6c34",
+        "android_client_info": {
+          "package_name": "com.wahyu.waitinglistapps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607777227741-s8uhfhntcgp8se5inhu65127jvns9mk3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wahyu.waitinglistapps",
+            "certificate_hash": "164061597a6fe3bdc19939ce3e4ecc2aafcdc07e"
+          }
+        },
+        {
+          "client_id": "607777227741-84f647du1vtlcta6t8lfcq0l27ja2loi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWbWbuUf3_fyAbvQv2OmLWDmeghg_7Ipw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607777227741-84f647du1vtlcta6t8lfcq0l27ja2loi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
