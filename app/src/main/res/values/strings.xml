@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Waiting List Apps</string>
+    <string name="todo">todo</string>
+    <string name="titlebar_registry">Daftar Akun</string>
+    <string name="titlebar_login">Login</string>
+    <string name="hint_username">masukkan username</string>
+    <string name="hint_email">masukkan email</string>
+    <string name="hint_password">masukkan password</string>
 </resources>
