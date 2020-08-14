@@ -2,8 +2,13 @@ package com.wahyu.waitinglistapps.View.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +35,10 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Toolbar toolbar = findViewById(R.id.topbar_home);
+        setSupportActionBar(toolbar);
+        setTitle("");
 
         civProfileUser = findViewById(R.id.civ_imageProfileHome);
 
@@ -63,5 +72,42 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.help:
+                startActivity(new Intent(this, HelpActivity.class));
+                return true;
+            case R.id.logout:
+                showAlertDialogLogout();
+                return true;
+        }
+        return false;
+    }
+
+    private void showAlertDialogLogout() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("KELUAR");
+        alertDialogBuilder
+                .setMessage("Apakah Anda yakin ingin keluar dari Aplikasi ?")
+                .setCancelable(false)
+                .setPositiveButton("Ya, tentu", (dialog, id) -> {
+
+                    FirebaseAuth.getInstance().signOut();
+
+                    startActivity(new Intent(HomeActivity.this, LoginActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                })
+                .setNegativeButton("Gak jadi", (dialog, id) -> dialog.cancel());
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }
