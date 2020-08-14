@@ -1,8 +1,10 @@
-package com.bbpp.waitinglistapps;
+package com.wahyu.waitinglistapps;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.wahyu.waitinglistapps.R;
 
 public class MainActivity extends AppCompatActivity {
 

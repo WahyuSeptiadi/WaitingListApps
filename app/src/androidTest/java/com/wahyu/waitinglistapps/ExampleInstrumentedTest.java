@@ -1,4 +1,4 @@
-package com.bbpp.waitinglistapps;
+package com.wahyu.waitinglistapps;
 
 import android.content.Context;
 
