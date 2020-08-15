@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Activity.AddDoctorActivity">
+    tools:context=".View.Activity.AddUpdateDoctorActivity">
 
     <include
         android:id="@+id/topbar_adddoctor"
@@ -165,7 +165,7 @@
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
                             android:hint="@string/hint_workday"
-                            android:inputType="textCapSentences"
+                            android:inputType="textCapWords"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
                     </com.google.android.material.textfield.TextInputLayout>

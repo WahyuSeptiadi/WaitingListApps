@@ -13,7 +13,7 @@
         tools:ignore="AllowBackup">
         <activity android:name=".View.Activity.DoctorDetailsActivity"></activity>
         <activity android:name=".View.Activity.DoctorListActivity" />
-        <activity android:name=".View.Activity.AddDoctorActivity" />
+        <activity android:name=".View.Activity.AddUpdateDoctorActivity" />
         <activity android:name=".View.Activity.ProfileActivity" />
         <activity android:name=".View.Activity.HelpActivity" />
         <activity android:name=".View.Activity.RegisterActivity" />

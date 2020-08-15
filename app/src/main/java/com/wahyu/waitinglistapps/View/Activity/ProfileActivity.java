@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
         civAddDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProfileActivity.this, AddDoctorActivity.class));
+                startActivity(new Intent(ProfileActivity.this, AddUpdateDoctorActivity.class));
                 finish();
             }
         });

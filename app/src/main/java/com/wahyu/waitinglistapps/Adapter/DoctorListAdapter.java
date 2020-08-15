@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,8 +27,8 @@ import com.squareup.picasso.Picasso;
 import com.wahyu.waitinglistapps.Model.DoctorModel;
 import com.wahyu.waitinglistapps.Model.UserModel;
 import com.wahyu.waitinglistapps.R;
+import com.wahyu.waitinglistapps.View.Activity.AddUpdateDoctorActivity;
 import com.wahyu.waitinglistapps.View.Activity.DoctorDetailsActivity;
-import com.wahyu.waitinglistapps.View.Activity.DoctorListActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -76,7 +75,24 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         holder.tvSpesialis.setText(doctorModel.getSpesialis());
 
         holder.itemView.setOnClickListener(view -> {
+            String doctorId = doctorModel.getId();
+            String namedr = doctorModel.getName();
+            String imgProfile = doctorModel.getImageURL();
+            String spesialis = doctorModel.getSpesialis();
+            String workday = doctorModel.getWorkday();
+            String timestart = doctorModel.getWorktimestart();
+            String timefinish = doctorModel.getWorktimefinish();
+            String limit = doctorModel.getLimit();
+
             Intent toDetails = new Intent(mActivity, DoctorDetailsActivity.class);
+            toDetails.putExtra("id", doctorId);
+            toDetails.putExtra("name", namedr);
+            toDetails.putExtra("imgprofile", imgProfile);
+            toDetails.putExtra("spesialis", spesialis);
+            toDetails.putExtra("workday", workday);
+            toDetails.putExtra("timestart", timestart);
+            toDetails.putExtra("timefinish", timefinish);
+            toDetails.putExtra("limit", limit);
             mActivity.startActivity(toDetails);
         });
 
@@ -93,6 +109,25 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                 //apabila tombol edit diklik
                 editButton.setOnClickListener(view1 -> {
                             dialog.dismiss();
+                            String doctorId = doctorModel.getId();
+                            String namedr = doctorModel.getName();
+                            String imgProfile = doctorModel.getImageURL();
+                            String spesialis = doctorModel.getSpesialis();
+                            String workday = doctorModel.getWorkday();
+                            String timestart = doctorModel.getWorktimestart();
+                            String timefinish = doctorModel.getWorktimefinish();
+                            String limit = doctorModel.getLimit();
+
+                            Intent toUpdate = new Intent(mActivity, AddUpdateDoctorActivity.class);
+                            toUpdate.putExtra("id", doctorId);
+                            toUpdate.putExtra("name", namedr);
+                            toUpdate.putExtra("imgprofile", imgProfile);
+                            toUpdate.putExtra("spesialis", spesialis);
+                            toUpdate.putExtra("workday", workday);
+                            toUpdate.putExtra("timestart", timestart);
+                            toUpdate.putExtra("timefinish", timefinish);
+                            toUpdate.putExtra("limit", limit);
+                            mActivity.startActivity(toUpdate);
                         }
                 );
 
