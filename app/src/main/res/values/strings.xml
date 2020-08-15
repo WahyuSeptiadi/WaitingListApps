@@ -21,4 +21,6 @@
     <string name="str_add">Tambah</string>
     <string name="str_timesetting">Atur waktu kerja</string>
     <string name="str_emptydr">Belum ada dokter yang ditambahkan</string>
+    <string name="titlebar_updatedoctor">Update Data Dokter</string>
+    <string name="str_update">Update</string>
 </resources>

@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +26,9 @@ import com.squareup.picasso.Picasso;
 import com.wahyu.waitinglistapps.Model.UserModel;
 import com.wahyu.waitinglistapps.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,6 +39,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
     private String userType;
+    private Calendar calendar;
+
+    private TextView tvCurrentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +54,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         civProfileUser = findViewById(R.id.civ_imageProfileHome);
         cvDoctorList = findViewById(R.id.cv_doctorlist_home);
+        tvCurrentDate = findViewById(R.id.tv_currentDate);
 
         //inisialisasi
         reference = FirebaseDatabase.getInstance().getReference("Users");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        calendar = Calendar.getInstance();
 
         getDataUser();
+
+        tvCurrentDate.setText(getCurrentLocalDateStamp());
 
         cvDoctorList.setOnClickListener(this);
         civProfileUser.setOnClickListener(view -> {
@@ -71,6 +83,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    public String getCurrentLocalDateStamp() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM, yyyy");
+        return currentDate.format(calendar.getTime());
+    }
+
+    public String getCurrentLocalTimeStamp() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+        return currentTime.format(calendar.getTime());
     }
 
     private void getDataUser() {

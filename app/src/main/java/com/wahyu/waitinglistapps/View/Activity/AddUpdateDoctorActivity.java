@@ -85,8 +85,8 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         if (getDoctorId != null && getName != null && getImageURL != null && getSpesialis != null && getWorkday != null &&
                 getTimeStart != null && getTimeFinish != null && getPatientLimit != null) {
 
-            tvTitle.setText("Update Data Dokter");
-            tvAddDoctor.setText("Update");
+            tvTitle.setText(R.string.titlebar_updatedoctor);
+            tvAddDoctor.setText(R.string.str_update);
 
             if (getImageURL.substring(0, 4).equals("http")) {
                 Picasso.get().load(getImageURL).into(civProfileDoctor);
