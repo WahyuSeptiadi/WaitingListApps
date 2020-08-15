@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".View.Activity.HomeActivity">
 
+    <!-- Design logo by -> https://www.flaticon.com/authors/flat-icons -->
+
     <include
         android:id="@+id/topbar_home"
         layout="@layout/topbar_white" />
@@ -203,7 +205,9 @@
                     android:id="@+id/civ_iconDoctorHome"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/icon_default_profile" />
+                    android:src="@drawable/icon_doctor"
+                    app:civ_border_color="@color/colorAccent"
+                    app:civ_border_width="0.6dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -211,10 +215,10 @@
                     android:layout_below="@+id/civ_iconDoctorHome"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="Daftar Dokter" />
+                    android:text="Daftar Dokter"
+                    android:textColor="@color/colorBlack" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_pickqueue_home"
@@ -235,7 +239,9 @@
                     android:id="@+id/civ_iconPickHome"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/icon_default_profile" />
+                    android:src="@drawable/icon_ticket"
+                    app:civ_border_color="@color/colorAccent"
+                    app:civ_border_width="0.6dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -243,7 +249,8 @@
                     android:layout_below="@+id/civ_iconPickHome"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="Ambil Antrian" />
+                    android:text="Ambil Antrian"
+                    android:textColor="@color/colorBlack" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>

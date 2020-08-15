@@ -195,7 +195,6 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
 
                     mActivity.overridePendingTransition(0, 0);
                     mActivity.startActivity(mActivity.getIntent());
-                    mActivity.finish();
                     mActivity.overridePendingTransition(0, 0);
 
                     Toast.makeText(mActivity, "Data berhasil dihapus", Toast.LENGTH_SHORT).show();

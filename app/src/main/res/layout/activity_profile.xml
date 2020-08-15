@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".View.Activity.ProfileActivity">
 
+    <!-- Design logo by -> https://www.flaticon.com/authors/flat-icons -->
+
     <include
         android:id="@+id/topbar_profile"
         layout="@layout/topbar_primary" />
