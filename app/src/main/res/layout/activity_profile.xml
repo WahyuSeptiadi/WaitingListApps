@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Activity.HelpActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".View.Activity.ProfileActivity">
 
     <include
-        android:id="@+id/topbar_help"
+        android:id="@+id/topbar_profile"
         layout="@layout/topbar_primary" />
 
     <RelativeLayout
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/btnback_help"
+            android:id="@+id/btnback_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -23,14 +24,25 @@
             android:src="@drawable/ic_back_white" />
 
         <TextView
-            android:id="@+id/titlebar_help"
+            android:id="@+id/titlebar_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@string/titlebar_help"
+            android:text="@string/titlebar_myprofile"
             android:textAlignment="center"
             android:textColor="#fff"
             android:textSize="18sp" />
     </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/add_newdoctor"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_below="@+id/topbar_profile"
+        android:src="@drawable/icon_default_profile"
+        app:civ_border_color="@color/colorPrimary"
+        app:civ_border_width="1dp"/>
 
 </RelativeLayout>

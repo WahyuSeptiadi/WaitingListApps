@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
+    private String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,12 @@ public class HomeActivity extends AppCompatActivity {
 
         getDataUser();
 
+        civProfileUser.setOnClickListener(view -> {
+            Intent toProfile = new Intent(HomeActivity.this, ProfileActivity.class);
+            toProfile.putExtra("usertype", userType);
+            startActivity(toProfile);
+        });
+
     }
 
     private void getDataUser() {
@@ -62,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
                     } else { // default atau file:\\
                         Picasso.get().load(R.drawable.icon_default_profile).into(civProfileUser);
                     }
+                    userType = userModel.getType();
                 } else {
                     Toast.makeText(HomeActivity.this, "Tidak ada user yang ditemukan", Toast.LENGTH_SHORT).show();
                 }

@@ -8,4 +8,7 @@
     <string name="hint_password">masukkan password</string>
     <string name="logout_menu">Keluar</string>
     <string name="help_menu">Bantuan</string>
+    <string name="titlebar_myprofile">Profile Saya</string>
+    <string name="titlebar_help">Bantuan</string>
+    <string name="titilebar_adddoctor">Tambah Dokter</string>
 </resources>
