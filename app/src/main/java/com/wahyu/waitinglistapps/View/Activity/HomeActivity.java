@@ -35,13 +35,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private CircleImageView civProfileUser;
     private CardView cvDoctorList;
+    private TextView tvCurrentDate;
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
-    private String userType;
     private Calendar calendar;
 
-    private TextView tvCurrentDate;
+    private String userType, imageURL, name, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         civProfileUser.setOnClickListener(view -> {
             Intent toProfile = new Intent(HomeActivity.this, ProfileActivity.class);
             toProfile.putExtra("usertype", userType);
+            toProfile.putExtra("image", imageURL);
+            toProfile.putExtra("name", name);
+            toProfile.putExtra("email", email);
             startActivity(toProfile);
         });
 
@@ -108,6 +111,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         Picasso.get().load(R.drawable.icon_default_profile).into(civProfileUser);
                     }
                     userType = userModel.getType();
+                    imageURL = userModel.getImageURL();
+                    name = userModel.getUsername();
+                    email = userModel.getEmail();
+
                 } else {
                     Toast.makeText(HomeActivity.this, "Tidak ada user yang ditemukan", Toast.LENGTH_SHORT).show();
                 }
