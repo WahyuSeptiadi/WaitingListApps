@@ -29,6 +29,7 @@ import com.wahyu.waitinglistapps.Model.UserModel;
 import com.wahyu.waitinglistapps.R;
 import com.wahyu.waitinglistapps.View.Activity.AddUpdateDoctorActivity;
 import com.wahyu.waitinglistapps.View.Activity.DoctorDetailsActivity;
+import com.wahyu.waitinglistapps.View.Activity.RegisPatientActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -47,6 +48,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
 
     private String userType;
     private UserModel userModel;
+    private String isDaftar;
 
     public DoctorListAdapter(Activity mActivity, ArrayList<DoctorModel> doctorModelArrayList) {
         this.mActivity = mActivity;
@@ -59,6 +61,8 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         View view = LayoutInflater.from(mActivity).inflate(R.layout.list_item_doctor, parent, false);
         userModel = new UserModel();
         getTypeUser();
+        Intent data = mActivity.getIntent();
+        isDaftar = data.getStringExtra("Daftar");
         return new ViewHolder(view);
     }
 
@@ -71,6 +75,16 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             Picasso.get().load(R.drawable.icon_default_profile).into(holder.civProfileDoctor);
         }
 
+        if (isDaftar != null){
+            String doctorId = doctorModel.getId();
+            String namedr = doctorModel.getName();
+            Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
+            toRegis.putExtra("id_doctor", doctorId);
+            toRegis.putExtra("name_doctor", namedr);
+            mActivity.startActivity(toRegis);
+        }
+
+//        isDaftar = mActivity.getIntent().getStringExtra("Daftar");
         holder.tvNameDr.setText(doctorModel.getName());
         holder.tvSpesialis.setText(doctorModel.getSpesialis());
 

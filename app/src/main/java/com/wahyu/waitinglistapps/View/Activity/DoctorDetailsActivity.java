@@ -15,6 +15,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
 
     private String getDoctorId, getName, getImageURL, getSpesialis, getWorkday, getTimeStart, getTimeFinish, getPatientLimit;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         TextView tvTimeStart = findViewById(R.id.tv_worktimestart_doctordetails);
         TextView tvTimeFinish = findViewById(R.id.tv_worktimefinish_doctordetails);
         TextView tvPatientLimit = findViewById(R.id.tv_patientlimit_doctordetails);
+        TextView btnShowpatient = findViewById(R.id.tv_btnshowpatient);
 
         getDataFromIntentList();
 
