@@ -11,4 +11,14 @@
     <string name="titlebar_myprofile">Profile Saya</string>
     <string name="titlebar_help">Bantuan</string>
     <string name="titilebar_adddoctor">Tambah Dokter</string>
+    <string name="str_dot">....</string>
+    <string name="hint_namedr">masukkan nama dokter</string>
+    <string name="hint_spesialis">masukkan spesialis</string>
+    <string name="hint_workday">masukkan hari kerja</string>
+    <string name="hint_start">mulai</string>
+    <string name="hint_finish">selesai</string>
+    <string name="note_limit">NOTE : Batas -\npasien tiap hari</string>
+    <string name="str_add">Tambah</string>
+    <string name="str_timesetting">Atur waktu kerja</string>
+    <string name="str_emptydr">Belum ada dokter yang ditambahkan</string>
 </resources>

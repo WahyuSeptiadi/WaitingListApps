@@ -3,6 +3,7 @@ package com.wahyu.waitinglistapps.View.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -25,9 +26,10 @@ import com.wahyu.waitinglistapps.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CircleImageView civProfileUser;
+    private CardView cvDoctorList;
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
@@ -43,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         setTitle("");
 
         civProfileUser = findViewById(R.id.civ_imageProfileHome);
+        cvDoctorList = findViewById(R.id.cv_doctorlist_home);
 
         //inisialisasi
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -50,12 +53,24 @@ public class HomeActivity extends AppCompatActivity {
 
         getDataUser();
 
+        cvDoctorList.setOnClickListener(this);
         civProfileUser.setOnClickListener(view -> {
             Intent toProfile = new Intent(HomeActivity.this, ProfileActivity.class);
             toProfile.putExtra("usertype", userType);
             startActivity(toProfile);
         });
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.cv_doctorlist_home:
+                startActivity(new Intent(this, DoctorListActivity.class));
+                break;
+            default:
+                break;
+        }
     }
 
     private void getDataUser() {
