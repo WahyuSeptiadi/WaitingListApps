@@ -61,8 +61,10 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         View view = LayoutInflater.from(mActivity).inflate(R.layout.list_item_doctor, parent, false);
         userModel = new UserModel();
         getTypeUser();
+
+        //pick doctor name and id
         Intent data = mActivity.getIntent();
-        isDaftar = data.getStringExtra("Daftar");
+        isDaftar = data.getStringExtra("daftar");
         return new ViewHolder(view);
     }
 
@@ -75,16 +77,6 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             Picasso.get().load(R.drawable.icon_default_profile).into(holder.civProfileDoctor);
         }
 
-        if (isDaftar != null){
-            String doctorId = doctorModel.getId();
-            String namedr = doctorModel.getName();
-            Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
-            toRegis.putExtra("id_doctor", doctorId);
-            toRegis.putExtra("name_doctor", namedr);
-            mActivity.startActivity(toRegis);
-        }
-
-//        isDaftar = mActivity.getIntent().getStringExtra("Daftar");
         holder.tvNameDr.setText(doctorModel.getName());
         holder.tvSpesialis.setText(doctorModel.getSpesialis());
 
@@ -98,16 +90,24 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             String timefinish = doctorModel.getWorktimefinish();
             String limit = doctorModel.getLimit();
 
-            Intent toDetails = new Intent(mActivity, DoctorDetailsActivity.class);
-            toDetails.putExtra("id", doctorId);
-            toDetails.putExtra("name", namedr);
-            toDetails.putExtra("imgprofile", imgProfile);
-            toDetails.putExtra("spesialis", spesialis);
-            toDetails.putExtra("workday", workday);
-            toDetails.putExtra("timestart", timestart);
-            toDetails.putExtra("timefinish", timefinish);
-            toDetails.putExtra("limit", limit);
-            mActivity.startActivity(toDetails);
+            if (isDaftar != null){
+                Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
+                toRegis.putExtra("id_doctor", doctorId);
+                toRegis.putExtra("name_doctor", namedr);
+                mActivity.startActivity(toRegis);
+                mActivity.finish();
+            }else{
+                Intent toDetails = new Intent(mActivity, DoctorDetailsActivity.class);
+                toDetails.putExtra("id", doctorId);
+                toDetails.putExtra("name", namedr);
+                toDetails.putExtra("imgprofile", imgProfile);
+                toDetails.putExtra("spesialis", spesialis);
+                toDetails.putExtra("workday", workday);
+                toDetails.putExtra("timestart", timestart);
+                toDetails.putExtra("timefinish", timefinish);
+                toDetails.putExtra("limit", limit);
+                mActivity.startActivity(toDetails);
+            }
         });
 
         holder.itemView.setOnLongClickListener(view -> {

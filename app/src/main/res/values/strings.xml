@@ -23,4 +23,5 @@
     <string name="str_emptydr">Belum ada dokter yang ditambahkan</string>
     <string name="titlebar_updatedoctor">Update Data Dokter</string>
     <string name="str_update">Update</string>
+    <string name="str_null">Silahkan muat ulang</string>
 </resources>

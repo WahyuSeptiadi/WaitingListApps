@@ -34,8 +34,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CircleImageView civProfileUser;
-    private CardView cvDoctorList, pickQueue;
-    private TextView tvCurrentDate;
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
@@ -53,19 +51,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setTitle("");
 
         civProfileUser = findViewById(R.id.civ_imageProfileHome);
-        cvDoctorList = findViewById(R.id.cv_doctorlist_home);
-        tvCurrentDate = findViewById(R.id.tv_currentDate);
-        pickQueue = findViewById(R.id.cv_pickqueue_home);
-
-        pickQueue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent toDaftar = new Intent(HomeActivity.this, RegisPatientActivity.class);
-                toDaftar.putExtra("namapasien", name);
-                toDaftar.putExtra("imagepasien", imageURL);
-                startActivity(toDaftar);
-            }
-        });
+        CardView cvDoctorList = findViewById(R.id.cv_doctorlist_home);
+        TextView tvCurrentDate = findViewById(R.id.tv_currentDate);
+        CardView pickQueue = findViewById(R.id.cv_pickqueue_home);
 
         //inisialisasi
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -76,6 +64,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         tvCurrentDate.setText(getCurrentLocalDateStamp());
 
+        pickQueue.setOnClickListener(this);
         cvDoctorList.setOnClickListener(this);
         civProfileUser.setOnClickListener(view -> {
             Intent toProfile = new Intent(HomeActivity.this, ProfileActivity.class);
@@ -94,6 +83,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.cv_doctorlist_home:
                 startActivity(new Intent(this, DoctorListActivity.class));
                 break;
+            case R.id.cv_pickqueue_home:
+                Intent toDaftar = new Intent(HomeActivity.this, RegisPatientActivity.class);
+                toDaftar.putExtra("namapasien", name);
+                toDaftar.putExtra("imagepasien", imageURL);
+                startActivity(toDaftar);
+                break;
             default:
                 break;
         }
@@ -104,10 +99,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         return currentDate.format(calendar.getTime());
     }
 
-    public String getCurrentLocalTimeStamp() {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-        return currentTime.format(calendar.getTime());
-    }
+//    public String getCurrentLocalTimeStamp() {
+//        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+//        return currentTime.format(calendar.getTime());
+//    }
 
     private void getDataUser() {
         reference.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
