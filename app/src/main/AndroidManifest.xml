@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".View.Activity.DoctorListActivity"></activity>
+        <activity android:name=".View.Activity.DoctorDetailsActivity"></activity>
+        <activity android:name=".View.Activity.DoctorListActivity" />
         <activity android:name=".View.Activity.AddDoctorActivity" />
         <activity android:name=".View.Activity.ProfileActivity" />
         <activity android:name=".View.Activity.HelpActivity" />
