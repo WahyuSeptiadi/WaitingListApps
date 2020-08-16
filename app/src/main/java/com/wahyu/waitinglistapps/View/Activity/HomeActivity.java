@@ -164,6 +164,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
                     startActivity(new Intent(HomeActivity.this, LoginActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
                 })
                 .setNegativeButton("Gak jadi", (dialog, id) -> dialog.cancel());
         AlertDialog alertDialog = alertDialogBuilder.create();

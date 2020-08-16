@@ -136,7 +136,7 @@
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
                             android:hint="Keluhan penyakit"
-                            android:inputType="textCapWords"
+                            android:inputType="textCapSentences"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -156,7 +156,7 @@
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
                             android:hint="Alamat pasien"
-                            android:inputType="textCapWords"
+                            android:inputType="textCapSentences"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
                     </com.google.android.material.textfield.TextInputLayout>

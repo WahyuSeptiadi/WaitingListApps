@@ -166,8 +166,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                             FirebaseAuth.getInstance().signOut();
 
-                                            Intent toHome = new Intent(RegisterActivity.this, LoginActivity.class);
-                                            startActivity(toHome);
+                                            Intent toLogin = new Intent(RegisterActivity.this, LoginActivity.class);
+                                            startActivity(toLogin);
                                             finish();
 
                                             Toast.makeText(RegisterActivity.this, "Registrasi berhasil, silahkan login", Toast.LENGTH_SHORT).show();
@@ -181,8 +181,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                         pd.dismiss();
                                     });
                                 } else {
-                                    Intent toHome = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    startActivity(toHome);
+                                    FirebaseAuth.getInstance().signOut();
+
+                                    Intent toLogin = new Intent(RegisterActivity.this, LoginActivity.class);
+                                    startActivity(toLogin);
                                     finish();
                                     Toast.makeText(this, "Berhasil registrasi tanpa foto profile", Toast.LENGTH_SHORT).show();
                                     pd.dismiss();
