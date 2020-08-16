@@ -6,5 +6,115 @@ package com.wahyu.waitinglistapps.Model;
  */
 
 public class PatientModel {
+    private String idDokter;
+    private String namaDokter;
+    private String imageURL;
+    private String idPasien;
+    private String namaPasien;
+    private String alamatPasien;
+    private String jenisPasien;
+    private String keluhanPasien;
+    private String penyakitPasien;
+    private String umurPasien;
+    private String waktuDaftar;
+    private String waktuSelesai;
 
+    public PatientModel() {
+    }
+
+    public String getIdDokter() {
+        return idDokter;
+    }
+
+    public void setIdDokter(String idDokter) {
+        this.idDokter = idDokter;
+    }
+
+    public String getNamaDokter() {
+        return namaDokter;
+    }
+
+    public void setNamaDokter(String namaDokter) {
+        this.namaDokter = namaDokter;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getIdPasien() {
+        return idPasien;
+    }
+
+    public void setIdPasien(String idPasien) {
+        this.idPasien = idPasien;
+    }
+
+    public String getNamaPasien() {
+        return namaPasien;
+    }
+
+    public void setNamaPasien(String namaPasien) {
+        this.namaPasien = namaPasien;
+    }
+
+    public String getAlamatPasien() {
+        return alamatPasien;
+    }
+
+    public void setAlamatPasien(String alamatPasien) {
+        this.alamatPasien = alamatPasien;
+    }
+
+    public String getJenisPasien() {
+        return jenisPasien;
+    }
+
+    public void setJenisPasien(String jenisPasien) {
+        this.jenisPasien = jenisPasien;
+    }
+
+    public String getKeluhanPasien() {
+        return keluhanPasien;
+    }
+
+    public void setKeluhanPasien(String keluhanPasien) {
+        this.keluhanPasien = keluhanPasien;
+    }
+
+    public String getPenyakitPasien() {
+        return penyakitPasien;
+    }
+
+    public void setPenyakitPasien(String penyakitPasien) {
+        this.penyakitPasien = penyakitPasien;
+    }
+
+    public String getUmurPasien() {
+        return umurPasien;
+    }
+
+    public void setUmurPasien(String umurPasien) {
+        this.umurPasien = umurPasien;
+    }
+
+    public String getWaktuDaftar() {
+        return waktuDaftar;
+    }
+
+    public void setWaktuDaftar(String waktuDaftar) {
+        this.waktuDaftar = waktuDaftar;
+    }
+
+    public String getWaktuSelesai() {
+        return waktuSelesai;
+    }
+
+    public void setWaktuSelesai(String waktuSelesai) {
+        this.waktuSelesai = waktuSelesai;
+    }
 }

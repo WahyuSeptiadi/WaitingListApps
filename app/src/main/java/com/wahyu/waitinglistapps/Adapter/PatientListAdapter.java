@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.wahyu.waitinglistapps.Model.PatientModel;
 import com.wahyu.waitinglistapps.R;
 
@@ -41,7 +42,18 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull PatientListAdapter.ViewHolder holder, int position) {
+        PatientModel patientModel = patientModelArrayList.get(position);
 
+        if (patientModel.getImageURL().substring(0, 4).equals("http")) {
+            Picasso.get().load(patientModel.getImageURL()).into(holder.civProfilePatient);
+        } else {
+            Picasso.get().load(R.drawable.icon_default_profile).into(holder.civProfilePatient);
+        }
+        holder.tvNamePatient.setText(patientModel.getNamaPasien());
+        holder.tvEstimationFinish.setText(patientModel.getWaktuSelesai());
+
+        int queueSort = position + 1;
+        holder.tvQueueSort.setText(String.valueOf(queueSort));
     }
 
     @Override

@@ -127,8 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/input_patientsick"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginTop="10dp">
 
                         <EditText
                             android:id="@+id/et_patientcomplains"
@@ -148,8 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/input_patientcomplains"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginTop="10dp">
 
                         <EditText
                             android:id="@+id/et_patientaddress"
@@ -169,8 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/input_patientaddress"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginTop="10dp">
 
                         <EditText
                             android:id="@+id/et_patientage"
@@ -178,7 +175,7 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="Umur (mis: 21 tahun)"
+                            android:hint="Umur (mis: 21 Thn)"
                             android:inputType="textCapWords"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
@@ -190,8 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/input_patientage"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginTop="10dp">
 
                         <EditText
                             android:id="@+id/et_patientgender"
@@ -199,7 +195,7 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="Jenis kelamin"
+                            android:hint="Jenis kelamin (L/P)"
                             android:inputType="textCapWords"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
@@ -210,7 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/input_patientgender"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 

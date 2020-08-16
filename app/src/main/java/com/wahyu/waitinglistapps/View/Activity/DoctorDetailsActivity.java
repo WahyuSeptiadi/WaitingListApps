@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -48,6 +49,12 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             tvTimeFinish.setText(getTimeFinish);
             tvPatientLimit.setText(getPatientLimit);
         }
+
+        btnShowpatient.setOnClickListener(view -> {
+            Intent toListPatient = new Intent(DoctorDetailsActivity.this, PatientListActivity.class);
+            toListPatient.putExtra("id_dokter", getDoctorId);
+            startActivity(toListPatient);
+        });
     }
 
     private void getDataFromIntentList() {
