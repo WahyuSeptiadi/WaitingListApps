@@ -90,13 +90,13 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             String timefinish = doctorModel.getWorktimefinish();
             String limit = doctorModel.getLimit();
 
-            if (isDaftar != null){
+            if (isDaftar != null) {
                 Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
                 toRegis.putExtra("id_doctor", doctorId);
                 toRegis.putExtra("name_doctor", namedr);
                 mActivity.startActivity(toRegis);
                 mActivity.finish();
-            }else{
+            } else {
                 Intent toDetails = new Intent(mActivity, DoctorDetailsActivity.class);
                 toDetails.putExtra("id", doctorId);
                 toDetails.putExtra("name", namedr);

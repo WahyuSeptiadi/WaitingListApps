@@ -86,7 +86,6 @@ public class PatientListActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, HomeActivity.class));
-        finish();
+        super.onBackPressed();
     }
 }
