@@ -21,12 +21,21 @@ public class PatientModel {
     private String tanggalDaftar;
     private String waktuDaftar;
     private String waktuSelesai;
+    private String status;
 
     public PatientModel() {
     }
 
     public String getSpesialis() {
         return spesialis;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setSpesialis(String spesialis) {

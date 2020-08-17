@@ -4,15 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,11 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.wahyu.waitinglistapps.Adapter.MyQueueAdapter;
+import com.wahyu.waitinglistapps.Model.PatientModel;
 import com.wahyu.waitinglistapps.Model.UserModel;
 import com.wahyu.waitinglistapps.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,10 +41,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
-    private Calendar calendar;
+    private String userType, imageURL, name, email;
 
-    private SharedPreferences preferences;
-    private String userType, imageURL, name, email, isTerdaftar, terdaftarReal;
+    //display list antrianku
+    private RecyclerView rvMyQueue;
+    private MyQueueAdapter myQueueAdapter;
+    private TextView tvEmptyQueue;
+    private ImageView emptyBox;
+    private ProgressBar progressBar;
+    private ArrayList<PatientModel> patientModelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,53 +62,22 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         civProfileUser = findViewById(R.id.civ_imageProfileHome);
         CardView cvDoctorList = findViewById(R.id.cv_doctorlist_home);
-        TextView tvCurrentDate = findViewById(R.id.tv_currentDate);
         CardView pickQueue = findViewById(R.id.cv_pickqueue_home);
 
-        // ubah ke adapter list
-        TextView tvBlmTerdaftar = findViewById(R.id.tv_belumdaftar);
-        TextView tvTerdaftar = findViewById(R.id.tv_terdaftar);
+        //inisialisasi component list antrian
+        tvEmptyQueue = findViewById(R.id.emptyMyQueue);
+        emptyBox = findViewById(R.id.emptyBox_home);
+        progressBar = findViewById(R.id.progressBar_home);
+        rvMyQueue = findViewById(R.id.rv_myqueue_home);
+        rvMyQueue.setLayoutManager(new LinearLayoutManager(this));
+        rvMyQueue.setHasFixedSize(true);
+        rvMyQueue.smoothScrollToPosition(0);
 
         //inisialisasi
         reference = FirebaseDatabase.getInstance().getReference("Users");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        calendar = Calendar.getInstance();
 
-//        getPrefTerdaftar(); // salah
-
-//        // preference
-//        if (isTerdaftar != null) {
-//            if (isTerdaftar.equals("terdaftar")) {
-//                tvTerdaftar.setVisibility(View.VISIBLE);
-//                tvBlmTerdaftar.setVisibility(View.INVISIBLE);
-//            } else {
-//                tvTerdaftar.setVisibility(View.INVISIBLE);
-//                tvBlmTerdaftar.setVisibility(View.VISIBLE);
-//            }
-//        }
-
-//        // for realtime db
-//        if (terdaftarReal != null) {
-//            if (terdaftarReal.equals("true")) {
-//                tvTerdaftar.setVisibility(View.VISIBLE);
-//                tvBlmTerdaftar.setVisibility(View.INVISIBLE);
-//            } else {
-//                tvTerdaftar.setVisibility(View.INVISIBLE);
-//                tvBlmTerdaftar.setVisibility(View.VISIBLE);
-//            }
-//        }else {
-//            terdaftarReal = "false";
-//            if (terdaftarReal.equals("true")) {
-//                tvTerdaftar.setVisibility(View.VISIBLE);
-//                tvBlmTerdaftar.setVisibility(View.INVISIBLE);
-//            } else {
-//                tvTerdaftar.setVisibility(View.INVISIBLE);
-//                tvBlmTerdaftar.setVisibility(View.VISIBLE);
-//            }
-//        }
-
-        // set tanggal sekarang //ubah ke adapter list aja
-        tvCurrentDate.setText(getCurrentLocalDateStamp());
+        getMyQueue();
 
         pickQueue.setOnClickListener(this);
         cvDoctorList.setOnClickListener(this);
@@ -120,11 +97,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         getDataUser();
     }
 
-    private void getPrefTerdaftar() {
-        preferences = getSharedPreferences("PREF_REGIST", MODE_PRIVATE);
-        isTerdaftar = preferences.getString("terdaftar", "");
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -132,19 +104,57 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, DoctorListActivity.class));
                 break;
             case R.id.cv_pickqueue_home:
-                Intent toDaftar = new Intent(HomeActivity.this, RegisPatientActivity.class);
-                toDaftar.putExtra("namapasien", name);
-                toDaftar.putExtra("imagepasien", imageURL);
-                startActivity(toDaftar);
+                if (!patientModelArrayList.isEmpty()) {
+                    Toast.makeText(this, "Maaf Antrian anda belum selesai", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent toDaftar = new Intent(HomeActivity.this, RegisPatientActivity.class);
+                    toDaftar.putExtra("namapasien", name);
+                    toDaftar.putExtra("imagepasien", imageURL);
+                    startActivity(toDaftar);
+                }
                 break;
             default:
                 break;
         }
     }
 
-    public String getCurrentLocalDateStamp() {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM, yyyy");
-        return currentDate.format(calendar.getTime());
+    private void getMyQueue() {
+        patientModelArrayList = new ArrayList<>();
+        DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
+
+        dbRefMyQueue.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                patientModelArrayList.clear();
+
+                if (!snapshot.exists()) {
+                    tvEmptyQueue.setVisibility(View.VISIBLE);
+                    emptyBox.setVisibility(View.VISIBLE);
+                } else {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        PatientModel patientModel = dataSnapshot.getValue(PatientModel.class);
+                        assert patientModel != null;
+                        if (patientModel.getStatus().equals("MENUNGGU")) {
+                            patientModelArrayList.add(patientModel);
+                            tvEmptyQueue.setVisibility(View.GONE);
+                            emptyBox.setVisibility(View.GONE);
+                        } else {
+                            tvEmptyQueue.setVisibility(View.VISIBLE);
+                            emptyBox.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    myQueueAdapter = new MyQueueAdapter(HomeActivity.this, patientModelArrayList);
+                    rvMyQueue.setAdapter(myQueueAdapter);
+                    myQueueAdapter.notifyDataSetChanged();
+                }
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void getDataUser() {
@@ -163,7 +173,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     imageURL = userModel.getImageURL();
                     name = userModel.getUsername();
                     email = userModel.getEmail();
-                    terdaftarReal = userModel.getTerdaftar(); // salah
                 } else {
                     Toast.makeText(HomeActivity.this, "Tidak ada user yang ditemukan", Toast.LENGTH_SHORT).show();
                 }

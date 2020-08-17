@@ -73,6 +73,10 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         holder.tvNamePatient.setText(patientModel.getNamaPasien());
         holder.tvEstimationFinish.setText(patientModel.getWaktuSelesai());
 
+        if (patientModel.getWaktuSelesai().equals("SELESAI")){
+            holder.tvEstimationFinish.setTextColor(mActivity.getResources().getColor(R.color.colorAccent));
+        }
+
         int queueSort = position + 1;
         holder.tvQueueSort.setText(String.valueOf(queueSort));
 

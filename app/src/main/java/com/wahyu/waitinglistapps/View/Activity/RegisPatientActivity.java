@@ -86,7 +86,6 @@ public class RegisPatientActivity extends AppCompatActivity {
 
         btn_searchdoctor.setOnClickListener(view -> {
             setPreference();
-//            setPrefTerdaftar("belumdaftar");
             Intent toListDoctor = new Intent(RegisPatientActivity.this, DoctorListActivity.class);
             toListDoctor.putExtra("daftar", "daftar");
             startActivity(toListDoctor);
@@ -173,12 +172,6 @@ public class RegisPatientActivity extends AppCompatActivity {
         preferences.edit().remove("kelamin").apply();
     }
 
-//    private void setPrefTerdaftar(String info) {
-//        editor = getSharedPreferences("PREF_REGIST", MODE_PRIVATE).edit();
-//        editor.putString("terdaftar", info);
-//        editor.apply();
-//    }
-
     public String getCurrentLocalTimeStamp(int plus) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
         calendar.add(Calendar.MINUTE, plus);
@@ -204,6 +197,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         daftarPatient.put("alamatPasien", alamat);
         daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
         daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(10));
+        daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
 
         if (profile != null && name != null) {
             daftarPatient.put("imageURL", profile);
@@ -218,7 +212,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         if (foto_dokter != null && spesialis_dokter != null) {
             daftarPatient.put("imageDoctor", foto_dokter);
             daftarPatient.put("spesialis", spesialis_dokter);
-            daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
+            daftarPatient.put("status", "MENUNGGU");
 
             DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
             dbRefMyQueue.child(userId).child(id_dokter).setValue(daftarPatient);
@@ -229,23 +223,6 @@ public class RegisPatientActivity extends AppCompatActivity {
             toListPatient.putExtra("id_dokter", id_dokter);
             startActivity(toListPatient);
             finish();
-
         }
-
-//        //update user
-//        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//        assert firebaseUser != null;
-//        DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put("terdaftar", "true");
-//        refUser.updateChildren(hashMap);
-
-//        //set total pasien
-//        DatabaseReference refTotal = FirebaseDatabase.getInstance().getReference("TotalPatient");
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put("total", count+1);
-//        refTotal.child(id_dokter).setValue(hashMap);
-
-//        setPrefTerdaftar("terdaftar");
     }
 }
