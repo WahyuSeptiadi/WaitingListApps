@@ -23,7 +23,7 @@
     <string name="str_emptydr">Belum ada dokter yang ditambahkan</string>
     <string name="titlebar_updatedoctor">Update Data Dokter</string>
     <string name="str_update">Update</string>
-    <string name="str_null">Silahkan muat ulang</string>
+    <string name="str_null">kosong</string>
     <string name="str_emptyPatient">Belum ada pasien terdaftar</string>
     <string name="titlebar_patient">Daftar Pasien</string>
     <string name="str_openeveryday">Buka Setiap Hari</string>

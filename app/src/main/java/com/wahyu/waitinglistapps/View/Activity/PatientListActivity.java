@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,7 +22,9 @@ import com.wahyu.waitinglistapps.Adapter.PatientListAdapter;
 import com.wahyu.waitinglistapps.Model.PatientModel;
 import com.wahyu.waitinglistapps.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class PatientListActivity extends AppCompatActivity {
 
@@ -33,7 +35,7 @@ public class PatientListActivity extends AppCompatActivity {
     private PatientListAdapter patientListAdapter;
     private DatabaseReference reference;
     private ArrayList<PatientModel> patientModelArrayList;
-//    private String isTerdaftar;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class PatientListActivity extends AppCompatActivity {
         if (dokterId != null) {
             reference = FirebaseDatabase.getInstance().getReference("WaitingList").child(dokterId);
         }
+        calendar = Calendar.getInstance();
 
         getAllPatient();
 
@@ -69,10 +72,10 @@ public class PatientListActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-//    private void getPrefTerdaftar() {
-//        SharedPreferences preferences = getSharedPreferences("PREF_REGIST", MODE_PRIVATE);
-//        isTerdaftar = preferences.getString("terdaftar", "");
-//    }
+    public String getCurrentLocalDateStamp() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM, yyyy");
+        return currentDate.format(calendar.getTime());
+    }
 
     private void getAllPatient() {
         patientModelArrayList = new ArrayList<>();
@@ -86,7 +89,11 @@ public class PatientListActivity extends AppCompatActivity {
                 } else {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         PatientModel patientModel = dataSnapshot.getValue(PatientModel.class);
-                        patientModelArrayList.add(patientModel);
+
+                        assert patientModel != null;
+                        if (patientModel.getTanggalDaftar().equals(getCurrentLocalDateStamp())) {
+                            patientModelArrayList.add(patientModel);
+                        }
                     }
                     patientListAdapter = new PatientListAdapter(PatientListActivity.this, patientModelArrayList);
                     rvPatientList.setAdapter(patientListAdapter);

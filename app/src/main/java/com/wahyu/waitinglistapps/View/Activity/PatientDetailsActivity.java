@@ -1,10 +1,12 @@
 package com.wahyu.waitinglistapps.View.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,12 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PatientDetailsActivity extends AppCompatActivity {
 
-    private CircleImageView civProfilePatient;
-    private TextView tvName, tvKeluhan, tvPenyakit, tvAlamat, tvUmur, tvJenis, tvDaftar, tvSelesai;
     private String getImage, getName, getKeluhan, getPenyakit, getAlamat, getUmur, getJenis, getDaftar, getSelesai;
-
-    private CircleImageView civProfileDoctor;
-    private TextView tvNameDoctor, tvSpesialisDoctor, tvDateRegist;
     private String getImageDoctor, getNameDoctor, getSpesialisDoctor, getDateRegist;
 
     @Override
@@ -29,21 +26,22 @@ public class PatientDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_details);
 
-        civProfilePatient = findViewById(R.id.civ_profile_patientdetails);
-        tvName = findViewById(R.id.tv_nama_patientdetails);
-        tvKeluhan = findViewById(R.id.tv_keluhan_patientdetails);
-        tvPenyakit = findViewById(R.id.tv_penyakit_patientdetails);
-        tvAlamat = findViewById(R.id.tv_alamat_patientdetails);
-        tvUmur = findViewById(R.id.tv_umur_patientdetails);
-        tvJenis = findViewById(R.id.tv_jenis_patientdetails);
-        tvDaftar = findViewById(R.id.tv_waktu_daftar_patientdetails);
-        tvSelesai = findViewById(R.id.tv_estimasi_patientdetails);
+        CircleImageView civProfilePatient = findViewById(R.id.civ_profile_patientdetails);
+        TextView tvName = findViewById(R.id.tv_nama_patientdetails);
+        TextView tvKeluhan = findViewById(R.id.tv_keluhan_patientdetails);
+        TextView tvPenyakit = findViewById(R.id.tv_penyakit_patientdetails);
+        TextView tvAlamat = findViewById(R.id.tv_alamat_patientdetails);
+        TextView tvUmur = findViewById(R.id.tv_umur_patientdetails);
+        TextView tvJenis = findViewById(R.id.tv_jenis_patientdetails);
+        TextView tvDaftar = findViewById(R.id.tv_waktu_daftar_patientdetails);
+        TextView tvSelesai = findViewById(R.id.tv_estimasi_patientdetails);
+        ImageView btnBack = findViewById(R.id.btnback_patientdetails);
 
         //details in home trigger
-        civProfileDoctor = findViewById(R.id.civ_doctor_patientdetails);
-        tvNameDoctor = findViewById(R.id.tv_namedoctor_patientdetails);
-        tvSpesialisDoctor = findViewById(R.id.tv_spesialisdoctor_patientdetails);
-        tvDateRegist = findViewById(R.id.tv_dateRegist_patientdetails);
+        CircleImageView civProfileDoctor = findViewById(R.id.civ_doctor_patientdetails);
+        TextView tvNameDoctor = findViewById(R.id.tv_namedoctor_patientdetails);
+        TextView tvSpesialisDoctor = findViewById(R.id.tv_spesialisdoctor_patientdetails);
+        TextView tvDateRegist = findViewById(R.id.tv_dateRegist_patientdetails);
 
         getDataIntent();
 
@@ -51,9 +49,14 @@ public class PatientDetailsActivity extends AppCompatActivity {
         if (getImage != null && getName != null && getKeluhan != null && getPenyakit != null && getAlamat != null &&
                 getUmur != null && getJenis != null && getDaftar != null && getSelesai != null) {
 
-            if (getImage.substring(0, 4).equals("http")) {
-                Picasso.get().load(getImage).into(civProfilePatient);
+            if (!getImage.equals("")) {
+                if (getImage.substring(0, 4).equals("http")) {
+                    Picasso.get().load(getImage).into(civProfilePatient);
+                } else {
+                    Picasso.get().load(R.drawable.icon_default_profile).into(civProfilePatient);
+                }
             } else {
+                Toast.makeText(this, "Silahkan batalkan pendaftaran,\ndan daftar ulang kembali ya !", Toast.LENGTH_SHORT).show();
                 Picasso.get().load(R.drawable.icon_default_profile).into(civProfilePatient);
             }
 
@@ -81,9 +84,16 @@ public class PatientDetailsActivity extends AppCompatActivity {
             tvSpesialisDoctor.setText(getSpesialisDoctor);
             tvDateRegist.setText(getDateRegist);
         } else {
-            RelativeLayout rl_doctorDetails = findViewById(R.id.doctordetails);
-            rl_doctorDetails.setVisibility(View.GONE);
+            RelativeLayout rlDoctorDetails = findViewById(R.id.doctordetails);
+            CardView cvNote = findViewById(R.id.cv_note_queuedetails);
+            rlDoctorDetails.setVisibility(View.GONE);
+            cvNote.setVisibility(View.GONE);
         }
+
+        btnBack.setOnClickListener(view -> {
+            startActivity(new Intent(PatientDetailsActivity.this, HomeActivity.class));
+            finish();
+        });
     }
 
     private void getDataIntent() {

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,6 +59,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         civ_profilepatient = findViewById(R.id.civ_imageProfilePatient);
         btn_regis = findViewById(R.id.cv_btnpatientregis);
         btn_searchdoctor = findViewById(R.id.cv_btnpickdoctor);
+        ImageView btnBack = findViewById(R.id.btnback_registry);
 
         Intent data = getIntent();
         id_dokter = data.getStringExtra("id_doctor");
@@ -96,16 +98,21 @@ public class RegisPatientActivity extends AppCompatActivity {
             String jenis = et_patientgender.getText().toString();
             String alamat = et_patientaddress.getText().toString();
 
-            if (!TextUtils.isEmpty(penyakit) && !TextUtils.isEmpty(keluhan) && !TextUtils.isEmpty(umur) &&
-                    !TextUtils.isEmpty(jenis) && !TextUtils.isEmpty(alamat)) {
-                if (!TextUtils.isEmpty(et_pickdoctor.getText())) {
-                    daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter);
+            if (!et_patientname.getText().toString().equals("kosong")) {
+                if (!TextUtils.isEmpty(penyakit) && !TextUtils.isEmpty(keluhan) && !TextUtils.isEmpty(umur) &&
+                        !TextUtils.isEmpty(jenis) && !TextUtils.isEmpty(alamat)) {
+                    if (!TextUtils.isEmpty(et_pickdoctor.getText())) {
+                        daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter);
+                    } else {
+                        Toast.makeText(this, "Silahkan pilih dokter terlebih dahulu", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(this, "Silahkan pilih dokter terlebih dahulu", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Tolong lengkapi semua fieldnya ya", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "Tolong lengkapi semua fieldnya ya", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "!! FOTO KOSONG !!\nSilahkan kembali ke halaman home\nterlebih dahulu !", Toast.LENGTH_SHORT).show();
             }
+
         });
 
 
@@ -113,6 +120,10 @@ public class RegisPatientActivity extends AppCompatActivity {
             initPrefRegistPatient();
         }
 
+        btnBack.setOnClickListener(view -> {
+            startActivity(new Intent(RegisPatientActivity.this, HomeActivity.class));
+            finish();
+        });
     }
 
     @Override

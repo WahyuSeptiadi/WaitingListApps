@@ -65,11 +65,16 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
     public void onBindViewHolder(@NonNull PatientListAdapter.ViewHolder holder, int position) {
         PatientModel patientModel = patientModelArrayList.get(position);
 
-        if (patientModel.getImageURL().substring(0, 4).equals("http")) {
-            Picasso.get().load(patientModel.getImageURL()).into(holder.civProfilePatient);
+        if (!patientModel.getImageURL().equals("")) {
+            if (patientModel.getImageURL().substring(0, 4).equals("http")) {
+                Picasso.get().load(patientModel.getImageURL()).into(holder.civProfilePatient);
+            } else {
+                Picasso.get().load(R.drawable.icon_default_profile).into(holder.civProfilePatient);
+            }
         } else {
             Picasso.get().load(R.drawable.icon_default_profile).into(holder.civProfilePatient);
         }
+
         holder.tvNamePatient.setText(patientModel.getNamaPasien());
         holder.tvEstimationFinish.setText(patientModel.getWaktuSelesai());
 

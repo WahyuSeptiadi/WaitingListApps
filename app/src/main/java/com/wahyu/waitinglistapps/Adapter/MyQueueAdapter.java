@@ -69,7 +69,7 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
         if (patientModel.getStatus().equals("MENUNGGU")) {
             holder.tvStatus.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
         } else {
-            holder.tvStatus.setTextColor(mActivity.getResources().getColor(R.color.colorAccent));
+            holder.tvStatus.setTextColor(mActivity.getResources().getColor(R.color.colorAccent)); // gak kanggo cok wkwkw
         }
 
         holder.ivFinish.setOnClickListener(view -> {
@@ -80,7 +80,7 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
         holder.ivCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                showDialogAlertCancel(patientModel.getIdDokter(), patientModel.getNamaDokter());
             }
         });
 
@@ -165,9 +165,11 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
                 .setPositiveButton("Sudah", (dialog, id) -> {
 
                     //for home
-                    HashMap<String, Object> myQueue = new HashMap<>();
-                    myQueue.put("status", "SELESAI");
-                    rootMyQueue.child(dokterId).updateChildren(myQueue);
+//                    HashMap<String, Object> myQueue = new HashMap<>();
+//                    myQueue.put("status", "SELESAI");
+
+                    //sementara gini aja dah
+                    rootMyQueue.child(dokterId).removeValue();
 
                     //for patientlist per doctor
                     HashMap<String, Object> waitingList = new HashMap<>();
@@ -181,6 +183,35 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
                     Toast.makeText(mActivity, "Data berhasil diupdate", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Belum", (dialog, id) -> dialog.cancel());
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void showDialogAlertCancel(String dokterId, String namaDokter) {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert firebaseUser != null;
+        String userid = firebaseUser.getUid();
+        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue").child(userid);
+        DatabaseReference rootWaitingList = FirebaseDatabase.getInstance().getReference("WaitingList").child(dokterId);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
+        alertDialogBuilder.setTitle("BATAL");
+        alertDialogBuilder
+                .setMessage("Apakah Anda ingin membatalkan antrian tiket pada dokter " + namaDokter + " ?")
+                .setCancelable(false)
+                .setPositiveButton("iya", (dialog, id) -> {
+
+                    //fix delete
+                    rootMyQueue.child(dokterId).removeValue();
+                    rootWaitingList.child(userid).removeValue();
+
+                    mActivity.overridePendingTransition(0, 0);
+                    mActivity.startActivity(mActivity.getIntent());
+                    mActivity.overridePendingTransition(0, 0);
+
+                    Toast.makeText(mActivity, "Data berhasil diupdate", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("tidak", (dialog, id) -> dialog.cancel());
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

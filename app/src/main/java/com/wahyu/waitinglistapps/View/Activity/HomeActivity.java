@@ -152,12 +152,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                             patientModelArrayList.add(patientModel);
                             tvEmptyQueue.setVisibility(View.GONE);
                             emptyBox.setVisibility(View.GONE);
-                        }
-//                        else {
+                        }else {
 //                            patientModelFinishArrayList.add(patientModel);
-//                            tvEmptyQueue.setVisibility(View.VISIBLE);
-//                            emptyBox.setVisibility(View.VISIBLE);
-//                        }
+                            tvEmptyQueue.setVisibility(View.VISIBLE);
+                            emptyBox.setVisibility(View.VISIBLE);
+                        }
                     }
                     myQueueAdapter = new MyQueueAdapter(HomeActivity.this, patientModelArrayList);
                     rvMyQueue.setAdapter(myQueueAdapter);
