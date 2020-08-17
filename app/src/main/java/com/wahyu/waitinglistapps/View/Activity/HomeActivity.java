@@ -50,6 +50,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView emptyBox;
     private ProgressBar progressBar;
     private ArrayList<PatientModel> patientModelArrayList;
+//    private ArrayList<PatientModel> patientModelFinishArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         getMyQueue();
+
+//        if (!patientModelFinishArrayList.isEmpty()) {
+//            if (!patientModelArrayList.isEmpty()){
+//                tvEmptyQueue.setVisibility(View.GONE);
+//                emptyBox.setVisibility(View.GONE);
+//            }else {
+//                tvEmptyQueue.setVisibility(View.VISIBLE);
+//                emptyBox.setVisibility(View.VISIBLE);
+//            }
+//        }
 
         pickQueue.setOnClickListener(this);
         cvDoctorList.setOnClickListener(this);
@@ -120,12 +131,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void getMyQueue() {
         patientModelArrayList = new ArrayList<>();
+//        patientModelFinishArrayList = new ArrayList<>();
         DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
 
         dbRefMyQueue.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 patientModelArrayList.clear();
+//                patientModelFinishArrayList.clear();
 
                 if (!snapshot.exists()) {
                     tvEmptyQueue.setVisibility(View.VISIBLE);
@@ -134,14 +147,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         PatientModel patientModel = dataSnapshot.getValue(PatientModel.class);
                         assert patientModel != null;
+
                         if (patientModel.getStatus().equals("MENUNGGU")) {
                             patientModelArrayList.add(patientModel);
                             tvEmptyQueue.setVisibility(View.GONE);
                             emptyBox.setVisibility(View.GONE);
-                        } else {
-                            tvEmptyQueue.setVisibility(View.VISIBLE);
-                            emptyBox.setVisibility(View.VISIBLE);
                         }
+//                        else {
+//                            patientModelFinishArrayList.add(patientModel);
+//                            tvEmptyQueue.setVisibility(View.VISIBLE);
+//                            emptyBox.setVisibility(View.VISIBLE);
+//                        }
                     }
                     myQueueAdapter = new MyQueueAdapter(HomeActivity.this, patientModelArrayList);
                     rvMyQueue.setAdapter(myQueueAdapter);

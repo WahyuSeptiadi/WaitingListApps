@@ -40,7 +40,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (userType != null && imageURL != null && name != null && email != null) {
             if (userType.equals("admin")) {
-                Toast.makeText(this, "Hi " + userType, Toast.LENGTH_SHORT).show();
                 flAddNewDoctor.setVisibility(View.VISIBLE);
             }
 

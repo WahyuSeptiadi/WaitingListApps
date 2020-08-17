@@ -46,7 +46,7 @@
                 android:layout_below="@+id/tv_name_patientlist"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/civ_patientlist"
-                android:text="Perkiraan selesai pukul : "
+                android:text="Perkiraan selesai\t  : "
                 android:textSize="15sp" />
 
             <TextView
@@ -54,8 +54,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_name_patientlist"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/tv_estimationfinish"
                 android:text="@string/str_dot"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 

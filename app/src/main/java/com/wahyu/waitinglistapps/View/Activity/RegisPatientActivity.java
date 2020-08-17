@@ -21,7 +21,6 @@ import com.wahyu.waitinglistapps.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,7 +37,6 @@ public class RegisPatientActivity extends AppCompatActivity {
 
     private String profile, name, penyakit, keluhan, alamat, umur, kelamin;
     private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +122,7 @@ public class RegisPatientActivity extends AppCompatActivity {
     }
 
     private void setPreference() {
-        editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
         editor.putString("profile", imagePasien);
         editor.putString("namepasien", namaPasien);
         editor.putString("penyakit", et_patientsick.getText().toString());

@@ -120,6 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:contentDescription="@string/todo"
+            android:background="@drawable/bg_round_white"
             android:src="@drawable/ic_round_add_accent" />
     </FrameLayout>
 

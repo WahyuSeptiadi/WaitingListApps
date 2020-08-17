@@ -73,7 +73,8 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         holder.tvNamePatient.setText(patientModel.getNamaPasien());
         holder.tvEstimationFinish.setText(patientModel.getWaktuSelesai());
 
-        if (patientModel.getWaktuSelesai().equals("SELESAI")){
+        if (patientModel.getWaktuSelesai().equals("SELESAI")) {
+            holder.tvEstimate.setVisibility(View.GONE);
             holder.tvEstimationFinish.setTextColor(mActivity.getResources().getColor(R.color.colorAccent));
         }
 
@@ -119,7 +120,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
                 Button deleteButton = dialog.findViewById(R.id.btnDelete);
 
                 //sementara btn Edit jadi Hapus
-                editButton.setText("Hapus");
+                editButton.setText(R.string.str_delete);
                 choice.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.GONE);
 
@@ -149,7 +150,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private CircleImageView civProfilePatient;
-        private TextView tvNamePatient, tvEstimationFinish, tvQueueSort;
+        private TextView tvNamePatient, tvEstimationFinish, tvQueueSort, tvEstimate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -158,6 +159,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
             tvNamePatient = itemView.findViewById(R.id.tv_name_patientlist);
             tvEstimationFinish = itemView.findViewById(R.id.tv_estimationfinish_patientlist);
             tvQueueSort = itemView.findViewById(R.id.tv_queuesort_patientlist);
+            tvEstimate = itemView.findViewById(R.id.tv_estimationfinish);
         }
     }
 

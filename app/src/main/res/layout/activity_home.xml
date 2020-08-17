@@ -13,6 +13,7 @@
         layout="@layout/topbar_white" />
 
     <TextView
+        android:id="@+id/top_lineshadow"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/topbar_home"
@@ -43,143 +44,197 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/mainmenu_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/topbar_home"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_doctorlist_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="15dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civ_iconDoctorHome"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/icon_doctor"
-                    app:civ_border_color="@color/colorAccent"
-                    app:civ_border_width="0.6dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/civ_iconDoctorHome"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="Daftar Dokter"
-                    android:textColor="@color/colorBlack" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_pickqueue_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="15dp"
-            android:layout_toEndOf="@+id/cv_doctorlist_home"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civ_iconPickHome"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/icon_ticket"
-                    app:civ_border_color="@color/colorAccent"
-                    app:civ_border_width="0.6dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/civ_iconPickHome"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="Ambil Antrian"
-                    android:textColor="@color/colorBlack" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-    </RelativeLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_myqueue_home"
-        android:layout_width="350dp"
-        android:layout_height="290dp"
-        android:layout_below="@+id/mainmenu_home"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="10dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_lineshadow">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_info"
+            <RelativeLayout
+                android:id="@+id/mainmenu_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="10dp"
-                android:text="INFO ANTRIAN SAYA"
-                android:textColor="@color/colorBlack"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_myqueue_home"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_below="@+id/tv_info" />
-
-            <ImageView
-                android:id="@+id/emptyBox_home"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/icon_empty_box"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/emptyMyQueue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/emptyBox_home"
+                android:layout_below="@+id/cv_myqueue_home"
                 android:layout_centerHorizontal="true"
-                android:text="ANDA BELUM MENGAMBIL ANTRIAN"
-                android:textColor="@color/colorBlack"
-                android:visibility="gone" />
+                android:layout_marginTop="5dp">
 
-            <ProgressBar
-                android:id="@+id/progressBar_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_doctorlist_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civ_iconDoctorHome"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/icon_doctor"
+                            app:civ_border_color="@color/colorAccent"
+                            app:civ_border_width="0.6dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/civ_iconDoctorHome"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Daftar Dokter"
+                            android:textColor="@color/colorBlack" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_pickqueue_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toEndOf="@+id/cv_doctorlist_home"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civ_iconPickHome"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/icon_ticket"
+                            app:civ_border_color="@color/colorAccent"
+                            app:civ_border_width="0.6dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/civ_iconPickHome"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Ambil Antrian"
+                            android:textColor="@color/colorBlack" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_myqueue_home"
+                android:layout_width="350dp"
+                android:layout_height="290dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="10dp"
+                        android:text="INFO ANTRIAN SAYA"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_myqueue_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_info"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/emptyBox_home"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_centerInParent="true"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/icon_empty_box"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/emptyMyQueue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/emptyBox_home"
+                        android:layout_centerHorizontal="true"
+                        android:text="ANDA BELUM MENGAMBIL ANTRIAN"
+                        android:textColor="@color/colorOrange"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="350dp"
+                android:layout_height="120dp"
+                android:layout_below="@+id/mainmenu_home"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/welcome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:text="SELAMAT DATANG\nDI APLIKASI ANTRI KUY"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/getwellsoon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/welcome"
+                        android:layout_centerHorizontal="true"
+                        android:text="SEMOGA LEKAS SEMBUH YA"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorOrange"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 
 </RelativeLayout>

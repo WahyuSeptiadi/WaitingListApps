@@ -27,4 +27,5 @@
     <string name="str_emptyPatient">Belum ada pasien terdaftar</string>
     <string name="titlebar_patient">Daftar Pasien</string>
     <string name="str_openeveryday">Buka Setiap Hari</string>
+    <string name="str_delete">Hapus</string>
 </resources>

@@ -2,6 +2,7 @@ package com.wahyu.waitinglistapps.Adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 import com.wahyu.waitinglistapps.Model.PatientModel;
 import com.wahyu.waitinglistapps.R;
+import com.wahyu.waitinglistapps.View.Activity.PatientDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,11 +84,38 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
             }
         });
 
-        holder.tvBtnDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.tvBtnDetails.setOnClickListener(view -> {
+            String image = patientModel.getImageURL();
+            String name = patientModel.getNamaPasien();
+            String keluhan = patientModel.getKeluhanPasien();
+            String penyakit = patientModel.getPenyakitPasien();
+            String alamat = patientModel.getAlamatPasien();
+            String umur = patientModel.getUmurPasien();
+            String jenis = patientModel.getJenisPasien();
+            String daftar = patientModel.getWaktuDaftar();
+            String selesai = patientModel.getWaktuSelesai();
+            //FOR MY QUEUE DETAILS
+            String imageDoctor = patientModel.getImageDoctor();
+            String nameDoctor = patientModel.getNamaDokter();
+            String spesialisDoctor = patientModel.getSpesialis();
+            String dateRegist = patientModel.getTanggalDaftar();
 
-            }
+            Intent toPatientDetails = new Intent(mActivity, PatientDetailsActivity.class);
+            toPatientDetails.putExtra("image", image);
+            toPatientDetails.putExtra("name", name);
+            toPatientDetails.putExtra("keluhan", keluhan);
+            toPatientDetails.putExtra("penyakit", penyakit);
+            toPatientDetails.putExtra("alamat", alamat);
+            toPatientDetails.putExtra("umur", umur);
+            toPatientDetails.putExtra("jenis", jenis);
+            toPatientDetails.putExtra("daftar", daftar);
+            toPatientDetails.putExtra("selesai", selesai);
+            //my queue details
+            toPatientDetails.putExtra("imagedoctor", imageDoctor);
+            toPatientDetails.putExtra("namedoctor", nameDoctor);
+            toPatientDetails.putExtra("spesialisdoctor", spesialisDoctor);
+            toPatientDetails.putExtra("dateregist", dateRegist);
+            mActivity.startActivity(toPatientDetails);
         });
 
     }

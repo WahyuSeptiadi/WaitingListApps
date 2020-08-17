@@ -42,209 +42,278 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="40dp">
+            android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_imgprofile_patientdetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                app:cardCornerRadius="100dp"
-                app:cardElevation="10dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civ_profile_patientdetails"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:src="@drawable/icon_default_profile"
-                    app:civ_border_color="@color/colorPrimary"
-                    app:civ_border_width="0.5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/tv_nama_patientdetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/cv_imgprofile_patientdetails"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="@string/str_dot"
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv_spesialis_patientdetails"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/tv_nama_patientdetails"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:text="@string/str_dot"-->
-<!--                android:textColor="@color/colorBlack"-->
-<!--                android:textSize="16sp" />-->
-
-            <LinearLayout
-                android:id="@+id/ll_keluhan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_nama_patientdetails"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/doctordetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/tv_dateRegist_patientdetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Keluhan Pasien\t\t\t\t: "
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/str_dot"
                     android:textColor="@color/colorBlack"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
 
-                <TextView
-                    android:id="@+id/tv_keluhan_patientdetails"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_imgdoctor_patientdetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/str_dot" />
-            </LinearLayout>
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardCornerRadius="70dp"
+                    app:cardElevation="7dp">
 
-            <LinearLayout
-                android:id="@+id/ll_penyakit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_keluhan"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civ_doctor_patientdetails"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/icon_default_profile"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="0.5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.cardview.widget.CardView>
 
                 <TextView
+                    android:id="@+id/tv_namedoctor_patientdetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Estimasi Penyakit\t\t\t: "
+                    android:layout_below="@+id/cv_imgdoctor_patientdetails"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/str_dot"
                     android:textColor="@color/colorBlack"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_penyakit_patientdetails"
+                    android:id="@+id/tv_spesialisdoctor_patientdetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/str_dot" />
-            </LinearLayout>
+                    android:layout_below="@+id/tv_namedoctor_patientdetails"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/str_dot"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_alamat"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/patientdetails"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_penyakit"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_below="@+id/doctordetails"
+                android:paddingBottom="40dp">
 
-                <TextView
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_imgprofile_patientdetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Alamat Pasien\t\t\t\t\t: "
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="10dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civ_profile_patientdetails"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@drawable/icon_default_profile"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="0.5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_nama_patientdetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cv_imgprofile_patientdetails"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/str_dot"
                     android:textColor="@color/colorBlack"
-                    android:textSize="16sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_alamat_patientdetails"
+                <!--            <TextView-->
+                <!--                android:id="@+id/tv_spesialis_patientdetails"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_below="@+id/tv_nama_patientdetails"-->
+                <!--                android:layout_centerHorizontal="true"-->
+                <!--                android:layout_marginTop="5dp"-->
+                <!--                android:layout_marginBottom="10dp"-->
+                <!--                android:text="@string/str_dot"-->
+                <!--                android:textColor="@color/colorBlack"-->
+                <!--                android:textSize="16sp" />-->
+
+                <LinearLayout
+                    android:id="@+id/ll_keluhan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/str_dot" />
-            </LinearLayout>
+                    android:layout_below="@+id/tv_nama_patientdetails"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/ll_umurnjenis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_alamat"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Keluhan Pasien\t\t\t\t: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp" />
 
-                <TextView
+                    <TextView
+                        android:id="@+id/tv_keluhan_patientdetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/str_dot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_penyakit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Umur / Jenis\t\t\t\t\t\t: "
-                    android:textColor="@color/colorBlack"
-                    android:textSize="16sp" />
+                    android:layout_below="@+id/ll_keluhan"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_umur_patientdetails"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estimasi Penyakit\t\t\t: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_penyakit_patientdetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/str_dot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_alamat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/str_dot" />
+                    android:layout_below="@+id/ll_penyakit"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alamat Pasien\t\t\t\t\t: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_alamat_patientdetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/str_dot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_umurnjenis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" / " />
+                    android:layout_below="@+id/ll_alamat"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_jenis_patientdetails"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Umur / Jenis\t\t\t\t\t\t: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_umur_patientdetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/str_dot" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" / " />
+
+                    <TextView
+                        android:id="@+id/tv_jenis_patientdetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_dot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_waktu_daftar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/str_dot" />
-            </LinearLayout>
+                    android:layout_below="@+id/ll_umurnjenis"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/ll_waktu_daftar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_umurnjenis"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Waktu Daftar\t\t\t\t\t\t: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp" />
 
-                <TextView
+                    <TextView
+                        android:id="@+id/tv_waktu_daftar_patientdetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/str_dot" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_estimasi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Waktu Daftar\t\t\t\t\t\t: "
-                    android:textColor="@color/colorBlack"
-                    android:textSize="16sp" />
+                    android:layout_below="@+id/ll_waktu_daftar"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_waktu_daftar_patientdetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/str_dot" />
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estimasi Selesai\t\t\t\t: "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp" />
 
-            <LinearLayout
-                android:id="@+id/ll_estimasi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_waktu_daftar"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Estimasi Selesai\t\t\t\t: "
-                    android:textColor="@color/colorBlack"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_estimasi_patientdetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/str_dot" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_estimasi_patientdetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/str_dot" />
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
+
     </ScrollView>
 </RelativeLayout>
