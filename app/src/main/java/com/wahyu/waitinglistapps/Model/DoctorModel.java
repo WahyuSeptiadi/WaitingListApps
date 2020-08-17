@@ -14,6 +14,7 @@ public class DoctorModel {
     private String worktimestart;
     private String worktimefinish;
     private String limit;
+    private String open;
 
     public DoctorModel() {
     }
@@ -80,5 +81,13 @@ public class DoctorModel {
 
     public void setLimit(String limit) {
         this.limit = limit;
+    }
+
+    public String getOpen() {
+        return open;
+    }
+
+    public void setOpen(String open) {
+        this.open = open;
     }
 }

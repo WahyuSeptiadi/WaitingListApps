@@ -8,6 +8,7 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +40,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser firebaseUser;
     private Calendar calendar;
 
-    private String userType, imageURL, name, email;
+    private SharedPreferences preferences;
+    private String userType, imageURL, name, email, isTerdaftar, terdaftarReal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +57,49 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         TextView tvCurrentDate = findViewById(R.id.tv_currentDate);
         CardView pickQueue = findViewById(R.id.cv_pickqueue_home);
 
+        // ubah ke adapter list
+        TextView tvBlmTerdaftar = findViewById(R.id.tv_belumdaftar);
+        TextView tvTerdaftar = findViewById(R.id.tv_terdaftar);
+
         //inisialisasi
         reference = FirebaseDatabase.getInstance().getReference("Users");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         calendar = Calendar.getInstance();
 
-        getDataUser();
+//        getPrefTerdaftar(); // salah
 
+//        // preference
+//        if (isTerdaftar != null) {
+//            if (isTerdaftar.equals("terdaftar")) {
+//                tvTerdaftar.setVisibility(View.VISIBLE);
+//                tvBlmTerdaftar.setVisibility(View.INVISIBLE);
+//            } else {
+//                tvTerdaftar.setVisibility(View.INVISIBLE);
+//                tvBlmTerdaftar.setVisibility(View.VISIBLE);
+//            }
+//        }
+
+//        // for realtime db
+//        if (terdaftarReal != null) {
+//            if (terdaftarReal.equals("true")) {
+//                tvTerdaftar.setVisibility(View.VISIBLE);
+//                tvBlmTerdaftar.setVisibility(View.INVISIBLE);
+//            } else {
+//                tvTerdaftar.setVisibility(View.INVISIBLE);
+//                tvBlmTerdaftar.setVisibility(View.VISIBLE);
+//            }
+//        }else {
+//            terdaftarReal = "false";
+//            if (terdaftarReal.equals("true")) {
+//                tvTerdaftar.setVisibility(View.VISIBLE);
+//                tvBlmTerdaftar.setVisibility(View.INVISIBLE);
+//            } else {
+//                tvTerdaftar.setVisibility(View.INVISIBLE);
+//                tvBlmTerdaftar.setVisibility(View.VISIBLE);
+//            }
+//        }
+
+        // set tanggal sekarang //ubah ke adapter list aja
         tvCurrentDate.setText(getCurrentLocalDateStamp());
 
         pickQueue.setOnClickListener(this);
@@ -74,7 +112,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             toProfile.putExtra("email", email);
             startActivity(toProfile);
         });
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getDataUser();
+    }
+
+    private void getPrefTerdaftar() {
+        preferences = getSharedPreferences("PREF_REGIST", MODE_PRIVATE);
+        isTerdaftar = preferences.getString("terdaftar", "");
     }
 
     @Override
@@ -99,11 +147,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         return currentDate.format(calendar.getTime());
     }
 
-//    public String getCurrentLocalTimeStamp() {
-//        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-//        return currentTime.format(calendar.getTime());
-//    }
-
     private void getDataUser() {
         reference.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -120,7 +163,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     imageURL = userModel.getImageURL();
                     name = userModel.getUsername();
                     email = userModel.getEmail();
-
+                    terdaftarReal = userModel.getTerdaftar(); // salah
                 } else {
                     Toast.makeText(HomeActivity.this, "Tidak ada user yang ditemukan", Toast.LENGTH_SHORT).show();
                 }

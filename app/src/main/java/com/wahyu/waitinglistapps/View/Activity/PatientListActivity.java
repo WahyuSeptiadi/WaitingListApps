@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ public class PatientListActivity extends AppCompatActivity {
     private PatientListAdapter patientListAdapter;
     private DatabaseReference reference;
     private ArrayList<PatientModel> patientModelArrayList;
+//    private String isTerdaftar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +42,11 @@ public class PatientListActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
         tvEmptyPatient = findViewById(R.id.tv_emptyPatient);
+        ImageView btnBack = findViewById(R.id.btnback_patientlist);
         rvPatientList = findViewById(R.id.rv_patientlist);
+        rvPatientList.setHasFixedSize(true);
         rvPatientList.setLayoutManager(new LinearLayoutManager(this));
         rvPatientList.smoothScrollToPosition(0);
-        rvPatientList.setHasFixedSize(true);
 
         Intent data = getIntent();
         String dokterId = data.getStringExtra("id_dokter");
@@ -54,7 +58,21 @@ public class PatientListActivity extends AppCompatActivity {
 
         getAllPatient();
 
+        btnBack.setOnClickListener(view -> {
+            startActivity(new Intent(PatientListActivity.this, HomeActivity.class));
+            finish();
+        });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+//    private void getPrefTerdaftar() {
+//        SharedPreferences preferences = getSharedPreferences("PREF_REGIST", MODE_PRIVATE);
+//        isTerdaftar = preferences.getString("terdaftar", "");
+//    }
 
     private void getAllPatient() {
         patientModelArrayList = new ArrayList<>();
@@ -82,10 +100,5 @@ public class PatientListActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }

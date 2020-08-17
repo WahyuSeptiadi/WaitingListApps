@@ -14,7 +14,7 @@
     <string name="str_dot">....</string>
     <string name="hint_namedr">masukkan nama dokter</string>
     <string name="hint_spesialis">masukkan spesialis</string>
-    <string name="hint_workday">masukkan hari kerja</string>
+    <string name="hint_workday">hari kerja</string>
     <string name="hint_start">mulai</string>
     <string name="hint_finish">selesai</string>
     <string name="note_limit">NOTE : Batas -\npasien tiap hari</string>
@@ -26,4 +26,5 @@
     <string name="str_null">Silahkan muat ulang</string>
     <string name="str_emptyPatient">Belum ada pasien terdaftar</string>
     <string name="titlebar_patient">Daftar Pasien</string>
+    <string name="str_openeveryday">Buka Setiap Hari</string>
 </resources>

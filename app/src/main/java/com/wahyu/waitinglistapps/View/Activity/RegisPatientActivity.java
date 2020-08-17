@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -29,14 +30,15 @@ public class RegisPatientActivity extends AppCompatActivity {
     EditText et_patientname, et_patientsick, et_patientcomplain, et_patientage, et_patientaddress, et_patientgender, et_pickdoctor;
     CardView btn_regis, btn_searchdoctor;
     CircleImageView civ_profilepatient;
-    String imagePasien, namaPasien, nama_dokter, id_dokter;
+    String imagePasien, namaPasien, nama_dokter, id_dokter, foto_dokter, spesialis_dokter;
 
     private DatabaseReference reference;
-    private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
     private Calendar calendar;
 
     private String profile, name, penyakit, keluhan, alamat, umur, kelamin;
     private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class RegisPatientActivity extends AppCompatActivity {
 
         //inisialisasi
         reference = FirebaseDatabase.getInstance().getReference("WaitingList");
-        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         calendar = Calendar.getInstance();
 
         et_patientname = findViewById(R.id.et_patientname);
@@ -62,6 +64,8 @@ public class RegisPatientActivity extends AppCompatActivity {
         Intent data = getIntent();
         id_dokter = data.getStringExtra("id_doctor");
         nama_dokter = data.getStringExtra("name_doctor");
+        foto_dokter = data.getStringExtra("image_doctor");
+        spesialis_dokter = data.getStringExtra("spesialis");
         imagePasien = data.getStringExtra("imagepasien");
         namaPasien = data.getStringExtra("namapasien");
 
@@ -82,6 +86,7 @@ public class RegisPatientActivity extends AppCompatActivity {
 
         btn_searchdoctor.setOnClickListener(view -> {
             setPreference();
+//            setPrefTerdaftar("belumdaftar");
             Intent toListDoctor = new Intent(RegisPatientActivity.this, DoctorListActivity.class);
             toListDoctor.putExtra("daftar", "daftar");
             startActivity(toListDoctor);
@@ -120,7 +125,7 @@ public class RegisPatientActivity extends AppCompatActivity {
     }
 
     private void setPreference() {
-        SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+        editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
         editor.putString("profile", imagePasien);
         editor.putString("namepasien", namaPasien);
         editor.putString("penyakit", et_patientsick.getText().toString());
@@ -158,7 +163,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         et_patientgender.setText(kelamin);
     }
 
-    private void removePrefereence() {
+    private void removePreference() {
         preferences.edit().remove("profile").apply();
         preferences.edit().remove("namepasien").apply();
         preferences.edit().remove("penyakit").apply();
@@ -168,14 +173,25 @@ public class RegisPatientActivity extends AppCompatActivity {
         preferences.edit().remove("kelamin").apply();
     }
 
+//    private void setPrefTerdaftar(String info) {
+//        editor = getSharedPreferences("PREF_REGIST", MODE_PRIVATE).edit();
+//        editor.putString("terdaftar", info);
+//        editor.apply();
+//    }
+
     public String getCurrentLocalTimeStamp(int plus) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
         calendar.add(Calendar.MINUTE, plus);
         return currentTime.format(calendar.getTime());
     }
 
+    public String getCurrentLocalDateStamp() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM, yyyy");
+        return currentDate.format(calendar.getTime());
+    }
+
     private void daftarPatient(String penyakit, String keluhan, String umur, String jenisKelamin, String alamat, String dokter) {
-        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+        String userId = firebaseUser.getUid();
 
         HashMap<String, Object> daftarPatient = new HashMap<>();
         daftarPatient.put("idPasien", userId);
@@ -187,22 +203,49 @@ public class RegisPatientActivity extends AppCompatActivity {
         daftarPatient.put("jenisPasien", jenisKelamin);
         daftarPatient.put("alamatPasien", alamat);
         daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
-        daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(5));
+        daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(10));
+
         if (profile != null && name != null) {
             daftarPatient.put("imageURL", profile);
             daftarPatient.put("namaPasien", name);
         } else {
             daftarPatient.put("imageURL", "default");
-            daftarPatient.put("namaPasien", "null");
+            daftarPatient.put("namaPasien", "default");
         }
         reference.child(id_dokter).child(userId).setValue(daftarPatient);
 
-        Intent toListPatient = new Intent(RegisPatientActivity.this, PatientListActivity.class);
-        toListPatient.putExtra("id_dokter", id_dokter);
-        startActivity(toListPatient);
-        finish();
+        // buat list antrian di home activity
+        if (foto_dokter != null && spesialis_dokter != null) {
+            daftarPatient.put("imageDoctor", foto_dokter);
+            daftarPatient.put("spesialis", spesialis_dokter);
+            daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
 
-        removePrefereence();
-        Toast.makeText(this, "Data berhasil mendaftar", Toast.LENGTH_SHORT).show();
+            DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
+            dbRefMyQueue.child(userId).child(id_dokter).setValue(daftarPatient);
+            Toast.makeText(this, "Data berhasil mendaftar", Toast.LENGTH_SHORT).show();
+            removePreference();
+
+            Intent toListPatient = new Intent(RegisPatientActivity.this, PatientListActivity.class);
+            toListPatient.putExtra("id_dokter", id_dokter);
+            startActivity(toListPatient);
+            finish();
+
+        }
+
+//        //update user
+//        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//        assert firebaseUser != null;
+//        DatabaseReference refUser = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("terdaftar", "true");
+//        refUser.updateChildren(hashMap);
+
+//        //set total pasien
+//        DatabaseReference refTotal = FirebaseDatabase.getInstance().getReference("TotalPatient");
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("total", count+1);
+//        refTotal.child(id_dokter).setValue(hashMap);
+
+//        setPrefTerdaftar("terdaftar");
     }
 }

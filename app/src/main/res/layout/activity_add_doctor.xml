@@ -164,6 +164,7 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
+                            android:enabled="false"
                             android:hint="@string/hint_workday"
                             android:inputType="textCapWords"
                             android:paddingStart="20dp"
@@ -258,6 +259,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/input_workday"
                         android:layout_marginStart="20dp"
+                        android:visibility="gone"
                         android:layout_marginTop="8dp"
                         android:layout_toEndOf="@+id/rl_timesetting">
 

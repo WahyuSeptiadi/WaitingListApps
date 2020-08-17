@@ -8,6 +8,8 @@ package com.wahyu.waitinglistapps.Model;
 public class PatientModel {
     private String idDokter;
     private String namaDokter;
+    private String imageDoctor;
+    private String spesialis;
     private String imageURL;
     private String idPasien;
     private String namaPasien;
@@ -16,10 +18,35 @@ public class PatientModel {
     private String keluhanPasien;
     private String penyakitPasien;
     private String umurPasien;
+    private String tanggalDaftar;
     private String waktuDaftar;
     private String waktuSelesai;
 
     public PatientModel() {
+    }
+
+    public String getSpesialis() {
+        return spesialis;
+    }
+
+    public void setSpesialis(String spesialis) {
+        this.spesialis = spesialis;
+    }
+
+    public String getImageDoctor() {
+        return imageDoctor;
+    }
+
+    public void setImageDoctor(String imageDoctor) {
+        this.imageDoctor = imageDoctor;
+    }
+
+    public String getTanggalDaftar() {
+        return tanggalDaftar;
+    }
+
+    public void setTanggalDaftar(String tanggalDaftar) {
+        this.tanggalDaftar = tanggalDaftar;
     }
 
     public String getIdDokter() {

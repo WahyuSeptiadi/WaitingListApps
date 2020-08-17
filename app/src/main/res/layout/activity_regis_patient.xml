@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Daftar Pasien"
+            android:text="Form Pendaftaran"
             android:textAlignment="center"
             android:textColor="#fff"
             android:textSize="18sp" />

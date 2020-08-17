@@ -11,6 +11,7 @@ public class UserModel {
     private String email;
     private String imageURL;
     private String type;
+    private String terdaftar;
 
     public UserModel() {
     }
@@ -53,5 +54,13 @@ public class UserModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getTerdaftar() {
+        return terdaftar;
+    }
+
+    public void setTerdaftar(String terdaftar) {
+        this.terdaftar = terdaftar;
     }
 }

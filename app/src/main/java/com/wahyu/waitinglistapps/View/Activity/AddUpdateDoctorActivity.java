@@ -80,6 +80,8 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         storageReference = FirebaseStorage.getInstance().getReference("Profile");
         doctorModel = new DoctorModel();
 
+        etWorkDay.setText(R.string.str_openeveryday);
+        etLimitSeat.setText("--");
         getDataFromIntentList();
 
         if (getDoctorId != null && getName != null && getImageURL != null && getSpesialis != null && getWorkday != null &&
@@ -203,6 +205,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         hashMap.put("worktimestart", timestart);
         hashMap.put("worktimefinish", timefinish);
         hashMap.put("limit", limit);
+        hashMap.put("open", "false");
         hashMap.put("imageURL", "default");
 
         reference.child(doctorModel.getId()).setValue(hashMap).addOnCompleteListener(task -> {
@@ -258,6 +261,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         hashMap.put("worktimestart", timestart);
         hashMap.put("worktimefinish", timefinish);
         hashMap.put("limit", limit);
+        hashMap.put("open", "false");
         hashMap.put("imageURL", "default");
 
         reference.child(doctorId).setValue(hashMap).addOnCompleteListener(task -> {

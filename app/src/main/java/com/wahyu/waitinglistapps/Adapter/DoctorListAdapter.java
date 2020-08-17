@@ -1,5 +1,6 @@
 package com.wahyu.waitinglistapps.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -31,7 +32,9 @@ import com.wahyu.waitinglistapps.View.Activity.AddUpdateDoctorActivity;
 import com.wahyu.waitinglistapps.View.Activity.DoctorDetailsActivity;
 import com.wahyu.waitinglistapps.View.Activity.RegisPatientActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -49,6 +52,9 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
     private String userType;
     private UserModel userModel;
     private String isDaftar;
+    private Calendar calendar;
+
+//    private int countPatient;
 
     public DoctorListAdapter(Activity mActivity, ArrayList<DoctorModel> doctorModelArrayList) {
         this.mActivity = mActivity;
@@ -65,6 +71,8 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         //pick doctor name and id
         Intent data = mActivity.getIntent();
         isDaftar = data.getStringExtra("daftar");
+        calendar = Calendar.getInstance();
+
         return new ViewHolder(view);
     }
 
@@ -91,11 +99,40 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             String limit = doctorModel.getLimit();
 
             if (isDaftar != null) {
+//                // Waktu Sekarang
+//                int currentHour = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2));
+//                int currentMinute = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(3, 5));
+//                // Waktu Start dokter
+//                int hourStart = Integer.parseInt(doctorModel.getWorktimestart().substring(0, 2));
+//                int minuteStart = Integer.parseInt(doctorModel.getWorktimestart().substring(3, 5));
+//                // Waktu Finish dokter
+//                int hourFinish = Integer.parseInt(doctorModel.getWorktimefinish().substring(0, 2));
+//                int minuteFinish = Integer.parseInt(doctorModel.getWorktimefinish().substring(3, 5));
+//
+//                if (currentHour == 0) {
+//                    currentHour = 24;
+//                }
+//                if (hourStart == 0) {
+//                    hourStart = 24;
+//                }
+//                if (hourFinish == 0) {
+//                    hourFinish = 24;
+//                }
+//
+//                Toast.makeText(mActivity, "start = " + hourStart, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, "finish = " + hourFinish, Toast.LENGTH_SHORT).show();
+//
+//                if (currentHour >= hourStart && currentHour <= hourFinish) {
+//                    Toast.makeText(mActivity, "tutup", Toast.LENGTH_SHORT).show();
+//                } else if (getCurrentLocalTimeStamp(0).equals(doctorModel.getWorktimestart())) {
                 Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
                 toRegis.putExtra("id_doctor", doctorId);
                 toRegis.putExtra("name_doctor", namedr);
+                toRegis.putExtra("image_doctor", imgProfile);
+                toRegis.putExtra("spesialis", spesialis);
                 mActivity.startActivity(toRegis);
                 mActivity.finish();
+//                }
             } else {
                 Intent toDetails = new Intent(mActivity, DoctorDetailsActivity.class);
                 toDetails.putExtra("id", doctorId);
@@ -174,6 +211,23 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         }
     }
 
+//    private void getTotalPatientList(String doctorId){
+//        DatabaseReference refTotal = FirebaseDatabase.getInstance().getReference("TotalPatient");
+//        refTotal.child(doctorId).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()){
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+
     private void getTypeUser() {
         DatabaseReference rootRoomChats = FirebaseDatabase.getInstance().getReference("Users");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -195,6 +249,13 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             }
         });
     }
+
+    public String getCurrentLocalTimeStamp(int plus) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+        calendar.add(Calendar.MINUTE, plus);
+        return currentTime.format(calendar.getTime());
+    }
+
 
     private void showDialogAlertDelete(String key) {
         DatabaseReference rootDoctors = FirebaseDatabase.getInstance().getReference("Doctors");
