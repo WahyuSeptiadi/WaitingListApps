@@ -15,12 +15,21 @@ public class DoctorModel {
     private String worktimefinish;
     private String limit;
     private String open;
+    private String lastPatient;
 
     public DoctorModel() {
     }
 
     public String getId() {
         return id;
+    }
+
+    public String getLastPatient() {
+        return lastPatient;
+    }
+
+    public void setLastPatient(String lastPatient) {
+        this.lastPatient = lastPatient;
     }
 
     public void setId(String id) {

@@ -6,6 +6,7 @@ package com.wahyu.waitinglistapps.Model;
  */
 
 public class PatientModel {
+    private String idAntrian;
     private String idDokter;
     private String namaDokter;
     private String imageDoctor;
@@ -24,6 +25,14 @@ public class PatientModel {
     private String status;
 
     public PatientModel() {
+    }
+
+    public String getIdAntrian() {
+        return idAntrian;
+    }
+
+    public void setIdAntrian(String idAntrian) {
+        this.idAntrian = idAntrian;
     }
 
     public String getSpesialis() {

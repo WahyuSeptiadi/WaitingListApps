@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+import com.wahyu.waitinglistapps.Model.PatientModel;
 import com.wahyu.waitinglistapps.R;
 
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ public class RegisPatientActivity extends AppCompatActivity {
     EditText et_patientname, et_patientsick, et_patientcomplain, et_patientage, et_patientaddress, et_patientgender, et_pickdoctor;
     CardView btn_regis, btn_searchdoctor;
     CircleImageView civ_profilepatient;
-    String imagePasien, namaPasien, nama_dokter, id_dokter, foto_dokter, spesialis_dokter;
+    String imagePasien, namaPasien, nama_dokter, id_dokter, foto_dokter, spesialis_dokter, lastTimePatient;
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
@@ -68,6 +69,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         spesialis_dokter = data.getStringExtra("spesialis");
         imagePasien = data.getStringExtra("imagepasien");
         namaPasien = data.getStringExtra("namapasien");
+        lastTimePatient = data.getStringExtra("last_time");
 
         if (namaPasien != null && imagePasien != null) {
             if (imagePasien.substring(0, 4).equals("http")) {
@@ -102,7 +104,11 @@ public class RegisPatientActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(penyakit) && !TextUtils.isEmpty(keluhan) && !TextUtils.isEmpty(umur) &&
                         !TextUtils.isEmpty(jenis) && !TextUtils.isEmpty(alamat)) {
                     if (!TextUtils.isEmpty(et_pickdoctor.getText())) {
-                        daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter);
+                        if (lastTimePatient.equals("kosong")) {
+                            daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter, 10);
+                        } else {
+                            daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter, 0);
+                        }
                     } else {
                         Toast.makeText(this, "Silahkan pilih dokter terlebih dahulu", Toast.LENGTH_SHORT).show();
                     }
@@ -157,7 +163,11 @@ public class RegisPatientActivity extends AppCompatActivity {
 
     private void initPrefRegistPatient() {
         if (!TextUtils.isEmpty(profile)) {
-            Picasso.get().load(profile).into(civ_profilepatient);
+            if (!profile.equals("default")) {
+                Picasso.get().load(profile).into(civ_profilepatient);
+            } else {
+                Picasso.get().load(R.drawable.icon_default_profile).into(civ_profilepatient);
+            }
             et_patientname.setText(name);
         } else {
             Picasso.get().load(R.drawable.icon_default_profile).into(civ_profilepatient);
@@ -192,46 +202,149 @@ public class RegisPatientActivity extends AppCompatActivity {
         return currentDate.format(calendar.getTime());
     }
 
-    private void daftarPatient(String penyakit, String keluhan, String umur, String jenisKelamin, String alamat, String dokter) {
-        String userId = firebaseUser.getUid();
+    // Hmmm LOGIKA MANUAL CUK :(
+    public String setLastTimePatient(String lastTime, int plus) {
+        int hour = Integer.parseInt(lastTime.substring(0, 2));
+        int minute = Integer.parseInt(lastTime.substring(3, 5));
 
-        HashMap<String, Object> daftarPatient = new HashMap<>();
-        daftarPatient.put("idPasien", userId);
-        daftarPatient.put("idDokter", id_dokter);
-        daftarPatient.put("namaDokter", dokter);
-        daftarPatient.put("penyakitPasien", penyakit);
-        daftarPatient.put("keluhanPasien", keluhan);
-        daftarPatient.put("umurPasien", umur);
-        daftarPatient.put("jenisPasien", jenisKelamin);
-        daftarPatient.put("alamatPasien", alamat);
-        daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
-        daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(10));
-        daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
+        int estimateMinute = minute + plus;
+        String nol = "0";
 
-        if (profile != null && name != null) {
-            daftarPatient.put("imageURL", profile);
-            daftarPatient.put("namaPasien", name);
+        if (estimateMinute > 59) {
+            String getLastMinute = String.valueOf(estimateMinute);
+            String lastMinute = getLastMinute.substring(1, 2);
+
+            estimateMinute = 0;
+
+            int addHour = hour + 1;
+            String addHours = String.valueOf(addHour);
+            int lengthHours = addHours.length();
+
+            if (lengthHours != 1) {
+
+                if (addHour > 23) {
+                    addHour = 0;
+                    return nol + addHour + ":" + estimateMinute + lastMinute;
+                } else {
+                    return addHour + ":" + estimateMinute + lastMinute;
+                }
+
+            } else {
+                return nol + addHour + ":" + estimateMinute + lastMinute;
+            }
+
         } else {
-            daftarPatient.put("imageURL", "default");
-            daftarPatient.put("namaPasien", "default");
+            return lastTime.substring(0, 2) + ":" + estimateMinute;
         }
-        reference.child(id_dokter).child(userId).setValue(daftarPatient);
+    }
 
-        // buat list antrian di home activity
-        if (foto_dokter != null && spesialis_dokter != null) {
-            daftarPatient.put("imageDoctor", foto_dokter);
-            daftarPatient.put("spesialis", spesialis_dokter);
-            daftarPatient.put("status", "MENUNGGU");
+    private void daftarPatient(String penyakit, String keluhan, String umur, String jenisKelamin, String alamat, String dokter, int plus) {
+        String userId = firebaseUser.getUid();
+        PatientModel patientModel = new PatientModel();
 
-            DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
-            dbRefMyQueue.child(userId).child(id_dokter).setValue(daftarPatient);
-            Toast.makeText(this, "Data berhasil mendaftar", Toast.LENGTH_SHORT).show();
-            removePreference();
+        String idAntrian = reference.child(id_dokter).push().getKey();
+        patientModel.setIdAntrian(idAntrian);
 
-            Intent toListPatient = new Intent(RegisPatientActivity.this, PatientListActivity.class);
-            toListPatient.putExtra("id_dokter", id_dokter);
-            startActivity(toListPatient);
-            finish();
+        if (plus != 0) {
+            String estimateTime = getCurrentLocalTimeStamp(plus);
+
+            HashMap<String, Object> daftarPatient = new HashMap<>();
+            daftarPatient.put("idPasien", userId);
+            daftarPatient.put("idAntrian", patientModel.getIdAntrian());
+            daftarPatient.put("idDokter", id_dokter);
+            daftarPatient.put("namaDokter", dokter);
+            daftarPatient.put("penyakitPasien", penyakit);
+            daftarPatient.put("keluhanPasien", keluhan);
+            daftarPatient.put("umurPasien", umur);
+            daftarPatient.put("jenisPasien", jenisKelamin);
+            daftarPatient.put("alamatPasien", alamat);
+            daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
+            daftarPatient.put("waktuSelesai", estimateTime);
+            daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
+
+            if (profile != null && name != null) {
+                daftarPatient.put("imageURL", profile);
+                daftarPatient.put("namaPasien", name);
+            } else {
+                daftarPatient.put("imageURL", "default");
+                daftarPatient.put("namaPasien", "default");
+            }
+
+            assert idAntrian != null;
+            reference.child(id_dokter).child(idAntrian).setValue(daftarPatient);
+
+            // buat list antrian di home activity
+            if (foto_dokter != null && spesialis_dokter != null) {
+                daftarPatient.put("imageDoctor", foto_dokter);
+                daftarPatient.put("spesialis", spesialis_dokter);
+                daftarPatient.put("status", "MENUNGGU");
+
+                DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
+                dbRefMyQueue.child(userId).child(id_dokter).setValue(daftarPatient);
+                Toast.makeText(this, "Data berhasil mendaftar", Toast.LENGTH_SHORT).show();
+                removePreference();
+
+                //buat update dokter
+                HashMap<String, Object> hashDoctor = new HashMap<>();
+                hashDoctor.put("lastPatient", estimateTime);
+                DatabaseReference dbRefDoctor = FirebaseDatabase.getInstance().getReference("Doctors");
+                dbRefDoctor.child(id_dokter).updateChildren(hashDoctor);
+
+                Intent toListPatient = new Intent(RegisPatientActivity.this, PatientListActivity.class);
+                toListPatient.putExtra("id_dokter", id_dokter);
+                startActivity(toListPatient);
+                finish();
+            }
+        } else {
+            String estimateTime = setLastTimePatient(lastTimePatient, 10);
+
+            HashMap<String, Object> daftarPatient = new HashMap<>();
+            daftarPatient.put("idPasien", userId);
+            daftarPatient.put("idAntrian", patientModel.getIdAntrian());
+            daftarPatient.put("idDokter", id_dokter);
+            daftarPatient.put("namaDokter", dokter);
+            daftarPatient.put("penyakitPasien", penyakit);
+            daftarPatient.put("keluhanPasien", keluhan);
+            daftarPatient.put("umurPasien", umur);
+            daftarPatient.put("jenisPasien", jenisKelamin);
+            daftarPatient.put("alamatPasien", alamat);
+            daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
+            daftarPatient.put("waktuSelesai", estimateTime);
+            daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
+
+            if (profile != null && name != null) {
+                daftarPatient.put("imageURL", profile);
+                daftarPatient.put("namaPasien", name);
+            } else {
+                daftarPatient.put("imageURL", "default");
+                daftarPatient.put("namaPasien", "default");
+            }
+
+            assert idAntrian != null;
+            reference.child(id_dokter).child(idAntrian).setValue(daftarPatient);
+
+            // buat list antrian di home activity
+            if (foto_dokter != null && spesialis_dokter != null) {
+                daftarPatient.put("imageDoctor", foto_dokter);
+                daftarPatient.put("spesialis", spesialis_dokter);
+                daftarPatient.put("status", "MENUNGGU");
+
+                DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
+                dbRefMyQueue.child(userId).child(id_dokter).setValue(daftarPatient);
+                Toast.makeText(this, "Data berhasil mendaftar", Toast.LENGTH_SHORT).show();
+                removePreference();
+
+                //buat update dokter
+                HashMap<String, Object> hashDoctor = new HashMap<>();
+                hashDoctor.put("lastPatient", estimateTime);
+                DatabaseReference dbRefDoctor = FirebaseDatabase.getInstance().getReference("Doctors");
+                dbRefDoctor.child(id_dokter).updateChildren(hashDoctor);
+
+                Intent toListPatient = new Intent(RegisPatientActivity.this, PatientListActivity.class);
+                toListPatient.putExtra("id_dokter", id_dokter);
+                startActivity(toListPatient);
+                finish();
+            }
         }
     }
 }

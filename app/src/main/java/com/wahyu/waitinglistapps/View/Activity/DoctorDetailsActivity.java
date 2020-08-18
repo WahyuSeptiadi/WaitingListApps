@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -31,6 +31,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         TextView tvTimeFinish = findViewById(R.id.tv_worktimefinish_doctordetails);
         TextView tvPatientLimit = findViewById(R.id.tv_patientlimit_doctordetails);
         TextView btnShowpatient = findViewById(R.id.tv_btnshowpatient);
+        ImageView btnBack = findViewById(R.id.btnback_doctordetails);
 
         getDataFromIntentList();
 
@@ -54,6 +55,11 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             Intent toListPatient = new Intent(DoctorDetailsActivity.this, PatientListActivity.class);
             toListPatient.putExtra("id_dokter", getDoctorId);
             startActivity(toListPatient);
+        });
+
+        btnBack.setOnClickListener(view -> {
+            startActivity(new Intent(DoctorDetailsActivity.this, HomeActivity.class));
+            finish();
         });
     }
 

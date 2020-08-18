@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+import com.wahyu.waitinglistapps.Model.DoctorModel;
 import com.wahyu.waitinglistapps.Model.PatientModel;
 import com.wahyu.waitinglistapps.R;
 import com.wahyu.waitinglistapps.View.Activity.PatientDetailsActivity;
@@ -74,14 +75,14 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
 
         holder.ivFinish.setOnClickListener(view -> {
             holder.tvStatus.setText(patientModel.getStatus());
-            showDialogAlertUpdate(patientModel.getIdDokter(), patientModel.getNamaDokter());
+
+            String myQueueId = patientModel.getIdAntrian();
+            showDialogAlertUpdate(myQueueId, patientModel.getIdDokter(), patientModel.getNamaDokter());
         });
 
-        holder.ivCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogAlertCancel(patientModel.getIdDokter(), patientModel.getNamaDokter());
-            }
+        holder.ivCancel.setOnClickListener(view -> {
+            String myQueueId = patientModel.getIdAntrian();
+            showDialogAlertCancel(myQueueId, patientModel.getIdDokter(), patientModel.getNamaDokter());
         });
 
         holder.tvBtnDetails.setOnClickListener(view -> {
@@ -150,12 +151,13 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
         }
     }
 
-    private void showDialogAlertUpdate(String dokterId, String namaDokter) {
+    private void showDialogAlertUpdate(String myQueueId, String dokterId, String namaDokter) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
         String userid = firebaseUser.getUid();
         DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue").child(userid);
         DatabaseReference rootWaitingList = FirebaseDatabase.getInstance().getReference("WaitingList").child(dokterId);
+        DatabaseReference rootDoctors = FirebaseDatabase.getInstance().getReference("Doctors").child(dokterId);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
         alertDialogBuilder.setTitle("SELESAI");
@@ -164,17 +166,24 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
                 .setCancelable(false)
                 .setPositiveButton("Sudah", (dialog, id) -> {
 
-                    //for home
-//                    HashMap<String, Object> myQueue = new HashMap<>();
-//                    myQueue.put("status", "SELESAI");
-
                     //sementara gini aja dah
                     rootMyQueue.child(dokterId).removeValue();
+
+                    //cek apakah saya pasient terakhir ?
+//                    int lastPos = patientModelArrayList.size() - 1;
+//                    PatientModel patientModel = patientModelArrayList.get(lastPos);
+//                    String lastPatientId = patientModel.getIdPasien();
+//
+//                    if (lastPatientId.equals(firebaseUser.getUid())) {
+//                        HashMap<String, Object> lastPatient = new HashMap<>();
+//                        lastPatient.put("lastPatient", "kosong");
+//                        rootDoctors.updateChildren(lastPatient);
+//                    }
 
                     //for patientlist per doctor
                     HashMap<String, Object> waitingList = new HashMap<>();
                     waitingList.put("waktuSelesai", "SELESAI");
-                    rootWaitingList.child(userid).updateChildren(waitingList);
+                    rootWaitingList.child(myQueueId).updateChildren(waitingList);
 
                     mActivity.overridePendingTransition(0, 0);
                     mActivity.startActivity(mActivity.getIntent());
@@ -187,7 +196,7 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
         alertDialog.show();
     }
 
-    private void showDialogAlertCancel(String dokterId, String namaDokter) {
+    private void showDialogAlertCancel(String myQueueId, String dokterId, String namaDokter) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
         String userid = firebaseUser.getUid();
@@ -203,7 +212,7 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
 
                     //fix delete
                     rootMyQueue.child(dokterId).removeValue();
-                    rootWaitingList.child(userid).removeValue();
+                    rootWaitingList.child(myQueueId).removeValue();
 
                     mActivity.overridePendingTransition(0, 0);
                     mActivity.startActivity(mActivity.getIntent());

@@ -289,7 +289,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Estimasi Selesai\t\t\t\t: "
+                        android:text="Estimasi Dipanggil\t\t: "
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp" />
 

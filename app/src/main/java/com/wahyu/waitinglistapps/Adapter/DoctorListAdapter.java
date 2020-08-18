@@ -98,6 +98,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             String timefinish = doctorModel.getWorktimefinish();
             String limit = doctorModel.getLimit();
 
+
             if (isDaftar != null) {
 //                // Waktu Sekarang
 //                int currentHour = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2));
@@ -125,13 +126,34 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
 //                if (currentHour >= hourStart && currentHour <= hourFinish) {
 //                    Toast.makeText(mActivity, "tutup", Toast.LENGTH_SHORT).show();
 //                } else if (getCurrentLocalTimeStamp(0).equals(doctorModel.getWorktimestart())) {
-                Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
-                toRegis.putExtra("id_doctor", doctorId);
-                toRegis.putExtra("name_doctor", namedr);
-                toRegis.putExtra("image_doctor", imgProfile);
-                toRegis.putExtra("spesialis", spesialis);
-                mActivity.startActivity(toRegis);
+
+                String lastTimePatient = doctorModel.getLastPatient();
+
+                if (!doctorModel.getLastPatient().equals("kosong")) {
+                    Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
+                    toRegis.putExtra("id_doctor", doctorId);
+                    toRegis.putExtra("name_doctor", namedr);
+                    toRegis.putExtra("image_doctor", imgProfile);
+                    toRegis.putExtra("spesialis", spesialis);
+                    //ambil time finish pasien sebelumnya
+                    toRegis.putExtra("last_time", lastTimePatient);
+
+                    Toast.makeText(mActivity, "waktu selesai pasien terakhir\n=> " + lastTimePatient, Toast.LENGTH_SHORT).show();
+                    mActivity.startActivity(toRegis);
+                } else {
+                    Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
+                    toRegis.putExtra("id_doctor", doctorId);
+                    toRegis.putExtra("name_doctor", namedr);
+                    toRegis.putExtra("image_doctor", imgProfile);
+                    toRegis.putExtra("spesialis", spesialis);
+                    //ambil time finish pasien sebelumnya
+                    toRegis.putExtra("last_time", lastTimePatient);
+
+                    Toast.makeText(mActivity, "belum ada pasien sebelumnya", Toast.LENGTH_SHORT).show();
+                    mActivity.startActivity(toRegis);
+                }
                 mActivity.finish();
+
 //                }
             } else {
                 Intent toDetails = new Intent(mActivity, DoctorDetailsActivity.class);

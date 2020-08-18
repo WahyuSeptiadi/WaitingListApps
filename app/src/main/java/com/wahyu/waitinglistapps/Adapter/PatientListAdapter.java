@@ -132,7 +132,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
                 //apabila tombol edit diklik
                 editButton.setOnClickListener(view1 -> {
                             dialog.dismiss();
-                            showDialogAlertDelete(patientModel.getIdDokter(), patientModel.getIdPasien());
+                            showDialogAlertDelete(patientModel.getIdDokter(), patientModel.getIdAntrian());
                         }
                 );
 
@@ -190,8 +190,12 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         });
     }
 
-    private void showDialogAlertDelete(String doctorId, String patientId) {
+    private void showDialogAlertDelete(String doctorId, String antrianId) {
         DatabaseReference rootWaitingList = FirebaseDatabase.getInstance().getReference("WaitingList").child(doctorId);
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert firebaseUser != null;
+        String userId = firebaseUser.getUid();
+        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue").child(userId);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
         alertDialogBuilder.setTitle("HAPUS DATA");
@@ -199,7 +203,8 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
                 .setMessage("Apakah Anda yakin ingin menghapus data pendaftaran ini ?")
                 .setCancelable(false)
                 .setPositiveButton("Ya, tentu", (dialog, id) -> {
-                    rootWaitingList.child(patientId).removeValue();
+                    rootWaitingList.child(antrianId).removeValue();
+                    rootMyQueue.child(doctorId).removeValue();
 
                     mActivity.overridePendingTransition(0, 0);
                     mActivity.startActivity(mActivity.getIntent());
