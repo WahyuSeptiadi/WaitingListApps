@@ -207,6 +207,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         hashMap.put("limit", limit);
         hashMap.put("open", "false");
         hashMap.put("imageURL", "default");
+        hashMap.put("lastPatient", "kosong");
 
         reference.child(doctorModel.getId()).setValue(hashMap).addOnCompleteListener(task -> {
             if (mImageUri != null) {
