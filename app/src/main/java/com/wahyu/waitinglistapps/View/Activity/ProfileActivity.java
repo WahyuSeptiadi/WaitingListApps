@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvNameUser = findViewById(R.id.tv_name_profile);
         tvEmailUser = findViewById(R.id.tv_email_profile);
         flAddNewDoctor = findViewById(R.id.fl_add_newdoctor);
+        ImageView btnBack = findViewById(R.id.btnback_profile);
 
         Intent data = getIntent();
         String userType = data.getStringExtra("usertype");
@@ -54,6 +56,11 @@ public class ProfileActivity extends AppCompatActivity {
 
         civAddDoctor.setOnClickListener(view -> {
             startActivity(new Intent(ProfileActivity.this, AddUpdateDoctorActivity.class));
+            finish();
+        });
+
+        btnBack.setOnClickListener(view -> {
+            startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
             finish();
         });
     }

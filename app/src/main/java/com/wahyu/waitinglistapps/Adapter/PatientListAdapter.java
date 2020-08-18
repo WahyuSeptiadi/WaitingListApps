@@ -132,7 +132,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
                 //apabila tombol edit diklik
                 editButton.setOnClickListener(view1 -> {
                             dialog.dismiss();
-                            showDialogAlertDelete(patientModel.getIdDokter(), patientModel.getIdAntrian());
+                            showDialogAlertDelete(patientModel.getIdDokter(), patientModel.getIdAntrian(), patientModel.getIdPasien());
                         }
                 );
 
@@ -190,12 +190,9 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         });
     }
 
-    private void showDialogAlertDelete(String doctorId, String antrianId) {
+    private void showDialogAlertDelete(String doctorId, String antrianId, String pasienId) {
         DatabaseReference rootWaitingList = FirebaseDatabase.getInstance().getReference("WaitingList").child(doctorId);
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert firebaseUser != null;
-        String userId = firebaseUser.getUid();
-        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue").child(userId);
+        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue").child(pasienId);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
         alertDialogBuilder.setTitle("HAPUS DATA");

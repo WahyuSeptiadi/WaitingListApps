@@ -96,11 +96,13 @@ public class PatientListActivity extends AppCompatActivity {
                         assert patientModel != null;
                         if (patientModel.getTanggalDaftar().equals(getCurrentLocalDateStamp())) {
                             patientModelArrayList.add(patientModel);
-                        } else {
-                            if (countNotif == 1) {
-                                Toast.makeText(PatientListActivity.this, "Belum ada pasien untuk hari ini", Toast.LENGTH_SHORT).show();
-                            }
                         }
+                        // belum sesuai ekspektasi
+//                        else {
+//                            if (countNotif == 1) {
+//                                Toast.makeText(PatientListActivity.this, "Belum ada pasien untuk hari ini", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
                     }
                     countNotif = 0;
                     patientListAdapter = new PatientListAdapter(PatientListActivity.this, patientModelArrayList);
