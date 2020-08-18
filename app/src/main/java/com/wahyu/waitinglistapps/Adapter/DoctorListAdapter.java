@@ -123,7 +123,6 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                         //ambil time finish pasien sebelumnya
                         toRegis.putExtra("last_time", lastTimePatient);
 
-                        Toast.makeText(mActivity, "waktu selesai pasien terakhir\n=> " + lastTimePatient, Toast.LENGTH_SHORT).show();
                         mActivity.startActivity(toRegis);
                     } else {
                         Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
@@ -134,7 +133,6 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                         //ambil time finish pasien sebelumnya
                         toRegis.putExtra("last_time", lastTimePatient);
 
-                        Toast.makeText(mActivity, "belum ada pasien sebelumnya", Toast.LENGTH_SHORT).show();
                         mActivity.startActivity(toRegis);
                     }
                     mActivity.finish();
