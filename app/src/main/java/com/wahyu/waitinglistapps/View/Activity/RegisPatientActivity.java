@@ -309,8 +309,16 @@ public class RegisPatientActivity extends AppCompatActivity {
             daftarPatient.put("jenisPasien", jenisKelamin);
             daftarPatient.put("alamatPasien", alamat);
             daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
-            daftarPatient.put("waktuSelesai", estimateTime);
             daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
+
+            // cek kalau waktu estimasi sudah kelewat dari waktu sekarang
+            int hourLastPatient = Integer.parseInt(estimateTime.substring(0, 2));//08=8
+            int currentHour = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2));//09=9
+            if (hourLastPatient > currentHour) {
+                daftarPatient.put("waktuSelesai", estimateTime);
+            } else {
+                daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(10));
+            }
 
             if (profile != null && name != null) {
                 daftarPatient.put("imageURL", profile);
@@ -336,7 +344,15 @@ public class RegisPatientActivity extends AppCompatActivity {
 
                 //buat update dokter
                 HashMap<String, Object> hashDoctor = new HashMap<>();
-                hashDoctor.put("lastPatient", estimateTime);
+
+                // cek kalau waktu estimasi sudah kelewat dari waktu sekarang
+                int hourLastPatientForDoctor = Integer.parseInt(estimateTime.substring(0, 2));//08=8
+                int currentHourForDoctor = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2));//09=9
+                if (hourLastPatientForDoctor > currentHourForDoctor) {
+                    hashDoctor.put("lastPatient", estimateTime);
+                } else {
+                    hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
+                }
                 DatabaseReference dbRefDoctor = FirebaseDatabase.getInstance().getReference("Doctors");
                 dbRefDoctor.child(id_dokter).updateChildren(hashDoctor);
 
