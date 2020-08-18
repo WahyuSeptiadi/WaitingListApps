@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +37,8 @@ public class PatientListActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private ArrayList<PatientModel> patientModelArrayList;
     private Calendar calendar;
+
+    private int countNotif = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +96,13 @@ public class PatientListActivity extends AppCompatActivity {
                         assert patientModel != null;
                         if (patientModel.getTanggalDaftar().equals(getCurrentLocalDateStamp())) {
                             patientModelArrayList.add(patientModel);
+                        } else {
+                            if (countNotif == 1) {
+                                Toast.makeText(PatientListActivity.this, "Belum ada pasien untuk hari ini", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
+                    countNotif = 0;
                     patientListAdapter = new PatientListAdapter(PatientListActivity.this, patientModelArrayList);
                     rvPatientList.setAdapter(patientListAdapter);
                     patientListAdapter.notifyDataSetChanged();

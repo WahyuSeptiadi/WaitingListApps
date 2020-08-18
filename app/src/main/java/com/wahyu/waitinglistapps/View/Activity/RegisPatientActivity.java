@@ -314,8 +314,17 @@ public class RegisPatientActivity extends AppCompatActivity {
             // cek kalau waktu estimasi sudah kelewat dari waktu sekarang
             int hourLastPatient = Integer.parseInt(estimateTime.substring(0, 2));//08=8
             int currentHour = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2));//09=9
+            int minuteLastPatient = Integer.parseInt(estimateTime.substring(3, 5));
+            int currentMinute = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(3, 5));
+
             if (hourLastPatient > currentHour) {
                 daftarPatient.put("waktuSelesai", estimateTime);
+            } else if (hourLastPatient == currentHour) {
+                if (minuteLastPatient > currentMinute) {
+                    daftarPatient.put("waktuSelesai", estimateTime);
+                } else {
+                    daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(10));
+                }
             } else {
                 daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(10));
             }
@@ -346,10 +355,14 @@ public class RegisPatientActivity extends AppCompatActivity {
                 HashMap<String, Object> hashDoctor = new HashMap<>();
 
                 // cek kalau waktu estimasi sudah kelewat dari waktu sekarang
-                int hourLastPatientForDoctor = Integer.parseInt(estimateTime.substring(0, 2));//08=8
-                int currentHourForDoctor = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2));//09=9
-                if (hourLastPatientForDoctor > currentHourForDoctor) {
+                if (hourLastPatient > currentHour) {
                     hashDoctor.put("lastPatient", estimateTime);
+                } else if (hourLastPatient == currentHour) {
+                    if (minuteLastPatient > currentMinute) {
+                        hashDoctor.put("lastPatient", estimateTime);
+                    } else {
+                        hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
+                    }
                 } else {
                     hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
                 }
