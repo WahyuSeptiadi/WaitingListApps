@@ -133,7 +133,7 @@
                         android:layout_below="@+id/question4"
                         android:layout_marginStart="30dp"
                         android:layout_marginEnd="20dp"
-                        android:text="Jika Anda menemukan BUG/ERROR yang terjadi di aplikasi, Anda dapat melaporkannya kepada pihak Admin melalui link media sosial dibawah ini. Kami senang mendengar saran dan kritik Anda untuk dapat membangun aplikasi ini menjadi lebih baik."
+                        android:text="Jika Anda menemukan BUG/ERROR yang terjadi di aplikasi, Anda dapat melaporkannya kepada pihak Developer melalui link media sosial dibawah ini. Kami senang menerima saran dan kritik Anda untuk dapat membangun aplikasi ini menjadi lebih baik."
                         android:textColor="@color/colorBlack" />
 
                     <TextView
