@@ -198,7 +198,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
 
     private void showDialogAlertDelete(String doctorId, String antrianId, String pasienId) {
         DatabaseReference rootWaitingList = FirebaseDatabase.getInstance().getReference("WaitingList").child(doctorId);
-        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
+//        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
         alertDialogBuilder.setTitle("HAPUS DATA");
@@ -208,8 +208,9 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
                 .setPositiveButton("Ya, tentu", (dialog, id) -> {
 
                     rootWaitingList.child(antrianId).removeValue();
+
                     // ketika user delete antrian yang sudah selesai lewat list pasien, myqueue pada home si user juga hilang ..
-                    rootMyQueue.child(pasienId).child(doctorId).removeValue();
+//                    rootMyQueue.child(pasienId).child(doctorId).removeValue(); // JANGAN DIHIDUPIN BAHAYA
 
                     //batalkan alarm
                     alarmReceiver.cancelAlarm(mActivity);
