@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,8 +36,6 @@ public class PatientListActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private ArrayList<PatientModel> patientModelArrayList;
     private Calendar calendar;
-
-    private int countNotif = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +101,6 @@ public class PatientListActivity extends AppCompatActivity {
 //                            }
 //                        }
                     }
-                    countNotif = 0;
                     patientListAdapter = new PatientListAdapter(PatientListActivity.this, patientModelArrayList);
                     rvPatientList.setAdapter(patientListAdapter);
                     patientListAdapter.notifyDataSetChanged();

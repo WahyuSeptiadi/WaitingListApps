@@ -137,6 +137,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
                 //apabila tombol edit diklik
                 editButton.setOnClickListener(view1 -> {
                             dialog.dismiss();
+                            //termasuk menghapus antrian pada user
                             showDialogAlertDelete(patientModel.getIdDokter(), patientModel.getIdAntrian(), patientModel.getIdPasien());
                         }
                 );
@@ -197,7 +198,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
 
     private void showDialogAlertDelete(String doctorId, String antrianId, String pasienId) {
         DatabaseReference rootWaitingList = FirebaseDatabase.getInstance().getReference("WaitingList").child(doctorId);
-//        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue").child(pasienId);
+        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
         alertDialogBuilder.setTitle("HAPUS DATA");
@@ -205,9 +206,10 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
                 .setMessage("Apakah Anda yakin ingin menghapus data pendaftaran ini ?")
                 .setCancelable(false)
                 .setPositiveButton("Ya, tentu", (dialog, id) -> {
+
                     rootWaitingList.child(antrianId).removeValue();
                     // ketika user delete antrian yang sudah selesai lewat list pasien, myqueue pada home si user juga hilang ..
-//                    rootMyQueue.child(doctorId).removeValue(); //sementara ditutup dulu
+                    rootMyQueue.child(pasienId).child(doctorId).removeValue();
 
                     //batalkan alarm
                     alarmReceiver.cancelAlarm(mActivity);

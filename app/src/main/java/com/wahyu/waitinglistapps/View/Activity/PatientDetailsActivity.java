@@ -69,7 +69,6 @@ public class PatientDetailsActivity extends AppCompatActivity {
             tvJenis.setText(getJenis);
             tvDaftar.setText(getDaftar);
             tvSelesai.setText(getSelesai);
-            tvTitle.setText(R.string.str_data_register);
 
         } else {
             Toast.makeText(this, "Silahkan reload kembali untuk set data", Toast.LENGTH_SHORT).show();
@@ -86,6 +85,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
             tvNameDoctor.setText(getNameDoctor);
             tvSpesialisDoctor.setText(getSpesialisDoctor);
             tvDateRegist.setText(getDateRegist);
+            tvTitle.setText(R.string.str_data_register);
 
         } else {
             RelativeLayout rlDoctorDetails = findViewById(R.id.doctordetails);

@@ -133,7 +133,7 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:enabled="false"
+                            android:enabled="true"
                             android:hint="Nama Pasien"
                             android:inputType="textCapWords"
                             android:paddingStart="20dp"

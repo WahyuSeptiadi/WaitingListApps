@@ -197,7 +197,7 @@ public class RegisPatientActivity extends AppCompatActivity {
     private void setPreference() {
         SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
         editor.putString("profile", imagePasien);
-        editor.putString("namepasien", namaPasien);
+        editor.putString("namepasien", et_patientname.getText().toString());
         editor.putString("nomerhp", et_numberphone.getText().toString());
         editor.putString("keluhan", et_patientcomplain.getText().toString());
         editor.putString("alamat", et_patientaddress.getText().toString());
