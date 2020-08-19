@@ -141,7 +141,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_patientsick"
+                        android:id="@+id/input_numberphone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/input_patientname"
@@ -149,22 +149,23 @@
                         android:layout_marginTop="10dp">
 
                         <EditText
-                            android:id="@+id/et_patientsick"
+                            android:id="@+id/et_numberphone"
                             android:layout_width="250dp"
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="Perkiraan penyakit"
-                            android:inputType="textCapSentences"
+                            android:hint="Nomer Hp Aktif"
+                            android:inputType="number"
                             android:paddingStart="20dp"
-                            android:paddingEnd="10dp" />
+                            android:paddingEnd="10dp"
+                            tools:ignore="TextFields" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/input_patientcomplains"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/input_patientsick"
+                        android:layout_below="@id/input_numberphone"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp">
 

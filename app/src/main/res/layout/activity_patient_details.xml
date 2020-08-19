@@ -182,12 +182,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Estimasi Penyakit\t\t\t: "
+                        android:text="Nomer Hp Pasien\t\t\t: "
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/tv_penyakit_patientdetails"
+                        android:id="@+id/tv_nomerhp_patientdetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"

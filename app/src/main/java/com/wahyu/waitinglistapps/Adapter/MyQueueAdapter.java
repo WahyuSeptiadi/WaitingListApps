@@ -128,7 +128,7 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
             String image = patientModel.getImageURL();
             String name = patientModel.getNamaPasien();
             String keluhan = patientModel.getKeluhanPasien();
-            String penyakit = patientModel.getPenyakitPasien();
+            String nomerhp = patientModel.getNomerHpPasien();
             String alamat = patientModel.getAlamatPasien();
             String umur = patientModel.getUmurPasien();
             String jenis = patientModel.getJenisPasien();
@@ -144,7 +144,7 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
             toPatientDetails.putExtra("image", image);
             toPatientDetails.putExtra("name", name);
             toPatientDetails.putExtra("keluhan", keluhan);
-            toPatientDetails.putExtra("penyakit", penyakit);
+            toPatientDetails.putExtra("nomerhp", nomerhp);
             toPatientDetails.putExtra("alamat", alamat);
             toPatientDetails.putExtra("umur", umur);
             toPatientDetails.putExtra("jenis", jenis);

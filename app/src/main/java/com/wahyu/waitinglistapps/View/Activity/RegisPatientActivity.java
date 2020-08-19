@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisPatientActivity extends AppCompatActivity {
 
-    private EditText et_patientname, et_patientsick, et_patientcomplain, et_patientage, et_patientaddress, et_patientgender, et_pickdoctor;
+    private EditText et_patientname, et_numberphone, et_patientcomplain, et_patientage, et_patientaddress, et_patientgender, et_pickdoctor;
     private CircleImageView civ_profilepatient;
     private String imagePasien, namaPasien, nama_dokter, id_dokter, foto_dokter, spesialis_dokter, lastTimePatient;
 //    private String lastNumber;
@@ -42,7 +42,7 @@ public class RegisPatientActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private Calendar calendar;
 
-    private String profile, name, penyakit, keluhan, alamat, umur, kelamin;
+    private String profile, name, nomerhp, keluhan, alamat, umur, kelamin;
     private SharedPreferences preferences;
 
     //setAlarm Notification
@@ -64,7 +64,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         alarmReceiver = new AlarmReceiver();
 
         et_patientname = findViewById(R.id.et_patientname);
-        et_patientsick = findViewById(R.id.et_patientsick);
+        et_numberphone = findViewById(R.id.et_numberphone);
         et_patientcomplain = findViewById(R.id.et_patientcomplains);
         et_patientage = findViewById(R.id.et_patientage);
         et_patientaddress = findViewById(R.id.et_patientaddress);
@@ -135,7 +135,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         });
 
         btn_regis.setOnClickListener(view -> {
-            String penyakit = et_patientsick.getText().toString();
+            String nomerhp = et_numberphone.getText().toString();
             String keluhan = et_patientcomplain.getText().toString();
             String umur = et_patientage.getText().toString();
             String jenis = et_patientgender.getText().toString();
@@ -147,13 +147,13 @@ public class RegisPatientActivity extends AppCompatActivity {
             }
 
             if (!et_patientname.getText().toString().equals("kosong")) {
-                if (!TextUtils.isEmpty(penyakit) && !TextUtils.isEmpty(keluhan) && !TextUtils.isEmpty(umur) &&
+                if (!TextUtils.isEmpty(nomerhp) && !TextUtils.isEmpty(keluhan) && !TextUtils.isEmpty(umur) &&
                         !TextUtils.isEmpty(jenis) && !TextUtils.isEmpty(alamat)) {
                     if (!TextUtils.isEmpty(et_pickdoctor.getText())) {
                         if (lastTimePatient.equals("kosong")) {
-                            daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter, estimateFinish, 0);
+                            daftarPatient(nomerhp, keluhan, umur, jenis, alamat, nama_dokter, estimateFinish, 0);
                         } else {
-                            daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter, 0, estimateFinish);
+                            daftarPatient(nomerhp, keluhan, umur, jenis, alamat, nama_dokter, 0, estimateFinish);
                         }
                     } else {
                         Toast.makeText(this, "Silahkan pilih dokter terlebih dahulu", Toast.LENGTH_SHORT).show();
@@ -198,7 +198,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
         editor.putString("profile", imagePasien);
         editor.putString("namepasien", namaPasien);
-        editor.putString("penyakit", et_patientsick.getText().toString());
+        editor.putString("nomerhp", et_numberphone.getText().toString());
         editor.putString("keluhan", et_patientcomplain.getText().toString());
         editor.putString("alamat", et_patientaddress.getText().toString());
         editor.putString("umur", et_patientage.getText().toString());
@@ -211,7 +211,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         preferences = getSharedPreferences("PREFS", MODE_PRIVATE);
         profile = preferences.getString("profile", "");
         name = preferences.getString("namepasien", "");
-        penyakit = preferences.getString("penyakit", "");
+        nomerhp = preferences.getString("nomerhp", "");
         keluhan = preferences.getString("keluhan", "");
         alamat = preferences.getString("alamat", "");
         umur = preferences.getString("umur", "");
@@ -232,7 +232,7 @@ public class RegisPatientActivity extends AppCompatActivity {
             et_patientname.setText(R.string.str_null);
         }
 
-        et_patientsick.setText(penyakit);
+        et_numberphone.setText(nomerhp);
         et_patientcomplain.setText(keluhan);
         et_patientaddress.setText(alamat);
         et_patientage.setText(umur);
@@ -242,7 +242,7 @@ public class RegisPatientActivity extends AppCompatActivity {
     private void removePreference() {
         preferences.edit().remove("profile").apply();
         preferences.edit().remove("namepasien").apply();
-        preferences.edit().remove("penyakit").apply();
+        preferences.edit().remove("nomerhp").apply();
         preferences.edit().remove("keluhan").apply();
         preferences.edit().remove("alamat").apply();
         preferences.edit().remove("umur").apply();
@@ -300,7 +300,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         }
     }
 
-    private void daftarPatient(String penyakit, String keluhan, String umur, String jenisKelamin, String alamat, String dokter,
+    private void daftarPatient(String nomerhp, String keluhan, String umur, String jenisKelamin, String alamat, String dokter,
                                int plus, int plusnotnull) {
         String userId = firebaseUser.getUid();
         PatientModel patientModel = new PatientModel();
@@ -314,7 +314,7 @@ public class RegisPatientActivity extends AppCompatActivity {
             daftarPatient.put("idAntrian", patientModel.getIdAntrian());
             daftarPatient.put("idDokter", id_dokter);
             daftarPatient.put("namaDokter", dokter);
-            daftarPatient.put("penyakitPasien", penyakit);
+            daftarPatient.put("nomerHpPasien", nomerhp);
             daftarPatient.put("keluhanPasien", keluhan);
             daftarPatient.put("umurPasien", umur);
             daftarPatient.put("jenisPasien", jenisKelamin);
@@ -366,7 +366,7 @@ public class RegisPatientActivity extends AppCompatActivity {
             daftarPatient.put("idAntrian", patientModel.getIdAntrian());
             daftarPatient.put("idDokter", id_dokter);
             daftarPatient.put("namaDokter", dokter);
-            daftarPatient.put("penyakitPasien", penyakit);
+            daftarPatient.put("nomerHpPasien", nomerhp);
             daftarPatient.put("keluhanPasien", keluhan);
             daftarPatient.put("umurPasien", umur);
             daftarPatient.put("jenisPasien", jenisKelamin);
@@ -374,53 +374,15 @@ public class RegisPatientActivity extends AppCompatActivity {
             daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
             daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
 
-            // cek kalau waktu estimasi sudah kelewat dari waktu sekarang
-//            int hourLastPatient = Integer.parseInt(estimateTime.substring(0, 2));//08=8
-//            int minuteLastPatient = Integer.parseInt(estimateTime.substring(3, 5));
-//            int currentHour = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2));//09=9
-//            int currentMinute = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(3, 5));
-
-//            int minutePatient = Integer.parseInt(estimateTime.substring(3, 5));
-//            int minuteCurrent = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(3, 5));
-
-//            String minuteP = "";
-//            String minuteC = "";
-//
-//            if (String.valueOf(minutePatient).length() == 1 && String.valueOf(minuteCurrent).length() == 1) {
-//                minuteP = "0" + minutePatient;
-//                minuteC = "0" + minuteCurrent;
-//            } else if (String.valueOf(minutePatient).length() == 1 || String.valueOf(minuteCurrent).length() == 1) {
-//                if (String.valueOf(minutePatient).length() == 1) {
-//                    minuteP = "0" + minutePatient;
-//                } else {
-//                    minuteC = "0" + minuteCurrent;
-//                }
-//            } else {
-//                minuteP = String.valueOf(minutePatient);
-//                minuteC = String.valueOf(minuteCurrent);
-//            }
-
             int lastPatient = Integer.parseInt(estimateTime.substring(0, 2) + estimateTime.substring(3, 5));
             int currentTime = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2) +
                     getCurrentLocalTimeStamp(0).substring(3, 5));
-
-            Toast.makeText(this, "last" + lastPatient, Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "current" + currentTime, Toast.LENGTH_SHORT).show();
 
             if (lastPatient > currentTime) {
                 daftarPatient.put("waktuSelesai", estimateTime);
             } else {
                 daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plusnotnull));
             }
-
-            //taruh tengah kalo gak bisa
-//            else if (hourLastPatient == currentHour) {
-//                if (minuteLastPatient > currentMinute) {
-//                    daftarPatient.put("waktuSelesai", estimateTime);
-//                } else {
-//                    daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plusnotnull));
-//                }
-//            }
 
             if (profile != null && name != null) {
                 daftarPatient.put("imageURL", profile);
@@ -456,16 +418,6 @@ public class RegisPatientActivity extends AppCompatActivity {
                     hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
                     onceTime = getCurrentLocalTimeStamp(0);
                 }
-                //taruh tengah kalo gak bisa
-//                else if (hourLastPatient == currentHour) {
-//                    if (minuteLastPatient > currentMinute) {
-//                        hashDoctor.put("lastPatient", estimateTime);
-//                        onceTime = estimateTime;
-//                    } else {
-//                        hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
-//                        onceTime = getCurrentLocalTimeStamp(0);
-//                    }
-//                }
 
                 DatabaseReference dbRefDoctor = FirebaseDatabase.getInstance().getReference("Doctors");
                 dbRefDoctor.child(id_dokter).updateChildren(hashDoctor);

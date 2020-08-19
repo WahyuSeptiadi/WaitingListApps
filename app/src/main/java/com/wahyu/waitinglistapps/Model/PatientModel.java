@@ -17,7 +17,7 @@ public class PatientModel {
     private String alamatPasien;
     private String jenisPasien;
     private String keluhanPasien;
-    private String penyakitPasien;
+    private String nomerHpPasien;
     private String umurPasien;
     private String tanggalDaftar;
     private String waktuDaftar;
@@ -131,12 +131,12 @@ public class PatientModel {
         this.keluhanPasien = keluhanPasien;
     }
 
-    public String getPenyakitPasien() {
-        return penyakitPasien;
+    public String getNomerHpPasien() {
+        return nomerHpPasien;
     }
 
-    public void setPenyakitPasien(String penyakitPasien) {
-        this.penyakitPasien = penyakitPasien;
+    public void setNomerHpPasien(String nomerHpPasien) {
+        this.nomerHpPasien = nomerHpPasien;
     }
 
     public String getUmurPasien() {

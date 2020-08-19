@@ -61,8 +61,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (alarmManager != null) {
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
-
-        Toast.makeText(context, "Alarm berhasil diatur", Toast.LENGTH_SHORT).show();
     }
 
     public boolean isDateInvalid(String date, String format) {
@@ -129,7 +127,5 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);
         }
-
-        Toast.makeText(context, "Alarm dibatalkan", Toast.LENGTH_SHORT).show();
     }
 }

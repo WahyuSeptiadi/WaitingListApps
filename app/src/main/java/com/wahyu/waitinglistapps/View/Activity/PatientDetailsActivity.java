@@ -18,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PatientDetailsActivity extends AppCompatActivity {
 
-    private String getImage, getName, getKeluhan, getPenyakit, getAlamat, getUmur, getJenis, getDaftar, getSelesai;
+    private String getImage, getName, getKeluhan, getNomerHp, getAlamat, getUmur, getJenis, getDaftar, getSelesai;
     private String getImageDoctor, getNameDoctor, getSpesialisDoctor, getDateRegist;
 
     @Override
@@ -29,7 +29,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
         CircleImageView civProfilePatient = findViewById(R.id.civ_profile_patientdetails);
         TextView tvName = findViewById(R.id.tv_nama_patientdetails);
         TextView tvKeluhan = findViewById(R.id.tv_keluhan_patientdetails);
-        TextView tvPenyakit = findViewById(R.id.tv_penyakit_patientdetails);
+        TextView tvNomerHp = findViewById(R.id.tv_nomerhp_patientdetails);
         TextView tvAlamat = findViewById(R.id.tv_alamat_patientdetails);
         TextView tvUmur = findViewById(R.id.tv_umur_patientdetails);
         TextView tvJenis = findViewById(R.id.tv_jenis_patientdetails);
@@ -47,7 +47,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
         getDataIntent();
 
         //set init detail pasien
-        if (getImage != null && getName != null && getKeluhan != null && getPenyakit != null && getAlamat != null &&
+        if (getImage != null && getName != null && getKeluhan != null && getNomerHp != null && getAlamat != null &&
                 getUmur != null && getJenis != null && getDaftar != null && getSelesai != null) {
 
             if (!getImage.equals("")) {
@@ -63,7 +63,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
 
             tvName.setText(getName);
             tvKeluhan.setText(getKeluhan);
-            tvPenyakit.setText(getPenyakit);
+            tvNomerHp.setText(getNomerHp);
             tvAlamat.setText(getAlamat);
             tvUmur.setText(getUmur);
             tvJenis.setText(getJenis);
@@ -105,7 +105,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
         getImage = data.getStringExtra("image");
         getName = data.getStringExtra("name");
         getKeluhan = data.getStringExtra("keluhan");
-        getPenyakit = data.getStringExtra("penyakit");
+        getNomerHp = data.getStringExtra("nomerhp");
         getAlamat = data.getStringExtra("alamat");
         getUmur = data.getStringExtra("umur");
         getJenis = data.getStringExtra("jenis");
