@@ -28,4 +28,6 @@
     <string name="titlebar_patient">Daftar Pasien</string>
     <string name="str_openeveryday">Buka Setiap Hari</string>
     <string name="str_delete">Hapus</string>
+    <string name="str_slash">-</string>
+    <string name="str_proccessing">DIPROSES</string>
 </resources>

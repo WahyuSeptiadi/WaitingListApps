@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -25,7 +26,7 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.wahyu.waitinglistapps.Model.DoctorModel;
 import com.wahyu.waitinglistapps.R;
-import com.wahyu.waitinglistapps.TimePicker.TimePickerFragment;
+import com.wahyu.waitinglistapps.AlarmManagement.TimePickerFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -50,8 +51,9 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
     private DoctorModel doctorModel;
 
-    private String getDoctorId, getName, getImageURL, getSpesialis, getWorkday, getTimeStart, getTimeFinish, getPatientLimit;
+    private String getDoctorId, getName, getImageURL, getSpesialis, getWorkday, getTimeStart, getTimeFinish, getPatientLimit, getLastPatient;
     private boolean isDeleteProfile = false;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         reference = FirebaseDatabase.getInstance().getReference("Doctors");
         storageReference = FirebaseStorage.getInstance().getReference("Profile");
         doctorModel = new DoctorModel();
+        calendar = Calendar.getInstance();
 
         etWorkDay.setText(R.string.str_openeveryday);
         etLimitSeat.setText("--");
@@ -127,6 +130,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         getTimeStart = data.getStringExtra("timestart");
         getTimeFinish = data.getStringExtra("timefinish");
         getPatientLimit = data.getStringExtra("limit");
+        getLastPatient = data.getStringExtra("lastpatient");
     }
 
     @Override
@@ -208,6 +212,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         hashMap.put("open", "false");
         hashMap.put("imageURL", "default");
         hashMap.put("lastPatient", "kosong");
+        hashMap.put("lastDate", getCurrentLocalDateStamp());
 
         reference.child(doctorModel.getId()).setValue(hashMap).addOnCompleteListener(task -> {
             if (mImageUri != null) {
@@ -264,6 +269,8 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         hashMap.put("limit", limit);
         hashMap.put("open", "false");
         hashMap.put("imageURL", "default");
+        hashMap.put("lastPatient", getLastPatient);
+        hashMap.put("lastDate", getCurrentLocalDateStamp());
 
         reference.child(doctorId).setValue(hashMap).addOnCompleteListener(task -> {
             if (!isDeleteProfile) {
@@ -318,6 +325,11 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
             }
 
         });
+    }
+
+    public String getCurrentLocalDateStamp() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM, yyyy");
+        return currentDate.format(calendar.getTime());
     }
 
     @Override

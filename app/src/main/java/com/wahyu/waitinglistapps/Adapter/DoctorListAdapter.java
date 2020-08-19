@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import com.wahyu.waitinglistapps.View.Activity.RegisPatientActivity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -53,8 +55,6 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
     private UserModel userModel;
     private String isDaftar;
     private Calendar calendar;
-
-//    private int countPatient;
 
     public DoctorListAdapter(Activity mActivity, ArrayList<DoctorModel> doctorModelArrayList) {
         this.mActivity = mActivity;
@@ -88,6 +88,12 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         holder.tvNameDr.setText(doctorModel.getName());
         holder.tvSpesialis.setText(doctorModel.getSpesialis());
 
+        if (isDaftar != null) {
+            holder.tvOpen.setText(doctorModel.getWorktimestart());
+            holder.tvClose.setText(doctorModel.getWorktimefinish());
+            holder.openClose.setVisibility(View.VISIBLE);
+        }
+
         holder.itemView.setOnClickListener(view -> {
             String doctorId = doctorModel.getId();
             String namedr = doctorModel.getName();
@@ -98,8 +104,17 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             String timefinish = doctorModel.getWorktimefinish();
             String limit = doctorModel.getLimit();
 
-
             if (isDaftar != null) {
+                if (!doctorModel.getLastDate().equals(getCurrentLocalDateStamp())){
+                    //update ke kosong lagi
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("lastDate", getCurrentLocalDateStamp());
+                    hashMap.put("lastPatient", "kosong");
+//                    hashMap.put("lastNumber", "0");
+                    DatabaseReference dbRefDoctors = FirebaseDatabase.getInstance().getReference("Doctors");
+                    dbRefDoctors.child(doctorId).updateChildren(hashMap);
+                }
+
                 int convertTimeStart = Integer.parseInt(doctorModel.getWorktimestart().substring(0, 2) +
                         doctorModel.getWorktimestart().substring(3, 5));
                 int convertTimeFinish = Integer.parseInt(doctorModel.getWorktimefinish().substring(0, 2) +
@@ -113,28 +128,16 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
 
                 if (convertCurrentTime >= convertTimeStart && convertCurrentTime <= convertTimeFinish) {
                     String lastTimePatient = doctorModel.getLastPatient();
+//                    String lastNumber = doctorModel.getLastNumber();
 
-                    if (!doctorModel.getLastPatient().equals("kosong")) {
-                        Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
-                        toRegis.putExtra("id_doctor", doctorId);
-                        toRegis.putExtra("name_doctor", namedr);
-                        toRegis.putExtra("image_doctor", imgProfile);
-                        toRegis.putExtra("spesialis", spesialis);
-                        //ambil time finish pasien sebelumnya
-                        toRegis.putExtra("last_time", lastTimePatient);
-
-                        mActivity.startActivity(toRegis);
-                    } else {
-                        Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
-                        toRegis.putExtra("id_doctor", doctorId);
-                        toRegis.putExtra("name_doctor", namedr);
-                        toRegis.putExtra("image_doctor", imgProfile);
-                        toRegis.putExtra("spesialis", spesialis);
-                        //ambil time finish pasien sebelumnya
-                        toRegis.putExtra("last_time", lastTimePatient);
-
-                        mActivity.startActivity(toRegis);
-                    }
+                    Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
+                    toRegis.putExtra("id_doctor", doctorId);
+                    toRegis.putExtra("name_doctor", namedr);
+                    toRegis.putExtra("image_doctor", imgProfile);
+                    toRegis.putExtra("spesialis", spesialis);
+                    toRegis.putExtra("last_time", lastTimePatient);
+//                    toRegis.putExtra("last_number", lastNumber);
+                    mActivity.startActivity(toRegis);
                     mActivity.finish();
                 } else {
                     Toast.makeText(mActivity, "Maaf, " + doctorModel.getName() + " sudah tutup", Toast.LENGTH_SHORT).show();
@@ -174,6 +177,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                             String timestart = doctorModel.getWorktimestart();
                             String timefinish = doctorModel.getWorktimefinish();
                             String limit = doctorModel.getLimit();
+                            String lastPatient = doctorModel.getLastPatient();
 
                             Intent toUpdate = new Intent(mActivity, AddUpdateDoctorActivity.class);
                             toUpdate.putExtra("id", doctorId);
@@ -184,6 +188,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                             toUpdate.putExtra("timestart", timestart);
                             toUpdate.putExtra("timefinish", timefinish);
                             toUpdate.putExtra("limit", limit);
+                            toUpdate.putExtra("lastpatient", lastPatient);
                             mActivity.startActivity(toUpdate);
                         }
                 );
@@ -207,32 +212,19 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private CircleImageView civProfileDoctor;
-        private TextView tvNameDr, tvSpesialis;
+        private TextView tvNameDr, tvSpesialis, tvOpen, tvClose;
+        private LinearLayout openClose;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             civProfileDoctor = itemView.findViewById(R.id.civ_doctorlist);
             tvNameDr = itemView.findViewById(R.id.tv_name_doctorlist);
             tvSpesialis = itemView.findViewById(R.id.tv_spesialis_doctorlist);
+            openClose = itemView.findViewById(R.id.ll_openclose_doctorlist);
+            tvOpen = itemView.findViewById(R.id.tv_open_doctorlist);
+            tvClose = itemView.findViewById(R.id.tv_close_doctorlist);
         }
     }
-
-//    private void getTotalPatientList(String doctorId){
-//        DatabaseReference refTotal = FirebaseDatabase.getInstance().getReference("TotalPatient");
-//        refTotal.child(doctorId).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()){
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 
     private void getTypeUser() {
         DatabaseReference rootRoomChats = FirebaseDatabase.getInstance().getReference("Users");
@@ -262,6 +254,10 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         return currentTime.format(calendar.getTime());
     }
 
+    public String getCurrentLocalDateStamp() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM, yyyy");
+        return currentDate.format(calendar.getTime());
+    }
 
     private void showDialogAlertDelete(String key) {
         DatabaseReference rootDoctors = FirebaseDatabase.getInstance().getReference("Doctors");

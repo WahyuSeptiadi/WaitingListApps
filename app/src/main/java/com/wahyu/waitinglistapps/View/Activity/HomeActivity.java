@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,7 +53,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView emptyBox;
     private ProgressBar progressBar;
     private ArrayList<PatientModel> patientModelArrayList;
-//    private ArrayList<PatientModel> patientModelFinishArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,19 +82,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         getMyQueue();
 
-//        if (!patientModelFinishArrayList.isEmpty()) {
-//            if (!patientModelArrayList.isEmpty()){
-//                tvEmptyQueue.setVisibility(View.GONE);
-//                emptyBox.setVisibility(View.GONE);
-//            }else {
-//                tvEmptyQueue.setVisibility(View.VISIBLE);
-//                emptyBox.setVisibility(View.VISIBLE);
-//            }
-//        }
+        // cek koneksi internet
+        if (checkInternet()) {
+            Toast.makeText(this, "Tolong hidupkan data koneksi Anda", Toast.LENGTH_SHORT).show();
+        }
 
         pickQueue.setOnClickListener(this);
         cvDoctorList.setOnClickListener(this);
         civProfileUser.setOnClickListener(view -> {
+            if (checkInternet()) {
+                Toast.makeText(this, "Tolong hidupkan data koneksi Anda", Toast.LENGTH_SHORT).show();
+            }
             Intent toProfile = new Intent(HomeActivity.this, ProfileActivity.class);
             toProfile.putExtra("usertype", userType);
             toProfile.putExtra("image", imageURL);
@@ -108,16 +108,31 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         getDataUser();
     }
 
+    public boolean checkInternet() {
+        boolean connectStatus;
+        ConnectivityManager ConnectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = ConnectionManager.getActiveNetworkInfo();
+        connectStatus = networkInfo != null && networkInfo.isConnected();
+
+        return !connectStatus;
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cv_doctorlist_home:
                 startActivity(new Intent(this, DoctorListActivity.class));
+                if (checkInternet()) {
+                    Toast.makeText(this, "Tolong hidupkan data koneksi Anda", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.cv_pickqueue_home:
                 if (!patientModelArrayList.isEmpty()) {
-                    Toast.makeText(this, "Maaf Antrian anda belum selesai", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Maaf, antrian Anda belum selesai !", Toast.LENGTH_SHORT).show();
                 } else {
+                    if (checkInternet()) {
+                        Toast.makeText(this, "Tolong hidupkan data koneksi Anda", Toast.LENGTH_SHORT).show();
+                    }
                     Intent toDaftar = new Intent(HomeActivity.this, RegisPatientActivity.class);
                     toDaftar.putExtra("namapasien", name);
                     toDaftar.putExtra("imagepasien", imageURL);
@@ -131,14 +146,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void getMyQueue() {
         patientModelArrayList = new ArrayList<>();
-//        patientModelFinishArrayList = new ArrayList<>();
         DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
 
         dbRefMyQueue.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 patientModelArrayList.clear();
-//                patientModelFinishArrayList.clear();
 
                 if (!snapshot.exists()) {
                     tvEmptyQueue.setVisibility(View.VISIBLE);
@@ -152,8 +165,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                             patientModelArrayList.add(patientModel);
                             tvEmptyQueue.setVisibility(View.GONE);
                             emptyBox.setVisibility(View.GONE);
-                        }else {
-//                            patientModelFinishArrayList.add(patientModel);
+                        } else {
                             tvEmptyQueue.setVisibility(View.VISIBLE);
                             emptyBox.setVisibility(View.VISIBLE);
                         }

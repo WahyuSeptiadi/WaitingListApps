@@ -14,10 +14,28 @@ public class DoctorModel {
     private String worktimestart;
     private String worktimefinish;
     private String limit;
-    private String open;
     private String lastPatient;
+    private String lastDate;
+//    private String open;
+//    private String lastNumber;
 
     public DoctorModel() {
+    }
+
+//    public String getLastNumber() {
+//        return lastNumber;
+//    }
+//
+//    public void setLastNumber(String lastNumber) {
+//        this.lastNumber = lastNumber;
+//    }
+
+    public String getLastDate() {
+        return lastDate;
+    }
+
+    public void setLastDate(String lastDate) {
+        this.lastDate = lastDate;
     }
 
     public String getId() {
@@ -92,11 +110,11 @@ public class DoctorModel {
         this.limit = limit;
     }
 
-    public String getOpen() {
-        return open;
-    }
-
-    public void setOpen(String open) {
-        this.open = open;
-    }
+//    public String getOpen() {
+//        return open;
+//    }
+//
+//    public void setOpen(String open) {
+//        this.open = open;
+//    }
 }

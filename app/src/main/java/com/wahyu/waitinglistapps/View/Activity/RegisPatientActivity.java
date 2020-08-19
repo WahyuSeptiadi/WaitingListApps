@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+import com.wahyu.waitinglistapps.AlarmManagement.AlarmReceiver;
 import com.wahyu.waitinglistapps.Model.PatientModel;
 import com.wahyu.waitinglistapps.R;
 
@@ -28,10 +29,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisPatientActivity extends AppCompatActivity {
 
-    EditText et_patientname, et_patientsick, et_patientcomplain, et_patientage, et_patientaddress, et_patientgender, et_pickdoctor;
-    CardView btn_regis, btn_searchdoctor;
-    CircleImageView civ_profilepatient;
-    String imagePasien, namaPasien, nama_dokter, id_dokter, foto_dokter, spesialis_dokter, lastTimePatient;
+    private EditText et_patientname, et_patientsick, et_patientcomplain, et_patientage, et_patientaddress, et_patientgender, et_pickdoctor;
+    private CircleImageView civ_profilepatient;
+    private String imagePasien, namaPasien, nama_dokter, id_dokter, foto_dokter, spesialis_dokter, lastTimePatient;
+//    private String lastNumber;
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
@@ -39,6 +40,10 @@ public class RegisPatientActivity extends AppCompatActivity {
 
     private String profile, name, penyakit, keluhan, alamat, umur, kelamin;
     private SharedPreferences preferences;
+
+    //setAlarm Notification
+    private AlarmReceiver alarmReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("WaitingList");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         calendar = Calendar.getInstance();
+        alarmReceiver = new AlarmReceiver();
 
         et_patientname = findViewById(R.id.et_patientname);
         et_patientsick = findViewById(R.id.et_patientsick);
@@ -58,8 +64,8 @@ public class RegisPatientActivity extends AppCompatActivity {
         et_patientgender = findViewById(R.id.et_patientgender);
         et_pickdoctor = findViewById(R.id.et_pickdoctor);
         civ_profilepatient = findViewById(R.id.civ_imageProfilePatient);
-        btn_regis = findViewById(R.id.cv_btnpatientregis);
-        btn_searchdoctor = findViewById(R.id.cv_btnpickdoctor);
+        CardView btn_regis = findViewById(R.id.cv_btnpatientregis);
+        CardView btn_searchdoctor = findViewById(R.id.cv_btnpickdoctor);
         ImageView btnBack = findViewById(R.id.btnback_registry);
 
         Intent data = getIntent();
@@ -70,6 +76,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         imagePasien = data.getStringExtra("imagepasien");
         namaPasien = data.getStringExtra("namapasien");
         lastTimePatient = data.getStringExtra("last_time");
+//        lastNumber = data.getStringExtra("last_number");
 
         if (namaPasien != null && imagePasien != null) {
             if (imagePasien.substring(0, 4).equals("http")) {
@@ -246,8 +253,6 @@ public class RegisPatientActivity extends AppCompatActivity {
         patientModel.setIdAntrian(idAntrian);
 
         if (plus != 0) {
-            String estimateTime = getCurrentLocalTimeStamp(plus);
-
             HashMap<String, Object> daftarPatient = new HashMap<>();
             daftarPatient.put("idPasien", userId);
             daftarPatient.put("idAntrian", patientModel.getIdAntrian());
@@ -259,6 +264,8 @@ public class RegisPatientActivity extends AppCompatActivity {
             daftarPatient.put("jenisPasien", jenisKelamin);
             daftarPatient.put("alamatPasien", alamat);
             daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
+            // set estimate +10 minute
+            String estimateTime = getCurrentLocalTimeStamp(plus);
             daftarPatient.put("waktuSelesai", estimateTime);
             daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
 
@@ -296,7 +303,7 @@ public class RegisPatientActivity extends AppCompatActivity {
                 finish();
             }
         } else {
-            String estimateTime = setLastTimePatient(lastTimePatient, 10);
+            String estimateTime = setLastTimePatient(lastTimePatient, plus);
 
             HashMap<String, Object> daftarPatient = new HashMap<>();
             daftarPatient.put("idPasien", userId);
@@ -323,10 +330,10 @@ public class RegisPatientActivity extends AppCompatActivity {
                 if (minuteLastPatient > currentMinute) {
                     daftarPatient.put("waktuSelesai", estimateTime);
                 } else {
-                    daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(10));
+                    daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plus));
                 }
             } else {
-                daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(10));
+                daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plus));
             }
 
             if (profile != null && name != null) {
@@ -348,26 +355,35 @@ public class RegisPatientActivity extends AppCompatActivity {
 
                 DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
                 dbRefMyQueue.child(userId).child(id_dokter).setValue(daftarPatient);
-                Toast.makeText(this, "Data berhasil mendaftar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Data berhasil terdaftar", Toast.LENGTH_SHORT).show();
                 removePreference();
 
                 //buat update dokter
                 HashMap<String, Object> hashDoctor = new HashMap<>();
 
                 // cek kalau waktu estimasi sudah kelewat dari waktu sekarang
+                String onceTime;
                 if (hourLastPatient > currentHour) {
                     hashDoctor.put("lastPatient", estimateTime);
+                    onceTime = estimateTime;
                 } else if (hourLastPatient == currentHour) {
                     if (minuteLastPatient > currentMinute) {
                         hashDoctor.put("lastPatient", estimateTime);
+                        onceTime = estimateTime;
                     } else {
                         hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
+                        onceTime = getCurrentLocalTimeStamp(0);
                     }
                 } else {
                     hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
+                    onceTime = getCurrentLocalTimeStamp(0);
                 }
                 DatabaseReference dbRefDoctor = FirebaseDatabase.getInstance().getReference("Doctors");
                 dbRefDoctor.child(id_dokter).updateChildren(hashDoctor);
+
+                //SET ALARM NOTIFICATION
+                String onceMessage = "Halo, " + name + " sudah giliran anda nih :)";
+                alarmReceiver.setOneTimeAlarm(this, AlarmReceiver.TYPE_ONE_TIME, onceTime, onceMessage);
 
                 Intent toListPatient = new Intent(RegisPatientActivity.this, PatientListActivity.class);
                 toListPatient.putExtra("id_dokter", id_dokter);

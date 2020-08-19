@@ -111,7 +111,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="@string/str_dot" />
+                    android:text="@string/str_dot"
+                    android:textColor="@color/colorBlack" />
             </LinearLayout>
 
             <LinearLayout
@@ -134,18 +135,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="@string/str_dot" />
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/str_dot"
+                    android:textColor="@color/colorBlack" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" - " />
+                    android:text="@string/str_slash" />
 
                 <TextView
                     android:id="@+id/tv_worktimefinish_doctordetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/str_dot" />
+                    android:layout_marginStart="5dp"
+                    android:text="@string/str_dot"
+                    android:textColor="@color/colorBlack" />
             </LinearLayout>
 
             <LinearLayout
@@ -169,7 +174,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="@string/str_dot" />
+                    android:text="@string/str_dot"
+                    android:textColor="@color/colorBlack" />
             </LinearLayout>
 
             <TextView

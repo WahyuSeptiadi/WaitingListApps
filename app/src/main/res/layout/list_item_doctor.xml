@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -46,6 +47,42 @@
                 android:layout_toEndOf="@+id/civ_doctorlist"
                 android:text="@string/str_dot"
                 android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_openclose_doctorlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:ignore="RelativeOverlap">
+
+                <TextView
+                    android:id="@+id/tv_open_doctorlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/str_dot"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/slash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_slash"
+                    android:textColor="@color/colorOrange" />
+
+                <TextView
+                    android:id="@+id/tv_close_doctorlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/str_dot"
+                    android:textColor="@color/colorPrimary" />
+            </LinearLayout>
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

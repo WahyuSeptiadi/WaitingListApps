@@ -1,4 +1,4 @@
-package com.wahyu.waitinglistapps.TimePicker;
+package com.wahyu.waitinglistapps.AlarmManagement;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

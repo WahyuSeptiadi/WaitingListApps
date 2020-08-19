@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wahyu.waitinglistapps">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo_round"
@@ -11,7 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".View.Activity.PatientDetailsActivity"></activity>
+
+        <receiver
+            android:name=".AlarmManagement.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="@string/todo"
+            tools:ignore="ManifestResource" />
+
+        <activity android:name=".View.Activity.PatientDetailsActivity" />
         <activity android:name=".View.Activity.RegisPatientActivity" />
         <activity android:name=".View.Activity.PatientListActivity" />
         <activity android:name=".View.Activity.DoctorDetailsActivity" />
