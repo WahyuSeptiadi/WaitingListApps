@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.wahyu.waitinglistapps.Adapter.MyQueueAdapter;
+import com.wahyu.waitinglistapps.Model.EstimateModel;
 import com.wahyu.waitinglistapps.Model.PatientModel;
 import com.wahyu.waitinglistapps.Model.UserModel;
 import com.wahyu.waitinglistapps.R;
@@ -53,6 +54,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView emptyBox;
     private ProgressBar progressBar;
     private ArrayList<PatientModel> patientModelArrayList;
+
+    //for Admin
+    private String estimateCalled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         getMyQueue();
+        getEstimate();
 
         // cek koneksi internet
         if (checkInternet()) {
@@ -135,7 +140,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     Intent toDaftar = new Intent(HomeActivity.this, RegisPatientActivity.class);
                     toDaftar.putExtra("namapasien", name);
+                    toDaftar.putExtra("usertype", userType);
                     toDaftar.putExtra("imagepasien", imageURL);
+                    toDaftar.putExtra("estimate", estimateCalled);
                     startActivity(toDaftar);
                 }
                 break;
@@ -175,6 +182,28 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     myQueueAdapter.notifyDataSetChanged();
                 }
                 progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getEstimate() {
+        DatabaseReference dbRefEstimate = FirebaseDatabase.getInstance().getReference("Estimate");
+
+        dbRefEstimate.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                EstimateModel estimateModel = snapshot.getValue(EstimateModel.class);
+                if (!snapshot.exists()) {
+                    Toast.makeText(HomeActivity.this, "Tolong, admin set data estimasi nya !", Toast.LENGTH_SHORT).show();
+                } else {
+                    assert estimateModel != null;
+                    estimateCalled = estimateModel.getEstimate();
+                }
             }
 
             @Override

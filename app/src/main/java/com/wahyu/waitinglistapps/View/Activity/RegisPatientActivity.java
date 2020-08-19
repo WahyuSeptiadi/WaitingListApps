@@ -1,12 +1,16 @@
 package com.wahyu.waitinglistapps.View.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +48,9 @@ public class RegisPatientActivity extends AppCompatActivity {
     //setAlarm Notification
     private AlarmReceiver alarmReceiver;
 
+    //set Estimate called for admin
+    private EditText etEstimateCalled;
+    private String estimate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +75,11 @@ public class RegisPatientActivity extends AppCompatActivity {
         CardView btn_searchdoctor = findViewById(R.id.cv_btnpickdoctor);
         ImageView btnBack = findViewById(R.id.btnback_registry);
 
+        //for admin
+        etEstimateCalled = findViewById(R.id.et_estimateAdmin);
+        ImageView btnSaveEstimate = findViewById(R.id.iv_saveEstimateAdmin);
+        LinearLayout estimateAdmin = findViewById(R.id.ll_estimateAdmin);
+
         Intent data = getIntent();
         id_dokter = data.getStringExtra("id_doctor");
         nama_dokter = data.getStringExtra("name_doctor");
@@ -76,7 +88,16 @@ public class RegisPatientActivity extends AppCompatActivity {
         imagePasien = data.getStringExtra("imagepasien");
         namaPasien = data.getStringExtra("namapasien");
         lastTimePatient = data.getStringExtra("last_time");
+        String userType = data.getStringExtra("usertype");
+        String estimateStart = data.getStringExtra("estimate");
 //        lastNumber = data.getStringExtra("last_number");
+
+        if (userType != null && estimateStart != null) {
+            if (userType.equals("admin")) {
+                estimateAdmin.setVisibility(View.VISIBLE);
+            }
+            etEstimateCalled.setText(estimateStart);
+        }
 
         if (namaPasien != null && imagePasien != null) {
             if (imagePasien.substring(0, 4).equals("http")) {
@@ -93,6 +114,19 @@ public class RegisPatientActivity extends AppCompatActivity {
             et_pickdoctor.setText(nama_dokter);
         }
 
+        btnSaveEstimate.setOnClickListener(view -> {
+            String estimate = etEstimateCalled.getText().toString();
+            if (!TextUtils.isEmpty(estimate)) {
+                setEstimate(estimate);
+            } else {
+                Toast.makeText(RegisPatientActivity.this, "Gak boleh kosong ya :(", Toast.LENGTH_SHORT).show();
+            }
+
+            // autohide after click SAVE
+            InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        });
+
         btn_searchdoctor.setOnClickListener(view -> {
             setPreference();
             Intent toListDoctor = new Intent(RegisPatientActivity.this, DoctorListActivity.class);
@@ -107,14 +141,19 @@ public class RegisPatientActivity extends AppCompatActivity {
             String jenis = et_patientgender.getText().toString();
             String alamat = et_patientaddress.getText().toString();
 
+            int estimateFinish = 10;
+            if (estimate != null) {
+                estimateFinish = Integer.parseInt(estimate);
+            }
+
             if (!et_patientname.getText().toString().equals("kosong")) {
                 if (!TextUtils.isEmpty(penyakit) && !TextUtils.isEmpty(keluhan) && !TextUtils.isEmpty(umur) &&
                         !TextUtils.isEmpty(jenis) && !TextUtils.isEmpty(alamat)) {
                     if (!TextUtils.isEmpty(et_pickdoctor.getText())) {
                         if (lastTimePatient.equals("kosong")) {
-                            daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter, 10);
+                            daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter, estimateFinish, 0);
                         } else {
-                            daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter, 0);
+                            daftarPatient(penyakit, keluhan, umur, jenis, alamat, nama_dokter, 0, estimateFinish);
                         }
                     } else {
                         Toast.makeText(this, "Silahkan pilih dokter terlebih dahulu", Toast.LENGTH_SHORT).show();
@@ -123,7 +162,7 @@ public class RegisPatientActivity extends AppCompatActivity {
                     Toast.makeText(this, "Tolong lengkapi semua fieldnya ya", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "!! FOTO KOSONG !!\nSilahkan kembali ke halaman home\nterlebih dahulu !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "!! NAMA ANDA KOSONG !!\nSilahkan kembali ke halaman home\nterlebih dahulu !", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -137,6 +176,16 @@ public class RegisPatientActivity extends AppCompatActivity {
             startActivity(new Intent(RegisPatientActivity.this, HomeActivity.class));
             finish();
         });
+    }
+
+    private void setEstimate(String plus) {
+        DatabaseReference dbRefEstimate = FirebaseDatabase.getInstance().getReference("Estimate");
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("estimate", plus);
+        dbRefEstimate.setValue(hashMap);
+
+        Toast.makeText(this, "Estimasi selesai per pasien\nBerhasil diperbaharui", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -154,6 +203,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         editor.putString("alamat", et_patientaddress.getText().toString());
         editor.putString("umur", et_patientage.getText().toString());
         editor.putString("kelamin", et_patientgender.getText().toString());
+        editor.putString("estimate", etEstimateCalled.getText().toString());
         editor.apply();
     }
 
@@ -166,6 +216,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         alamat = preferences.getString("alamat", "");
         umur = preferences.getString("umur", "");
         kelamin = preferences.getString("kelamin", "");
+        estimate = preferences.getString("estimate", "");
     }
 
     private void initPrefRegistPatient() {
@@ -245,7 +296,8 @@ public class RegisPatientActivity extends AppCompatActivity {
         }
     }
 
-    private void daftarPatient(String penyakit, String keluhan, String umur, String jenisKelamin, String alamat, String dokter, int plus) {
+    private void daftarPatient(String penyakit, String keluhan, String umur, String jenisKelamin, String alamat, String dokter,
+                               int plus, int plusnotnull) {
         String userId = firebaseUser.getUid();
         PatientModel patientModel = new PatientModel();
 
@@ -303,7 +355,7 @@ public class RegisPatientActivity extends AppCompatActivity {
                 finish();
             }
         } else {
-            String estimateTime = setLastTimePatient(lastTimePatient, plus);
+            String estimateTime = setLastTimePatient(lastTimePatient, plusnotnull);
 
             HashMap<String, Object> daftarPatient = new HashMap<>();
             daftarPatient.put("idPasien", userId);
@@ -330,10 +382,10 @@ public class RegisPatientActivity extends AppCompatActivity {
                 if (minuteLastPatient > currentMinute) {
                     daftarPatient.put("waktuSelesai", estimateTime);
                 } else {
-                    daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plus));
+                    daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plusnotnull));
                 }
             } else {
-                daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plus));
+                daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plusnotnull));
             }
 
             if (profile != null && name != null) {
