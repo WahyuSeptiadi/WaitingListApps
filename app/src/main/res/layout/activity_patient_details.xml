@@ -337,7 +337,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/getwellsoon"
                         android:layout_centerHorizontal="true"
-                        android:text="Ketika Alarm Pemberitahuan bunyi\nTunjukkan Form Pendaftaran ini \nkepada Admin / Asisten Dokter ya."
+                        android:text="Ketika Alarm Pemberitahuan bunyi\nTunjukkan Data Pendaftaran ini \nkepada Admin / Asisten Dokter ya."
                         android:textAlignment="center"
                         android:textColor="@color/colorOrange"
                         android:textSize="16sp" />

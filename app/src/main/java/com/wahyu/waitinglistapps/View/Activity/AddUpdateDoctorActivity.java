@@ -209,7 +209,6 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         hashMap.put("worktimestart", timestart);
         hashMap.put("worktimefinish", timefinish);
         hashMap.put("limit", limit);
-        hashMap.put("open", "false");
         hashMap.put("imageURL", "default");
         hashMap.put("lastPatient", "kosong");
         hashMap.put("lastDate", getCurrentLocalDateStamp());

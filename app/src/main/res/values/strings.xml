@@ -30,4 +30,6 @@
     <string name="str_delete">Hapus</string>
     <string name="str_slash">-</string>
     <string name="str_proccessing">DIPROSES</string>
+    <string name="copyright">Copyright 2020</string>
+    <string name="str_data_register">Data Pendaftaran</string>
 </resources>

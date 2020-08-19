@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.wahyu.waitinglistapps.AlarmManagement.AlarmReceiver;
 import com.wahyu.waitinglistapps.Model.PatientModel;
 import com.wahyu.waitinglistapps.Model.UserModel;
 import com.wahyu.waitinglistapps.R;
@@ -46,6 +47,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
 
     private String userType;
     private UserModel userModel;
+    private AlarmReceiver alarmReceiver;
 
     public PatientListAdapter(Activity mActivity, ArrayList<PatientModel> patientModelArrayList) {
         this.mActivity = mActivity;
@@ -56,8 +58,11 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
     @Override
     public PatientListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mActivity).inflate(R.layout.list_item_patient, parent, false);
+
         userModel = new UserModel();
         getTypeUser();
+
+        alarmReceiver = new AlarmReceiver();
         return new ViewHolder(view);
     }
 
@@ -192,7 +197,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
 
     private void showDialogAlertDelete(String doctorId, String antrianId, String pasienId) {
         DatabaseReference rootWaitingList = FirebaseDatabase.getInstance().getReference("WaitingList").child(doctorId);
-        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue").child(pasienId);
+//        DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue").child(pasienId);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
         alertDialogBuilder.setTitle("HAPUS DATA");
@@ -201,7 +206,11 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
                 .setCancelable(false)
                 .setPositiveButton("Ya, tentu", (dialog, id) -> {
                     rootWaitingList.child(antrianId).removeValue();
-                    rootMyQueue.child(doctorId).removeValue();
+                    // ketika user delete antrian yang sudah selesai lewat list pasien, myqueue pada home si user juga hilang ..
+//                    rootMyQueue.child(doctorId).removeValue(); //sementara ditutup dulu
+
+                    //batalkan alarm
+                    alarmReceiver.cancelAlarm(mActivity);
 
                     mActivity.overridePendingTransition(0, 0);
                     mActivity.startActivity(mActivity.getIntent());

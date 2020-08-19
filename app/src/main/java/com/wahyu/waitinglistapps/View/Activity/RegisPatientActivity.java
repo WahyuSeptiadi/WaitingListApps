@@ -292,7 +292,11 @@ public class RegisPatientActivity extends AppCompatActivity {
             }
 
         } else {
-            return lastTime.substring(0, 2) + ":" + estimateMinute;
+            if (String.valueOf(estimateMinute).length() != 1) {
+                return lastTime.substring(0, 2) + ":" + estimateMinute;
+            } else {
+                return lastTime.substring(0, 2) + ":" + nol + estimateMinute;
+            }
         }
     }
 
@@ -371,22 +375,52 @@ public class RegisPatientActivity extends AppCompatActivity {
             daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
 
             // cek kalau waktu estimasi sudah kelewat dari waktu sekarang
-            int hourLastPatient = Integer.parseInt(estimateTime.substring(0, 2));//08=8
-            int currentHour = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2));//09=9
-            int minuteLastPatient = Integer.parseInt(estimateTime.substring(3, 5));
-            int currentMinute = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(3, 5));
+//            int hourLastPatient = Integer.parseInt(estimateTime.substring(0, 2));//08=8
+//            int minuteLastPatient = Integer.parseInt(estimateTime.substring(3, 5));
+//            int currentHour = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2));//09=9
+//            int currentMinute = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(3, 5));
 
-            if (hourLastPatient > currentHour) {
+//            int minutePatient = Integer.parseInt(estimateTime.substring(3, 5));
+//            int minuteCurrent = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(3, 5));
+
+//            String minuteP = "";
+//            String minuteC = "";
+//
+//            if (String.valueOf(minutePatient).length() == 1 && String.valueOf(minuteCurrent).length() == 1) {
+//                minuteP = "0" + minutePatient;
+//                minuteC = "0" + minuteCurrent;
+//            } else if (String.valueOf(minutePatient).length() == 1 || String.valueOf(minuteCurrent).length() == 1) {
+//                if (String.valueOf(minutePatient).length() == 1) {
+//                    minuteP = "0" + minutePatient;
+//                } else {
+//                    minuteC = "0" + minuteCurrent;
+//                }
+//            } else {
+//                minuteP = String.valueOf(minutePatient);
+//                minuteC = String.valueOf(minuteCurrent);
+//            }
+
+            int lastPatient = Integer.parseInt(estimateTime.substring(0, 2) + estimateTime.substring(3, 5));
+            int currentTime = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2) +
+                    getCurrentLocalTimeStamp(0).substring(3, 5));
+
+            Toast.makeText(this, "last" + lastPatient, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "current" + currentTime, Toast.LENGTH_SHORT).show();
+
+            if (lastPatient > currentTime) {
                 daftarPatient.put("waktuSelesai", estimateTime);
-            } else if (hourLastPatient == currentHour) {
-                if (minuteLastPatient > currentMinute) {
-                    daftarPatient.put("waktuSelesai", estimateTime);
-                } else {
-                    daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plusnotnull));
-                }
             } else {
                 daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plusnotnull));
             }
+
+            //taruh tengah kalo gak bisa
+//            else if (hourLastPatient == currentHour) {
+//                if (minuteLastPatient > currentMinute) {
+//                    daftarPatient.put("waktuSelesai", estimateTime);
+//                } else {
+//                    daftarPatient.put("waktuSelesai", getCurrentLocalTimeStamp(plusnotnull));
+//                }
+//            }
 
             if (profile != null && name != null) {
                 daftarPatient.put("imageURL", profile);
@@ -415,21 +449,24 @@ public class RegisPatientActivity extends AppCompatActivity {
 
                 // cek kalau waktu estimasi sudah kelewat dari waktu sekarang
                 String onceTime;
-                if (hourLastPatient > currentHour) {
+                if (lastPatient > currentTime) {
                     hashDoctor.put("lastPatient", estimateTime);
                     onceTime = estimateTime;
-                } else if (hourLastPatient == currentHour) {
-                    if (minuteLastPatient > currentMinute) {
-                        hashDoctor.put("lastPatient", estimateTime);
-                        onceTime = estimateTime;
-                    } else {
-                        hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
-                        onceTime = getCurrentLocalTimeStamp(0);
-                    }
                 } else {
                     hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
                     onceTime = getCurrentLocalTimeStamp(0);
                 }
+                //taruh tengah kalo gak bisa
+//                else if (hourLastPatient == currentHour) {
+//                    if (minuteLastPatient > currentMinute) {
+//                        hashDoctor.put("lastPatient", estimateTime);
+//                        onceTime = estimateTime;
+//                    } else {
+//                        hashDoctor.put("lastPatient", getCurrentLocalTimeStamp(0));
+//                        onceTime = getCurrentLocalTimeStamp(0);
+//                    }
+//                }
+
                 DatabaseReference dbRefDoctor = FirebaseDatabase.getInstance().getReference("Doctors");
                 dbRefDoctor.child(id_dokter).updateChildren(hashDoctor);
 

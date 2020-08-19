@@ -168,7 +168,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         PatientModel patientModel = dataSnapshot.getValue(PatientModel.class);
                         assert patientModel != null;
 
-                        if (patientModel.getStatus().equals("MENUNGGU")) {
+                        if (patientModel.getStatus().equals("MENUNGGU") || patientModel.getStatus().equals("DIPROSES")) {
                             patientModelArrayList.add(patientModel);
                             tvEmptyQueue.setVisibility(View.GONE);
                             emptyBox.setVisibility(View.GONE);

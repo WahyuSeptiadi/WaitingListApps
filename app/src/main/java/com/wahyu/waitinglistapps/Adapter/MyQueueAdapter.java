@@ -56,6 +56,7 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
 
         alarmReceiver = new AlarmReceiver();
         calendar = Calendar.getInstance();
+
         return new ViewHolder(view);
     }
 
@@ -81,7 +82,13 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
 
         if (concatCurrentTime >= concatFinishTime) {
             holder.tvStatus.setTextColor(mActivity.getResources().getColor(R.color.colorAccent));
-            holder.tvStatus.setText(R.string.str_proccessing);
+            //update di my queue
+            DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue")
+                    .child(patientModel.getIdPasien());
+            HashMap<String, Object> myQueue = new HashMap<>();
+            myQueue.put("status", "DIPROSES");
+            rootMyQueue.child(patientModel.getIdDokter()).updateChildren(myQueue);
+            holder.tvStatus.setText(patientModel.getStatus());
 
             //update di list pasien
             DatabaseReference rootWaitingList = FirebaseDatabase.getInstance().getReference("WaitingList")
@@ -90,10 +97,14 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
             waitingList.put("waktuSelesai", "DIPROSES");
             rootWaitingList.child(patientModel.getIdAntrian()).updateChildren(waitingList);
         } else {
-            if (patientModel.getStatus().equals("MENUNGGU")) {
-                holder.tvStatus.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
-                holder.tvStatus.setText(patientModel.getStatus());
-            }
+            holder.tvStatus.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            //update di my queue wkkw
+            DatabaseReference rootMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue")
+                    .child(patientModel.getIdPasien());
+            HashMap<String, Object> myQueue = new HashMap<>();
+            myQueue.put("status", "MENUNGGU");
+            rootMyQueue.child(patientModel.getIdDokter()).updateChildren(myQueue);
+            holder.tvStatus.setText(patientModel.getStatus());
         }
 
         holder.ivFinish.setOnClickListener(view -> {

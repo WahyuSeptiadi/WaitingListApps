@@ -36,6 +36,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
         TextView tvDaftar = findViewById(R.id.tv_waktu_daftar_patientdetails);
         TextView tvSelesai = findViewById(R.id.tv_estimasi_patientdetails);
         ImageView btnBack = findViewById(R.id.btnback_patientdetails);
+        TextView tvTitle = findViewById(R.id.titlebar_patientdetails);
 
         //details in home trigger
         CircleImageView civProfileDoctor = findViewById(R.id.civ_doctor_patientdetails);
@@ -68,11 +69,13 @@ public class PatientDetailsActivity extends AppCompatActivity {
             tvJenis.setText(getJenis);
             tvDaftar.setText(getDaftar);
             tvSelesai.setText(getSelesai);
+            tvTitle.setText(R.string.str_data_register);
 
         } else {
             Toast.makeText(this, "Silahkan reload kembali untuk set data", Toast.LENGTH_SHORT).show();
         }
 
+        //data dari myqueue home
         if (getImageDoctor != null && getNameDoctor != null && getSpesialisDoctor != null && getDateRegist != null) {
             if (getImageDoctor.substring(0, 4).equals("http")) {
                 Picasso.get().load(getImageDoctor).into(civProfileDoctor);
@@ -83,6 +86,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
             tvNameDoctor.setText(getNameDoctor);
             tvSpesialisDoctor.setText(getSpesialisDoctor);
             tvDateRegist.setText(getDateRegist);
+
         } else {
             RelativeLayout rlDoctorDetails = findViewById(R.id.doctordetails);
             CardView cvNote = findViewById(R.id.cv_note_queuedetails);
