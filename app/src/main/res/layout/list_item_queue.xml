@@ -102,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_status_queuelist"
-                        android:text="Estimasi Dipanggil\nPada Pukul :"
+                        android:text="@string/str_estimasi_queue"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp" />
 
@@ -111,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_estimasi_queuelist"
-                        android:text="00 : 00"
+                        android:text="@string/str_time_queue"
                         android:textColor="@color/colorBlack"
                         android:textSize="30sp"
                         android:textStyle="bold" />
@@ -124,7 +124,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="15dp"
                         android:layout_toEndOf="@+id/tv_start_estimation_queuelist"
-                        android:text="WIB"
+                        android:text="@string/str_wib"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -168,7 +168,7 @@
                     android:paddingTop="5dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="5dp"
-                    android:text="Cek Detail"
+                    android:text="@string/str_cek_detail"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

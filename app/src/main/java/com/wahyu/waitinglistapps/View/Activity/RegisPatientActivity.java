@@ -36,7 +36,6 @@ public class RegisPatientActivity extends AppCompatActivity {
     private EditText et_patientname, et_numberphone, et_patientcomplain, et_patientage, et_patientaddress, et_patientgender, et_pickdoctor;
     private CircleImageView civ_profilepatient;
     private String imagePasien, namaPasien, nama_dokter, id_dokter, foto_dokter, spesialis_dokter, lastTimePatient;
-//    private String lastNumber;
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
@@ -90,7 +89,6 @@ public class RegisPatientActivity extends AppCompatActivity {
         lastTimePatient = data.getStringExtra("last_time");
         String userType = data.getStringExtra("usertype");
         String estimateStart = data.getStringExtra("estimate");
-//        lastNumber = data.getStringExtra("last_number");
 
         if (userType != null && estimateStart != null) {
             if (userType.equals("admin")) {

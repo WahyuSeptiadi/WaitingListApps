@@ -119,7 +119,8 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
             assert firebaseUser != null;
-            if (userType.equals("admin") || firebaseUser.getUid().equals(patientModel.getIdPasien())) {
+//            || firebaseUser.getUid().equals(patientModel.getIdPasien()) //akses user untuk delete lewat patient list dihapus sementara
+            if (userType.equals("admin")) {
                 final Dialog dialog = new Dialog(mActivity);
                 Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.setContentView(R.layout.dialog_edit_delete);

@@ -138,7 +138,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="Masuk"
+                                android:text="@string/str_masuk"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="18sp" />
                         </RelativeLayout>
@@ -155,7 +155,7 @@
                             android:id="@+id/tv_donthave_account"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Belum punya akun ?"
+                            android:text="@string/str_notyet_akun"
                             android:textColor="@color/colorBlack"
                             android:textSize="16sp" />
 
@@ -165,7 +165,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_toEndOf="@+id/tv_donthave_account"
-                            android:text="Daftar"
+                            android:text="@string/str_daftar"
                             android:textColor="@color/colorPrimary"
                             android:textSize="16sp" />
                     </RelativeLayout>

@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Detail Pasien"
+            android:text="@string/str_detail_pasien"
             android:textAlignment="center"
             android:textColor="#fff"
             android:textSize="18sp" />
@@ -158,7 +158,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Keluhan Pasien\t\t\t\t: "
+                        android:text="@string/str_keluhan"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp" />
 
@@ -182,7 +182,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nomer Hp Pasien\t\t\t: "
+                        android:text="@string/str_no_hp"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp" />
 
@@ -206,7 +206,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Alamat Pasien\t\t\t\t\t: "
+                        android:text="@string/str_alamat"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp" />
 
@@ -230,7 +230,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Umur / Jenis\t\t\t\t\t\t: "
+                        android:text="@string/str_umur"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp" />
 
@@ -239,17 +239,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginEnd="5dp"
                         android:text="@string/str_dot" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" / " />
+                        android:text="@string/str_slash_umurjenis" />
 
                     <TextView
                         android:id="@+id/tv_jenis_patientdetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:text="@string/str_dot" />
                 </LinearLayout>
 
@@ -265,7 +267,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Waktu Daftar\t\t\t\t\t\t: "
+                        android:text="@string/str_waktu_daftar"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp" />
 
@@ -289,7 +291,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Estimasi Dipanggil\t\t: "
+                        android:text="@string/str_estimasi"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp" />
 
@@ -325,7 +327,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:text="SEMOGA LEKAS SEMBUH YA"
+                        android:text="@string/str_gws_details"
                         android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp"
@@ -337,7 +339,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/getwellsoon"
                         android:layout_centerHorizontal="true"
-                        android:text="Ketika Alarm Pemberitahuan bunyi\nTunjukkan Data Pendaftaran ini \nkepada Admin / Asisten Dokter ya."
+                        android:text="@string/str_note_details"
                         android:textAlignment="center"
                         android:textColor="@color/colorOrange"
                         android:textSize="16sp" />

@@ -56,7 +56,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginEnd="20dp"
-                        android:text="1. Bagaimana cara jika saya lupa password ?"
+                        android:text="@string/str_q1"
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
                         android:layout_below="@+id/question1"
                         android:layout_marginStart="30dp"
                         android:layout_marginEnd="20dp"
-                        android:text="Mohon maaf, aplikasi belum ada fitur lupa password, jadi Anda harus registrasi akun baru."
+                        android:text="@string/str_a1"
                         android:textColor="@color/colorBlack" />
 
                     <TextView
@@ -78,7 +78,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="20dp"
-                        android:text="2. Apakah saya bisa menggunakan email yang sama untuk lebih dari satu akun ?"
+                        android:text="@string/str_q2"
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold" />
 
@@ -89,7 +89,7 @@
                         android:layout_below="@+id/question2"
                         android:layout_marginStart="30dp"
                         android:layout_marginEnd="20dp"
-                        android:text="Tidak bisa, satu email hanya digunakan untuk satu akun saja."
+                        android:text="@string/str_a2"
                         android:textColor="@color/colorBlack" />
 
                     <TextView
@@ -100,7 +100,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="20dp"
-                        android:text="3. Bagaimana jika saya ingin menghapus akun saya ?"
+                        android:text="@string/str_q3"
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold" />
 
@@ -111,7 +111,7 @@
                         android:layout_below="@+id/question3"
                         android:layout_marginStart="30dp"
                         android:layout_marginEnd="20dp"
-                        android:text="Mohon Maaf, untuk penghapusan akun hanya bisa dilakukan oleh Admin, dan tidak bisa dihapus sendiri. Jika ingin menghapus akun, silahkan hubungi Admin terlebih dahulu."
+                        android:text="@string/str_a3"
                         android:textColor="@color/colorBlack" />
 
                     <TextView
@@ -122,7 +122,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="20dp"
-                        android:text="4. Apakah yang harus saya lakukan, jika saya menemukan BUG/ERROR pada Aplikasi ini ?"
+                        android:text="@string/str_q4"
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold" />
 
@@ -133,7 +133,7 @@
                         android:layout_below="@+id/question4"
                         android:layout_marginStart="30dp"
                         android:layout_marginEnd="20dp"
-                        android:text="Jika Anda menemukan BUG/ERROR yang terjadi di aplikasi, Anda dapat melaporkannya kepada pihak Developer melalui link media sosial dibawah ini. Kami senang menerima saran dan kritik Anda untuk dapat membangun aplikasi ini menjadi lebih baik."
+                        android:text="@string/str_a4"
                         android:textColor="@color/colorBlack" />
 
                     <TextView
@@ -144,7 +144,7 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="10dp"
-                        android:text="Developed by\t\t> "
+                        android:text="@string/str_developedby"
                         android:textColor="@color/colorBlack" />
 
                     <LinearLayout
@@ -154,7 +154,8 @@
                         android:layout_below="@+id/answer4"
                         android:layout_marginTop="20dp"
                         android:layout_toEndOf="@+id/developerby"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
 
                         <ImageView
                             android:id="@+id/icon_igAdmin"
@@ -170,7 +171,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="20dp"
-                            android:text="wahyoearts"
+                            android:text="@string/str_developer"
                             android:textColor="@color/colorPrimary" />
                     </LinearLayout>
 
@@ -182,7 +183,7 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:text="Icon Design by\t> "
+                        android:text="@string/str_icondesign"
                         android:textColor="@color/colorBlack" />
 
                     <LinearLayout
@@ -195,20 +196,12 @@
                         android:layout_toEndOf="@+id/icondesignby"
                         android:orientation="horizontal">
 
-                        <!--                        <ImageView-->
-                        <!--                            android:id="@+id/icon_flatIcon"-->
-                        <!--                            android:layout_width="18dp"-->
-                        <!--                            android:layout_height="18dp"-->
-                        <!--                            android:layout_marginTop="2dp"-->
-                        <!--                            android:contentDescription="@string/todo"-->
-                        <!--                            android:src="@drawable/icon_instagram" />-->
-
                         <TextView
                             android:id="@+id/link_flatIcon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
-                            android:text="flaticon.com"
+                            android:text="@string/str_linkicon"
                             android:textColor="@color/colorPrimary" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -238,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:text="SEMOGA LEKAS SEMBUH"
+                        android:text="@string/str_getwellsoon"
                         android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp"
@@ -250,7 +243,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/getwellsoon"
                         android:layout_centerHorizontal="true"
-                        android:text="Ketika Alarm Pemberitahuan bunyi\nTunjukkan Data Pendaftaran Anda \nkepada Admin / Asisten Dokter ya :)"
+                        android:text="@string/str_notehelp"
                         android:textAlignment="center"
                         android:textColor="@color/colorOrange"
                         android:textSize="16sp" />

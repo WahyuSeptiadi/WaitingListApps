@@ -74,7 +74,7 @@
                 android:layout_below="@+id/cv_imgprofile_doctordetails"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
-                android:text="Dokter Spesialis"
+                android:text="@string/str_dokter_spesialis"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -102,7 +102,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hari kerja\t\t\t\t\t: "
+                    android:text="@string/str_hari_kerja"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp" />
 
@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Jam kerja\t\t\t\t: "
+                    android:text="@string/str_jam_kerja"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp" />
 
@@ -165,7 +165,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Batas pasien\t\t: "
+                    android:text="@string/str_batas_pasien"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp" />
 
@@ -190,7 +190,7 @@
                 android:paddingTop="5dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="5dp"
-                android:text="Lihat Pasien Hari ini"
+                android:text="@string/str_pasien_hariini"
                 android:textColor="@color/colorBlack" />
         </RelativeLayout>
     </ScrollView>

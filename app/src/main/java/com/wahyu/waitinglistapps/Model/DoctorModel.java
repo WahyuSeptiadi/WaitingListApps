@@ -16,19 +16,9 @@ public class DoctorModel {
     private String limit;
     private String lastPatient;
     private String lastDate;
-//    private String open;
-//    private String lastNumber;
 
     public DoctorModel() {
     }
-
-//    public String getLastNumber() {
-//        return lastNumber;
-//    }
-//
-//    public void setLastNumber(String lastNumber) {
-//        this.lastNumber = lastNumber;
-//    }
 
     public String getLastDate() {
         return lastDate;
@@ -109,12 +99,4 @@ public class DoctorModel {
     public void setLimit(String limit) {
         this.limit = limit;
     }
-
-//    public String getOpen() {
-//        return open;
-//    }
-//
-//    public void setOpen(String open) {
-//        this.open = open;
-//    }
 }

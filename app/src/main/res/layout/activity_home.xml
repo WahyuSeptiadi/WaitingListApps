@@ -91,7 +91,7 @@
                             android:layout_below="@+id/civ_iconDoctorHome"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:text="Daftar Dokter"
+                            android:text="@string/titlebar_daftardokter"
                             android:textColor="@color/colorBlack" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
@@ -125,7 +125,7 @@
                             android:layout_below="@+id/civ_iconPickHome"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:text="Ambil Antrian"
+                            android:text="@string/str_ambil_antrian"
                             android:textColor="@color/colorBlack" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
@@ -153,7 +153,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="17dp"
                         android:layout_marginTop="10dp"
-                        android:text="INFO ANTRIAN SAYA"
+                        android:text="@string/str_info_antrian"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -180,7 +180,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/emptyBox_home"
                         android:layout_centerHorizontal="true"
-                        android:text="ANDA BELUM MENGAMBIL ANTRIAN"
+                        android:text="@string/str_emptypickqueue"
                         android:textColor="@color/colorOrange"
                         android:textStyle="bold"
                         android:visibility="gone" />
@@ -215,7 +215,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
-                        android:text="SELAMAT DATANG\nDI APLIKASI ANTRI KUY"
+                        android:text="@string/str_wellcomehome"
                         android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp"
@@ -227,7 +227,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/welcome"
                         android:layout_centerHorizontal="true"
-                        android:text="SEMOGA LEKAS SEMBUH YA"
+                        android:text="@string/str_gws_home"
                         android:textAlignment="center"
                         android:textColor="@color/colorOrange"
                         android:textSize="16sp" />

@@ -105,42 +105,55 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             String limit = doctorModel.getLimit();
 
             if (isDaftar != null) {
-                if (!doctorModel.getLastDate().equals(getCurrentLocalDateStamp())){
-                    //update ke kosong lagi
+                //ketika hari sekarang tidak sama hari pada pasien terakhir di dokter tersebut
+                if (!doctorModel.getLastDate().equals(getCurrentLocalDateStamp())) {
+                    //update tgl sekarang
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("lastDate", getCurrentLocalDateStamp());
-                    hashMap.put("lastPatient", "kosong");
-//                    hashMap.put("lastNumber", "0");
                     DatabaseReference dbRefDoctors = FirebaseDatabase.getInstance().getReference("Doctors");
                     dbRefDoctors.child(doctorId).updateChildren(hashMap);
-                }
 
-                int convertTimeStart = Integer.parseInt(doctorModel.getWorktimestart().substring(0, 2) +
-                        doctorModel.getWorktimestart().substring(3, 5));
-                int convertTimeFinish = Integer.parseInt(doctorModel.getWorktimefinish().substring(0, 2) +
-                        doctorModel.getWorktimefinish().substring(3, 5));
-                int convertCurrentTime = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2) +
-                        getCurrentLocalTimeStamp(0).substring(3, 5));
+                    int convertTimeStart = Integer.parseInt(doctorModel.getWorktimestart().substring(0, 2) +
+                            doctorModel.getWorktimestart().substring(3, 5));
+                    int convertTimeFinish = Integer.parseInt(doctorModel.getWorktimefinish().substring(0, 2) +
+                            doctorModel.getWorktimefinish().substring(3, 5));
+                    int convertCurrentTime = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2) +
+                            getCurrentLocalTimeStamp(0).substring(3, 5));
 
-//                Toast.makeText(mActivity, "start " + convertTimeStart, Toast.LENGTH_SHORT).show();
-//                Toast.makeText(mActivity, "finish " + convertTimeFinish, Toast.LENGTH_SHORT).show();
-//                Toast.makeText(mActivity, "now " + convertCurrentTime, Toast.LENGTH_SHORT).show();
+                    if (convertCurrentTime >= convertTimeStart && convertCurrentTime <= convertTimeFinish) {
+                        Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
+                        toRegis.putExtra("id_doctor", doctorId);
+                        toRegis.putExtra("name_doctor", namedr);
+                        toRegis.putExtra("image_doctor", imgProfile);
+                        toRegis.putExtra("spesialis", spesialis);
+                        toRegis.putExtra("last_time", "kosong"); // update ke kosong
+                        mActivity.startActivity(toRegis);
+                        mActivity.finish();
+                    } else {
+                        Toast.makeText(mActivity, "Maaf, " + doctorModel.getName() + " sudah tutup", Toast.LENGTH_SHORT).show();
+                    }
+                } else { // ketika sama maka gak di upadate kosong
+                    int convertTimeStart = Integer.parseInt(doctorModel.getWorktimestart().substring(0, 2) +
+                            doctorModel.getWorktimestart().substring(3, 5));
+                    int convertTimeFinish = Integer.parseInt(doctorModel.getWorktimefinish().substring(0, 2) +
+                            doctorModel.getWorktimefinish().substring(3, 5));
+                    int convertCurrentTime = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2) +
+                            getCurrentLocalTimeStamp(0).substring(3, 5));
 
-                if (convertCurrentTime >= convertTimeStart && convertCurrentTime <= convertTimeFinish) {
-                    String lastTimePatient = doctorModel.getLastPatient();
-//                    String lastNumber = doctorModel.getLastNumber();
+                    if (convertCurrentTime >= convertTimeStart && convertCurrentTime <= convertTimeFinish) {
+                        String lastTimePatient = doctorModel.getLastPatient();
 
-                    Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
-                    toRegis.putExtra("id_doctor", doctorId);
-                    toRegis.putExtra("name_doctor", namedr);
-                    toRegis.putExtra("image_doctor", imgProfile);
-                    toRegis.putExtra("spesialis", spesialis);
-                    toRegis.putExtra("last_time", lastTimePatient);
-//                    toRegis.putExtra("last_number", lastNumber);
-                    mActivity.startActivity(toRegis);
-                    mActivity.finish();
-                } else {
-                    Toast.makeText(mActivity, "Maaf, " + doctorModel.getName() + " sudah tutup", Toast.LENGTH_SHORT).show();
+                        Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
+                        toRegis.putExtra("id_doctor", doctorId);
+                        toRegis.putExtra("name_doctor", namedr);
+                        toRegis.putExtra("image_doctor", imgProfile);
+                        toRegis.putExtra("spesialis", spesialis);
+                        toRegis.putExtra("last_time", lastTimePatient);
+                        mActivity.startActivity(toRegis);
+                        mActivity.finish();
+                    } else {
+                        Toast.makeText(mActivity, "Maaf, " + doctorModel.getName() + " sudah tutup", Toast.LENGTH_SHORT).show();
+                    }
                 }
             } else {
                 Intent toDetails = new Intent(mActivity, DoctorDetailsActivity.class);

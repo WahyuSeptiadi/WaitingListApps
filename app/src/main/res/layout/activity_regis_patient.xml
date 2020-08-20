@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Form Pendaftaran"
+            android:text="@string/str_form_pendaftaran"
             android:textAlignment="center"
             android:textColor="#fff"
             android:textSize="18sp" />
@@ -100,7 +100,7 @@
                                 android:layout_height="40dp"
                                 android:autofillHints=""
                                 android:background="@drawable/bg_round_white"
-                                android:hint="Estimasi dipanggil"
+                                android:hint="@string/str_estimasi"
                                 android:inputType="number"
                                 android:paddingStart="20dp"
                                 android:paddingEnd="10dp" />
@@ -134,7 +134,7 @@
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
                             android:enabled="true"
-                            android:hint="Nama Pasien"
+                            android:hint="@string/hint_nama_pasien"
                             android:inputType="textCapWords"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
@@ -154,7 +154,7 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="Nomer Hp Aktif"
+                            android:hint="@string/hint_nohp_pasien"
                             android:inputType="number"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp"
@@ -175,7 +175,7 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="Keluhan penyakit"
+                            android:hint="@string/str_keluhan_pasien"
                             android:inputType="textCapSentences"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
@@ -195,7 +195,7 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="Alamat pasien"
+                            android:hint="@string/hint_alamat_pasien"
                             android:inputType="textCapSentences"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
@@ -215,7 +215,7 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="Umur (mis: 21 Thn)"
+                            android:hint="@string/hint_umur_pasien"
                             android:inputType="textCapWords"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
@@ -235,7 +235,7 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="Jenis kelamin (L/P)"
+                            android:hint="@string/hint_jenis_pasien"
                             android:inputType="textCapWords"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp" />
@@ -257,7 +257,7 @@
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
                             android:enabled="false"
-                            android:hint="Pilih Dokter"
+                            android:hint="@string/hint_pilih_dokter"
                             android:inputType="text"
                             android:paddingStart="20dp"
                             android:paddingTop="7dp"
@@ -307,7 +307,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="Daftar"
+                                android:text="@string/str_daftar"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="18sp" />
                         </RelativeLayout>
