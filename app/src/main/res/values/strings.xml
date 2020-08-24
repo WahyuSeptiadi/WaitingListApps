@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Antri Kuy</string>
+    <string name="app_name">Antrian Rumah Sakit Islam</string>
+    <string name="name_hospital">Muhammadiyah Sumber Rejo</string>
     <string name="todo">todo</string>
     <string name="titlebar_registry">Daftar Akun</string>
     <string name="titlebar_login">Login</string>
@@ -55,7 +56,7 @@
     <string name="str_ambil_antrian">Ambil Antrian</string>
     <string name="str_info_antrian">INFO ANTRIAN SAYA</string>
     <string name="str_emptypickqueue">ANDA BELUM MENGAMBIL ANTRIAN</string>
-    <string name="str_wellcomehome">SELAMAT DATANG\nDI APLIKASI ANTRI KUY</string>
+    <string name="str_wellcomehome">SELAMAT DATANG\nDI APLIKASI ANTRIAN</string>
     <string name="str_gws_home">SEMOGA LEKAS SEMBUH YA</string>
     <string name="str_masuk">Masuk</string>
     <string name="str_notyet_akun">Belum punya akun ?</string>
