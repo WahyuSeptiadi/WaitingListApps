@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@string/str_dot"
+            android:text="@string/titlebar_detaildokter"
             android:textAlignment="center"
             android:textColor="#fff"
             android:textSize="18sp" />
@@ -68,22 +68,22 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/tv_spesialis"
+                android:id="@+id/tv_namedoctor_doctordetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/cv_imgprofile_doctordetails"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
-                android:text="@string/str_dokter_spesialis"
+                android:text="@string/str_dot"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_spesialis_doctordetails"
+                android:id="@+id/tv_polidoctor_doctordetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_spesialis"
+                android:layout_below="@+id/tv_namedoctor_doctordetails"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
@@ -95,7 +95,7 @@
                 android:id="@+id/ll_workday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_spesialis_doctordetails"
+                android:layout_below="@+id/tv_polidoctor_doctordetails"
                 android:layout_margin="20dp"
                 android:orientation="horizontal">
 

@@ -6,23 +6,24 @@ package com.wahyu.waitinglistapps.Model;
  */
 
 public class PatientModel {
-    private String idAntrian;
     private String idDokter;
     private String namaDokter;
     private String imageDoctor;
-    private String spesialis;
-    private String imageURL;
+    private String poliDoctor;
+    private String idAntrian;
     private String idPasien;
+    private String imageURL;
     private String namaPasien;
-    private String alamatPasien;
-    private String jenisPasien;
-    private String keluhanPasien;
-    private String nomerHpPasien;
-    private String umurPasien;
+    private String noRekamMedis;
+    private String caraPembayaran;
+    private String asalRujukan;
     private String tanggalDaftar;
     private String waktuDaftar;
     private String waktuSelesai;
     private String status;
+
+//    private String umurPasien;
+//    private String alamatPasien;
 
     public PatientModel() {
     }
@@ -35,8 +36,8 @@ public class PatientModel {
         this.idAntrian = idAntrian;
     }
 
-    public String getSpesialis() {
-        return spesialis;
+    public String getPoliDoctor() {
+        return poliDoctor;
     }
 
     public String getStatus() {
@@ -47,8 +48,8 @@ public class PatientModel {
         this.status = status;
     }
 
-    public void setSpesialis(String spesialis) {
-        this.spesialis = spesialis;
+    public void setPoliDoctor(String poliDoctor) {
+        this.poliDoctor = poliDoctor;
     }
 
     public String getImageDoctor() {
@@ -107,44 +108,28 @@ public class PatientModel {
         this.namaPasien = namaPasien;
     }
 
-    public String getAlamatPasien() {
-        return alamatPasien;
+    public String getNoRekamMedis() {
+        return noRekamMedis;
     }
 
-    public void setAlamatPasien(String alamatPasien) {
-        this.alamatPasien = alamatPasien;
+    public void setNoRekamMedis(String noRekamMedis) {
+        this.noRekamMedis = noRekamMedis;
     }
 
-    public String getJenisPasien() {
-        return jenisPasien;
+    public String getCaraPembayaran() {
+        return caraPembayaran;
     }
 
-    public void setJenisPasien(String jenisPasien) {
-        this.jenisPasien = jenisPasien;
+    public void setCaraPembayaran(String caraPembayaran) {
+        this.caraPembayaran = caraPembayaran;
     }
 
-    public String getKeluhanPasien() {
-        return keluhanPasien;
+    public String getAsalRujukan() {
+        return asalRujukan;
     }
 
-    public void setKeluhanPasien(String keluhanPasien) {
-        this.keluhanPasien = keluhanPasien;
-    }
-
-    public String getNomerHpPasien() {
-        return nomerHpPasien;
-    }
-
-    public void setNomerHpPasien(String nomerHpPasien) {
-        this.nomerHpPasien = nomerHpPasien;
-    }
-
-    public String getUmurPasien() {
-        return umurPasien;
-    }
-
-    public void setUmurPasien(String umurPasien) {
-        this.umurPasien = umurPasien;
+    public void setAsalRujukan(String asalRujukan) {
+        this.asalRujukan = asalRujukan;
     }
 
     public String getWaktuDaftar() {

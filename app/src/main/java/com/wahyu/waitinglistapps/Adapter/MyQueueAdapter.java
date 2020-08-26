@@ -71,7 +71,7 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
         }
 
         holder.tvNameDoctor.setText(patientModel.getNamaDokter());
-        holder.tvSpesialisDoctor.setText(patientModel.getSpesialis());
+        holder.tvSpesialisDoctor.setText(patientModel.getPoliDoctor());
         holder.tvDateRegist.setText(patientModel.getTanggalDaftar());
         holder.tvTimeFinish.setText(patientModel.getWaktuSelesai());
 
@@ -127,33 +127,36 @@ public class MyQueueAdapter extends RecyclerView.Adapter<MyQueueAdapter.ViewHold
         holder.tvBtnDetails.setOnClickListener(view -> {
             String image = patientModel.getImageURL();
             String name = patientModel.getNamaPasien();
-            String keluhan = patientModel.getKeluhanPasien();
-            String nomerhp = patientModel.getNomerHpPasien();
-            String alamat = patientModel.getAlamatPasien();
-            String umur = patientModel.getUmurPasien();
-            String jenis = patientModel.getJenisPasien();
+            String noRekamMedis = patientModel.getNoRekamMedis();
+            String caraPembayaran = patientModel.getCaraPembayaran();
+            String asalRujukan = patientModel.getAsalRujukan();
             String daftar = patientModel.getWaktuDaftar();
             String selesai = patientModel.getWaktuSelesai();
+//            String umur = patientModel.getUmurPasien();
+//            String jenis = patientModel.getJenisPasien();
+
             //FOR MY QUEUE DETAILS
             String imageDoctor = patientModel.getImageDoctor();
             String nameDoctor = patientModel.getNamaDokter();
-            String spesialisDoctor = patientModel.getSpesialis();
+            String poliDoctor = patientModel.getPoliDoctor();
             String dateRegist = patientModel.getTanggalDaftar();
 
             Intent toPatientDetails = new Intent(mActivity, PatientDetailsActivity.class);
             toPatientDetails.putExtra("image", image);
             toPatientDetails.putExtra("name", name);
-            toPatientDetails.putExtra("keluhan", keluhan);
-            toPatientDetails.putExtra("nomerhp", nomerhp);
-            toPatientDetails.putExtra("alamat", alamat);
-            toPatientDetails.putExtra("umur", umur);
-            toPatientDetails.putExtra("jenis", jenis);
+            toPatientDetails.putExtra("asalRujukan", asalRujukan);
+            toPatientDetails.putExtra("noRekamMedis", noRekamMedis);
+            toPatientDetails.putExtra("caraPembayaran", caraPembayaran);
             toPatientDetails.putExtra("daftar", daftar);
             toPatientDetails.putExtra("selesai", selesai);
+
+//            toPatientDetails.putExtra("umur", umur);
+//            toPatientDetails.putExtra("jenis", jenis);
+
             //my queue details
             toPatientDetails.putExtra("imagedoctor", imageDoctor);
             toPatientDetails.putExtra("namedoctor", nameDoctor);
-            toPatientDetails.putExtra("spesialisdoctor", spesialisDoctor);
+            toPatientDetails.putExtra("poliDoctor", poliDoctor);
             toPatientDetails.putExtra("dateregist", dateRegist);
             mActivity.startActivity(toPatientDetails);
         });

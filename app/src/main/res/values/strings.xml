@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Antrian Rumah Sakit Islam</string>
-    <string name="name_hospital">Muhammadiyah Sumber Rejo</string>
+    <string name="app_name">RSIM</string>
+    <string name="hometitle_name">Antrian RSI Muhammadiyah</string>
+    <string name="name_hospital">Muhammadiyah Sumberrejo</string>
     <string name="todo">todo</string>
     <string name="titlebar_registry">Daftar Akun</string>
     <string name="titlebar_login">Login</string>
@@ -13,9 +14,9 @@
     <string name="titlebar_help">Bantuan</string>
     <string name="titilebar_adddoctor">Tambah Dokter</string>
     <string name="str_dot">....</string>
-    <string name="hint_namedr">masukkan nama dokter</string>
-    <string name="hint_spesialis">masukkan spesialis</string>
-    <string name="hint_workday">hari kerja</string>
+    <string name="hint_namedr">Masukkan nama dokter</string>
+    <string name="hint_polidoctor">Masukkan Poliklinik</string>
+    <string name="hint_workday">Hari kerja</string>
     <string name="hint_start">mulai</string>
     <string name="hint_finish">selesai</string>
     <string name="note_limit">NOTE : Batas -\npasien tiap hari</string>
@@ -33,7 +34,7 @@
     <string name="str_proccessing">DIPROSES</string>
     <string name="copyright">Copyright 2020</string>
     <string name="str_data_register">Data Pendaftaran</string>
-    <string name="str_dokter_spesialis">Dokter Spesialis</string>
+    <string name="str_dokter_poliklinik">Dokter Poliklinik</string>
     <string name="str_hari_kerja">Hari kerja\t\t\t\t\t:</string>
     <string name="str_jam_kerja">Jam kerja\t\t\t\t:</string>
     <string name="str_batas_pasien">Batas pasien\t\t:</string>
@@ -62,23 +63,24 @@
     <string name="str_notyet_akun">Belum punya akun ?</string>
     <string name="str_daftar">Daftar</string>
     <string name="str_detail_pasien">Detail Pasien</string>
-    <string name="str_keluhan">Keluhan Pasien\t\t\t\t:</string>
-    <string name="str_no_hp">Nomer Hp Pasien\t\t\t:</string>
-    <string name="str_alamat">Alamat Pasien\t\t\t\t\t:</string>
+    <string name="str_asalrujukan">Asal Rujukan\t\t\t\t\t\t\t\t:</string>
+    <string name="str_no_rekammedis">Nomer Rekam Medis\t\t\t:</string>
+    <string name="str_carapembayaran">Cara Pembayaran\t\t\t\t\t:</string>
     <string name="str_umur">Umur / Jenis\t\t\t\t\t\t:</string>
     <string name="str_slash_umurjenis">/</string>
-    <string name="str_waktu_daftar">Waktu Daftar\t\t\t\t\t\t:</string>
-    <string name="str_estimasi">Estimasi Dipanggil\t\t:</string>
+    <string name="str_waktu_daftar">Waktu Daftar\t\t\t\t\t\t\t\t:</string>
+    <string name="str_estimasi">Estimasi Dipanggil\t\t\t\t:</string>
     <string name="str_gws_details">SEMOGA LEKAS SEMBUH YA</string>
     <string name="str_note_details">Ketika Alarm Pemberitahuan bunyi\nTunjukkan Data Pendaftaran ini \nkepada Admin / Asisten Dokter ya.</string>
-    <string name="str_form_pendaftaran">Form Pendaftaran</string>
-    <string name="hint_nama_pasien">Nama Pasien</string>
-    <string name="hint_nohp_pasien">Nomer Hp Aktif</string>
-    <string name="str_keluhan_pasien">Keluhan pasien</string>
-    <string name="hint_alamat_pasien">Alamat pasien</string>
-    <string name="hint_umur_pasien">Umur (mis: 21 Thn)</string>
-    <string name="hint_jenis_pasien">Jenis kelamin (L/P)</string>
-    <string name="hint_pilih_dokter">Pilih Dokter</string>
+    <string name="str_form_pendaftaran">Form Daftar Antrian</string>
+    <string name="hint_estimasi">Estimasi dipanggil</string>
+    <string name="hint_nama_pasien">Nama pasien</string>
+    <string name="hint_norekammedis_pasien">Nomer rekam medis</string>
+    <string name="hint_cara_pembayaran">Cara pembayaran (umum/bpjs)</string>
+    <string name="hint_asal_rujukan">Asal rujukan (mandiri/dirujuk)</string>
+    <string name="hint_umur_pasien">umur (mis: 21 Thn)</string>
+    <string name="hint_jenis_pasien">jenis kelamin (L/P)</string>
+    <string name="hint_pilih_poliklinik">Pilih Poliklinik</string>
     <string name="str_pilih_aksi">Silahkan pilih aksi</string>
     <string name="str_edit">Edit</string>
     <string name="str_perkiraan">Perkiraan dipanggil\t :</string>
@@ -87,4 +89,5 @@
     <string name="str_time_queue">00 : 00</string>
     <string name="str_wib">WIB</string>
     <string name="str_cek_detail">Cek Detail</string>
+    <string name="titlebar_detaildokter">Detail Dokter</string>
 </resources>

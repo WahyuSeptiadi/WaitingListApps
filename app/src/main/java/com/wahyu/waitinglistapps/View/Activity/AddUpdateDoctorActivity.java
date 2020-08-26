@@ -41,7 +41,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
     private CircleImageView civProfileDoctor;
     private Uri mImageUri;
     private ImageView imgUpload, imgDelete;
-    private EditText etNameDr, etSpesialis, etWorkDay, etTimeStart, etTimeFinish, etLimitSeat;
+    private EditText etNameDr, etPoliDoctor, etWorkDay, etTimeStart, etTimeFinish, etLimitSeat;
 
     final String TIMESTART_PICKER_TAG = "TIME START";
     final String TIMEFINISH_PICKER_TAG = "TIME FINISH";
@@ -51,7 +51,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
     private DoctorModel doctorModel;
 
-    private String getDoctorId, getName, getImageURL, getSpesialis, getWorkday, getTimeStart, getTimeFinish, getPatientLimit, getLastPatient;
+    private String getDoctorId, getName, getImageURL, getPoliDoctor, getWorkday, getTimeStart, getTimeFinish, getPatientLimit, getLastPatient;
     private boolean isDeleteProfile = false;
     private Calendar calendar;
 
@@ -67,7 +67,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         imgUpload = findViewById(R.id.iv_imageUploadProfileDoctor);
         imgDelete = findViewById(R.id.iv_imageDeleteProfileDoctor);
         etNameDr = findViewById(R.id.et_username_adddoctor);
-        etSpesialis = findViewById(R.id.et_spesialis_adddoctor);
+        etPoliDoctor = findViewById(R.id.et_polidoctor_adddoctor);
         etWorkDay = findViewById(R.id.et_workday_adddoctor);
 
         etTimeStart = findViewById(R.id.et_timestart);
@@ -87,7 +87,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         etLimitSeat.setText("--");
         getDataFromIntentList();
 
-        if (getDoctorId != null && getName != null && getImageURL != null && getSpesialis != null && getWorkday != null &&
+        if (getDoctorId != null && getName != null && getImageURL != null && getPoliDoctor != null && getWorkday != null &&
                 getTimeStart != null && getTimeFinish != null && getPatientLimit != null) {
 
             tvTitle.setText(R.string.titlebar_updatedoctor);
@@ -101,7 +101,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
                 Picasso.get().load(R.drawable.icon_default_profile).into(civProfileDoctor);
             }
             etNameDr.setText(getName);
-            etSpesialis.setText(getSpesialis);
+            etPoliDoctor.setText(getPoliDoctor);
             etWorkDay.setText(getWorkday);
             etTimeStart.setText(getTimeStart);
             etTimeFinish.setText(getTimeFinish);
@@ -125,7 +125,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         getDoctorId = data.getStringExtra("id");
         getName = data.getStringExtra("name");
         getImageURL = data.getStringExtra("imgprofile");
-        getSpesialis = data.getStringExtra("spesialis");
+        getPoliDoctor = data.getStringExtra("poliDoctor");
         getWorkday = data.getStringExtra("workday");
         getTimeStart = data.getStringExtra("timestart");
         getTimeFinish = data.getStringExtra("timefinish");
@@ -159,26 +159,26 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
                 break;
             case R.id.cv_btnadddoctor:
                 String name = etNameDr.getText().toString();
-                String spesialis = etSpesialis.getText().toString();
+                String poliDoctor = etPoliDoctor.getText().toString();
                 String workday = etWorkDay.getText().toString();
                 String timestart = etTimeStart.getText().toString();
                 String timefinish = etTimeFinish.getText().toString();
                 String limit = etLimitSeat.getText().toString();
 
                 if (getDoctorId != null) {
-                    if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(spesialis) && !TextUtils.isEmpty(workday) &&
+                    if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(poliDoctor) && !TextUtils.isEmpty(workday) &&
                             !TextUtils.isEmpty(timestart) && !TextUtils.isEmpty(timefinish) && !TextUtils.isEmpty(limit)) {
 
-                        updateDataDoctor(getDoctorId, name, spesialis, workday, timestart, timefinish, limit);
+                        updateDataDoctor(getDoctorId, name, poliDoctor, workday, timestart, timefinish, limit);
 
                     } else {
                         Toast.makeText(this, "Tolong lengkapi semua fieldnya ya :)", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(spesialis) && !TextUtils.isEmpty(workday) &&
+                    if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(poliDoctor) && !TextUtils.isEmpty(workday) &&
                             !TextUtils.isEmpty(timestart) && !TextUtils.isEmpty(timefinish) && !TextUtils.isEmpty(limit)) {
 
-                        AddNewDoctor(name, spesialis, workday, timestart, timefinish, limit);
+                        AddNewDoctor(name, poliDoctor, workday, timestart, timefinish, limit);
 
                     } else {
                         Toast.makeText(this, "Tolong lengkapi semua fieldnya ya :)", Toast.LENGTH_SHORT).show();
@@ -191,7 +191,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         }
     }
 
-    private void AddNewDoctor(String name, String spesialis, String workday, String timestart, String timefinish, String limit) {
+    private void AddNewDoctor(String name, String poliDoctor, String workday, String timestart, String timefinish, String limit) {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Tunggu sebentar ya..");
         pd.show();
@@ -204,7 +204,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", doctorModel.getId());
         hashMap.put("name", name);
-        hashMap.put("spesialis", spesialis);
+        hashMap.put("poliDoctor", poliDoctor);
         hashMap.put("workday", workday);
         hashMap.put("worktimestart", timestart);
         hashMap.put("worktimefinish", timefinish);
@@ -252,7 +252,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
 
     }
 
-    private void updateDataDoctor(String doctorId, String name, String spesialis, String workday, String timestart, String timefinish, String limit) {
+    private void updateDataDoctor(String doctorId, String name, String poliDoctor, String workday, String timestart, String timefinish, String limit) {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Tunggu sebentar ya..");
         pd.show();
@@ -261,7 +261,7 @@ public class AddUpdateDoctorActivity extends AppCompatActivity implements View.O
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", doctorId);
         hashMap.put("name", name);
-        hashMap.put("spesialis", spesialis);
+        hashMap.put("poliDoctor", poliDoctor);
         hashMap.put("workday", workday);
         hashMap.put("worktimestart", timestart);
         hashMap.put("worktimefinish", timefinish);

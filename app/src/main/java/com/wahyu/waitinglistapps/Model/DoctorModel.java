@@ -9,7 +9,7 @@ public class DoctorModel {
     private String id;
     private String name;
     private String imageURL;
-    private String spesialis;
+    private String poliDoctor;
     private String workday;
     private String worktimestart;
     private String worktimefinish;
@@ -60,12 +60,12 @@ public class DoctorModel {
         this.imageURL = imageURL;
     }
 
-    public String getSpesialis() {
-        return spesialis;
+    public String getPoliDoctor() {
+        return poliDoctor;
     }
 
-    public void setSpesialis(String spesialis) {
-        this.spesialis = spesialis;
+    public void setPoliDoctor(String poliDoctor) {
+        this.poliDoctor = poliDoctor;
     }
 
     public String getWorkday() {

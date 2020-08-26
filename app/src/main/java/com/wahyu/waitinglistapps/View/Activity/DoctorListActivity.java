@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.wahyu.waitinglistapps.Adapter.DoctorListAdapter;
 import com.wahyu.waitinglistapps.Model.DoctorModel;
@@ -59,8 +60,9 @@ public class DoctorListActivity extends AppCompatActivity {
 
     private void getAllDoctor() {
         doctorModelArrayList = new ArrayList<>();
+        Query query = reference.orderByChild("poliDoctor");
 
-        reference.addValueEventListener(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 doctorModelArrayList.clear();

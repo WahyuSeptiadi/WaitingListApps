@@ -31,22 +31,23 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RegisPatientActivity extends AppCompatActivity {
+public class PickQueuePatientActivity extends AppCompatActivity {
 
-    private EditText et_patientname, et_numberphone, et_patientcomplain, et_patientage, et_patientaddress, et_patientgender, et_pickdoctor;
     private CircleImageView civ_profilepatient;
-    private String imagePasien, namaPasien, nama_dokter, id_dokter, foto_dokter, spesialis_dokter, lastTimePatient;
+    private EditText et_patientname, et_norekammedis, et_carapembayaran, et_asalrujukan, et_pickdoctor;
+//    private EditText et_patientcomplain, et_patientgender;
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
+    private SharedPreferences preferences;
     private Calendar calendar;
 
-    private String profile, name, nomerhp, keluhan, alamat, umur, kelamin;
-    private SharedPreferences preferences;
+    private String imagePasien, namaDokter, idDokter, fotoDokter, poliDoctor, lastTimePatient;
+    private String profile, name, nomerRekamMedis, asalRujukan, caraPembayaran;
+//    private String keluhan, alamat, umur, kelamin;
 
     //setAlarm Notification
     private AlarmReceiver alarmReceiver;
-
     //set Estimate called for admin
     private EditText etEstimateCalled;
     private String estimate;
@@ -54,7 +55,7 @@ public class RegisPatientActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_regis_patient);
+        setContentView(R.layout.activity_pickqueue_patient);
 
         //inisialisasi
         reference = FirebaseDatabase.getInstance().getReference("WaitingList");
@@ -62,16 +63,24 @@ public class RegisPatientActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         alarmReceiver = new AlarmReceiver();
 
-        et_patientname = findViewById(R.id.et_patientname);
-        et_numberphone = findViewById(R.id.et_numberphone);
-        et_patientcomplain = findViewById(R.id.et_patientcomplains);
-        et_patientage = findViewById(R.id.et_patientage);
-        et_patientaddress = findViewById(R.id.et_patientaddress);
-        et_patientgender = findViewById(R.id.et_patientgender);
-        et_pickdoctor = findViewById(R.id.et_pickdoctor);
         civ_profilepatient = findViewById(R.id.civ_imageProfilePatient);
+        et_patientname = findViewById(R.id.et_patientname);
+
+//        Data sebelumnya
+//        et_numberphone = findViewById(R.id.et_numberphone);
+//        et_patientcomplain = findViewById(R.id.et_patientcomplains);
+//        et_patientage = findViewById(R.id.et_patientage);
+//        et_patientaddress = findViewById(R.id.et_patientaddress);
+//        et_patientgender = findViewById(R.id.et_patientgender);
+
+//        Revisi ke 4
+        et_norekammedis = findViewById(R.id.et_no_rekammedis);
+        et_carapembayaran = findViewById(R.id.et_cara_pembayaran);
+        et_asalrujukan = findViewById(R.id.et_asal_rujukan);
+        et_pickdoctor = findViewById(R.id.et_pick_polindoctor);
+
         CardView btn_regis = findViewById(R.id.cv_btnpatientregis);
-        CardView btn_searchdoctor = findViewById(R.id.cv_btnpickdoctor);
+        CardView btn_searchdoctor = findViewById(R.id.cv_btn_pickpoliklinik);
         ImageView btnBack = findViewById(R.id.btnback_registry);
 
         //for admin
@@ -79,16 +88,19 @@ public class RegisPatientActivity extends AppCompatActivity {
         ImageView btnSaveEstimate = findViewById(R.id.iv_saveEstimateAdmin);
         LinearLayout estimateAdmin = findViewById(R.id.ll_estimateAdmin);
 
+        //get intent dari list dokter
         Intent data = getIntent();
-        id_dokter = data.getStringExtra("id_doctor");
-        nama_dokter = data.getStringExtra("name_doctor");
-        foto_dokter = data.getStringExtra("image_doctor");
-        spesialis_dokter = data.getStringExtra("spesialis");
-        imagePasien = data.getStringExtra("imagepasien");
-        namaPasien = data.getStringExtra("namapasien");
-        lastTimePatient = data.getStringExtra("last_time");
+        String namaPasien = data.getStringExtra("namapasien");
         String userType = data.getStringExtra("usertype");
         String estimateStart = data.getStringExtra("estimate");
+
+        idDokter = data.getStringExtra("id_doctor");
+        namaDokter = data.getStringExtra("name_doctor");
+        fotoDokter = data.getStringExtra("image_doctor");
+        poliDoctor = data.getStringExtra("poliDoctor");
+        imagePasien = data.getStringExtra("imagepasien");
+        lastTimePatient = data.getStringExtra("last_time");
+
 
         if (userType != null && estimateStart != null) {
             if (userType.equals("admin")) {
@@ -108,8 +120,8 @@ public class RegisPatientActivity extends AppCompatActivity {
             getPreference();
         }
 
-        if (id_dokter != null && nama_dokter != null) {
-            et_pickdoctor.setText(nama_dokter);
+        if (idDokter != null && namaDokter != null) {
+            et_pickdoctor.setText(namaDokter);
         }
 
         btnSaveEstimate.setOnClickListener(view -> {
@@ -117,7 +129,7 @@ public class RegisPatientActivity extends AppCompatActivity {
             if (!TextUtils.isEmpty(estimate)) {
                 setEstimate(estimate);
             } else {
-                Toast.makeText(RegisPatientActivity.this, "Gak boleh kosong ya :(", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PickQueuePatientActivity.this, "Gak boleh kosong ya :(", Toast.LENGTH_SHORT).show();
             }
 
             // autohide after click SAVE
@@ -127,17 +139,18 @@ public class RegisPatientActivity extends AppCompatActivity {
 
         btn_searchdoctor.setOnClickListener(view -> {
             setPreference();
-            Intent toListDoctor = new Intent(RegisPatientActivity.this, DoctorListActivity.class);
+            Intent toListDoctor = new Intent(PickQueuePatientActivity.this, DoctorListActivity.class);
             toListDoctor.putExtra("daftar", "daftar");
             startActivity(toListDoctor);
         });
 
         btn_regis.setOnClickListener(view -> {
-            String nomerhp = et_numberphone.getText().toString();
-            String keluhan = et_patientcomplain.getText().toString();
-            String umur = et_patientage.getText().toString();
-            String jenis = et_patientgender.getText().toString();
-            String alamat = et_patientaddress.getText().toString();
+            String noRekamMedis = et_norekammedis.getText().toString();
+            String caraPembayaran = et_carapembayaran.getText().toString();
+            String asalRujukan = et_asalrujukan.getText().toString();
+
+//            String keluhan = et_patientcomplain.getText().toString();
+//            String jenis = et_patientgender.getText().toString();
 
             int estimateFinish = 10;
             if (estimate != null) {
@@ -145,13 +158,12 @@ public class RegisPatientActivity extends AppCompatActivity {
             }
 
             if (!et_patientname.getText().toString().equals("kosong")) {
-                if (!TextUtils.isEmpty(nomerhp) && !TextUtils.isEmpty(keluhan) && !TextUtils.isEmpty(umur) &&
-                        !TextUtils.isEmpty(jenis) && !TextUtils.isEmpty(alamat)) {
+                if (!TextUtils.isEmpty(noRekamMedis) && !TextUtils.isEmpty(caraPembayaran) && !TextUtils.isEmpty(asalRujukan)) {
                     if (!TextUtils.isEmpty(et_pickdoctor.getText())) {
                         if (lastTimePatient.equals("kosong")) {
-                            daftarPatient(nomerhp, keluhan, umur, jenis, alamat, nama_dokter, estimateFinish, 0);
+                            daftarPatient(noRekamMedis, caraPembayaran, asalRujukan, namaDokter, estimateFinish, 0);
                         } else {
-                            daftarPatient(nomerhp, keluhan, umur, jenis, alamat, nama_dokter, 0, estimateFinish);
+                            daftarPatient(noRekamMedis, caraPembayaran, asalRujukan, namaDokter, 0, estimateFinish);
                         }
                     } else {
                         Toast.makeText(this, "Silahkan pilih dokter terlebih dahulu", Toast.LENGTH_SHORT).show();
@@ -171,7 +183,7 @@ public class RegisPatientActivity extends AppCompatActivity {
         }
 
         btnBack.setOnClickListener(view -> {
-            startActivity(new Intent(RegisPatientActivity.this, HomeActivity.class));
+            startActivity(new Intent(PickQueuePatientActivity.this, HomeActivity.class));
             finish();
         });
     }
@@ -196,25 +208,37 @@ public class RegisPatientActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
         editor.putString("profile", imagePasien);
         editor.putString("namepasien", et_patientname.getText().toString());
-        editor.putString("nomerhp", et_numberphone.getText().toString());
-        editor.putString("keluhan", et_patientcomplain.getText().toString());
-        editor.putString("alamat", et_patientaddress.getText().toString());
-        editor.putString("umur", et_patientage.getText().toString());
-        editor.putString("kelamin", et_patientgender.getText().toString());
+        editor.putString("norekammedis", et_norekammedis.getText().toString());
+        editor.putString("asalrujukan", et_asalrujukan.getText().toString());
+        editor.putString("carapembayaran", et_carapembayaran.getText().toString());
         editor.putString("estimate", etEstimateCalled.getText().toString());
+//        editor.putString("kelamin", et_patientgender.getText().toString());
+//        editor.putString("keluhan", et_patientcomplain.getText().toString());
         editor.apply();
     }
 
     private void getPreference() {
         preferences = getSharedPreferences("PREFS", MODE_PRIVATE);
         profile = preferences.getString("profile", "");
-        name = preferences.getString("namepasien", "");
-        nomerhp = preferences.getString("nomerhp", "");
-        keluhan = preferences.getString("keluhan", "");
-        alamat = preferences.getString("alamat", "");
-        umur = preferences.getString("umur", "");
-        kelamin = preferences.getString("kelamin", "");
         estimate = preferences.getString("estimate", "");
+        name = preferences.getString("namepasien", "");
+        nomerRekamMedis = preferences.getString("norekammedis", "");
+        asalRujukan = preferences.getString("asalrujukan", "");
+        caraPembayaran = preferences.getString("carapembayaran", "");
+
+//        keluhan = preferences.getString("keluhan", "");
+//        kelamin = preferences.getString("kelamin", "");
+    }
+
+    private void removePreference() {
+        preferences.edit().remove("profile").apply();
+        preferences.edit().remove("namepasien").apply();
+        preferences.edit().remove("norekammedis").apply();
+        preferences.edit().remove("asalrujukan").apply();
+        preferences.edit().remove("carapembayaran").apply();
+
+//        preferences.edit().remove("keluhan").apply();
+//        preferences.edit().remove("kelamin").apply();
     }
 
     private void initPrefRegistPatient() {
@@ -230,22 +254,14 @@ public class RegisPatientActivity extends AppCompatActivity {
             et_patientname.setText(R.string.str_null);
         }
 
-        et_numberphone.setText(nomerhp);
-        et_patientcomplain.setText(keluhan);
-        et_patientaddress.setText(alamat);
-        et_patientage.setText(umur);
-        et_patientgender.setText(kelamin);
+        et_norekammedis.setText(nomerRekamMedis);
+        et_asalrujukan.setText(asalRujukan);
+        et_carapembayaran.setText(caraPembayaran);
+
+//        et_patientcomplain.setText(keluhan);
+//        et_patientgender.setText(kelamin);
     }
 
-    private void removePreference() {
-        preferences.edit().remove("profile").apply();
-        preferences.edit().remove("namepasien").apply();
-        preferences.edit().remove("nomerhp").apply();
-        preferences.edit().remove("keluhan").apply();
-        preferences.edit().remove("alamat").apply();
-        preferences.edit().remove("umur").apply();
-        preferences.edit().remove("kelamin").apply();
-    }
 
     public String getCurrentLocalTimeStamp(int plus) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
@@ -298,30 +314,31 @@ public class RegisPatientActivity extends AppCompatActivity {
         }
     }
 
-    private void daftarPatient(String nomerhp, String keluhan, String umur, String jenisKelamin, String alamat, String dokter,
+    private void daftarPatient(String nomerRekamMedis, String caraPembayaran, String asalRujukan, String namaDokter,
                                int plus, int plusnotnull) {
         String userId = firebaseUser.getUid();
         PatientModel patientModel = new PatientModel();
 
-        String idAntrian = reference.child(id_dokter).push().getKey();
+        String idAntrian = reference.child(idDokter).push().getKey();
         patientModel.setIdAntrian(idAntrian);
 
         if (plus != 0) {
             HashMap<String, Object> daftarPatient = new HashMap<>();
             daftarPatient.put("idPasien", userId);
             daftarPatient.put("idAntrian", patientModel.getIdAntrian());
-            daftarPatient.put("idDokter", id_dokter);
-            daftarPatient.put("namaDokter", dokter);
-            daftarPatient.put("nomerHpPasien", nomerhp);
-            daftarPatient.put("keluhanPasien", keluhan);
-            daftarPatient.put("umurPasien", umur);
-            daftarPatient.put("jenisPasien", jenisKelamin);
-            daftarPatient.put("alamatPasien", alamat);
+            daftarPatient.put("idDokter", idDokter);
+            daftarPatient.put("namaDokter", namaDokter);
+            daftarPatient.put("noRekamMedis", nomerRekamMedis);
+            daftarPatient.put("caraPembayaran", caraPembayaran);
+            daftarPatient.put("asalRujukan", asalRujukan);
             daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
             // set estimate +10 minute
             String estimateTime = getCurrentLocalTimeStamp(plus);
             daftarPatient.put("waktuSelesai", estimateTime);
             daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
+
+//            daftarPatient.put("keluhanPasien", keluhan);
+//            daftarPatient.put("alamatPasien", alamat);
 
             if (profile != null && name != null) {
                 daftarPatient.put("imageURL", profile);
@@ -332,16 +349,16 @@ public class RegisPatientActivity extends AppCompatActivity {
             }
 
             assert idAntrian != null;
-            reference.child(id_dokter).child(idAntrian).setValue(daftarPatient);
+            reference.child(idDokter).child(idAntrian).setValue(daftarPatient);
 
             // buat list antrian di home activity
-            if (foto_dokter != null && spesialis_dokter != null) {
-                daftarPatient.put("imageDoctor", foto_dokter);
-                daftarPatient.put("spesialis", spesialis_dokter);
+            if (fotoDokter != null && poliDoctor != null) {
+                daftarPatient.put("imageDoctor", fotoDokter);
+                daftarPatient.put("poliDoctor", poliDoctor);
                 daftarPatient.put("status", "MENUNGGU");
 
                 DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
-                dbRefMyQueue.child(userId).child(id_dokter).setValue(daftarPatient);
+                dbRefMyQueue.child(userId).child(idDokter).setValue(daftarPatient);
                 Toast.makeText(this, "Data berhasil mendaftar", Toast.LENGTH_SHORT).show();
                 removePreference();
 
@@ -349,10 +366,10 @@ public class RegisPatientActivity extends AppCompatActivity {
                 HashMap<String, Object> hashDoctor = new HashMap<>();
                 hashDoctor.put("lastPatient", estimateTime);
                 DatabaseReference dbRefDoctor = FirebaseDatabase.getInstance().getReference("Doctors");
-                dbRefDoctor.child(id_dokter).updateChildren(hashDoctor);
+                dbRefDoctor.child(idDokter).updateChildren(hashDoctor);
 
-                Intent toListPatient = new Intent(RegisPatientActivity.this, PatientListActivity.class);
-                toListPatient.putExtra("id_dokter", id_dokter);
+                Intent toListPatient = new Intent(PickQueuePatientActivity.this, PatientListActivity.class);
+                toListPatient.putExtra("id_dokter", idDokter);
                 startActivity(toListPatient);
                 finish();
             }
@@ -362,15 +379,16 @@ public class RegisPatientActivity extends AppCompatActivity {
             HashMap<String, Object> daftarPatient = new HashMap<>();
             daftarPatient.put("idPasien", userId);
             daftarPatient.put("idAntrian", patientModel.getIdAntrian());
-            daftarPatient.put("idDokter", id_dokter);
-            daftarPatient.put("namaDokter", dokter);
-            daftarPatient.put("nomerHpPasien", nomerhp);
-            daftarPatient.put("keluhanPasien", keluhan);
-            daftarPatient.put("umurPasien", umur);
-            daftarPatient.put("jenisPasien", jenisKelamin);
-            daftarPatient.put("alamatPasien", alamat);
+            daftarPatient.put("idDokter", idDokter);
+            daftarPatient.put("namaDokter", namaDokter);
+            daftarPatient.put("noRekamMedis", nomerRekamMedis);
+            daftarPatient.put("caraPembayaran", caraPembayaran);
+            daftarPatient.put("asalRujukan", asalRujukan);
             daftarPatient.put("waktuDaftar", getCurrentLocalTimeStamp(0));
             daftarPatient.put("tanggalDaftar", getCurrentLocalDateStamp());
+
+//            daftarPatient.put("keluhanPasien", keluhan);
+//            daftarPatient.put("alamatPasien", alamat);
 
             int lastPatient = Integer.parseInt(estimateTime.substring(0, 2) + estimateTime.substring(3, 5));
             int currentTime = Integer.parseInt(getCurrentLocalTimeStamp(0).substring(0, 2) +
@@ -391,16 +409,16 @@ public class RegisPatientActivity extends AppCompatActivity {
             }
 
             assert idAntrian != null;
-            reference.child(id_dokter).child(idAntrian).setValue(daftarPatient);
+            reference.child(idDokter).child(idAntrian).setValue(daftarPatient);
 
             // buat list antrian di home activity
-            if (foto_dokter != null && spesialis_dokter != null) {
-                daftarPatient.put("imageDoctor", foto_dokter);
-                daftarPatient.put("spesialis", spesialis_dokter);
+            if (fotoDokter != null && poliDoctor != null) {
+                daftarPatient.put("imageDoctor", fotoDokter);
+                daftarPatient.put("poliDoctor", poliDoctor);
                 daftarPatient.put("status", "MENUNGGU");
 
                 DatabaseReference dbRefMyQueue = FirebaseDatabase.getInstance().getReference("MyQueue");
-                dbRefMyQueue.child(userId).child(id_dokter).setValue(daftarPatient);
+                dbRefMyQueue.child(userId).child(idDokter).setValue(daftarPatient);
                 Toast.makeText(this, "Data berhasil terdaftar", Toast.LENGTH_SHORT).show();
                 removePreference();
 
@@ -418,14 +436,14 @@ public class RegisPatientActivity extends AppCompatActivity {
                 }
 
                 DatabaseReference dbRefDoctor = FirebaseDatabase.getInstance().getReference("Doctors");
-                dbRefDoctor.child(id_dokter).updateChildren(hashDoctor);
+                dbRefDoctor.child(idDokter).updateChildren(hashDoctor);
 
                 //SET ALARM NOTIFICATION
                 String onceMessage = "Halo, " + name + " sudah giliran anda nih :)";
                 alarmReceiver.setOneTimeAlarm(this, AlarmReceiver.TYPE_ONE_TIME, onceTime, onceMessage);
 
-                Intent toListPatient = new Intent(RegisPatientActivity.this, PatientListActivity.class);
-                toListPatient.putExtra("id_dokter", id_dokter);
+                Intent toListPatient = new Intent(PickQueuePatientActivity.this, PatientListActivity.class);
+                toListPatient.putExtra("id_dokter", idDokter);
                 startActivity(toListPatient);
                 finish();
             }

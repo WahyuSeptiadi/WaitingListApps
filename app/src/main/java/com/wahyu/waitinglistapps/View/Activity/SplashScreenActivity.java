@@ -27,8 +27,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                 .withBackgroundColor(Color.parseColor("#03A9F4"))
                 .withHeaderText("")
                 .withFooterText(getApplication().getResources().getString(R.string.copyright))
-                .withBeforeLogoText(getApplication().getResources().getString(R.string.app_name))
-                .withAfterLogoText(getApplication().getResources().getString(R.string.name_hospital))
+                .withBeforeLogoText("")
+                .withAfterLogoText("Halo RSIM")
                 .withLogo(R.drawable.icon_logoapps);
 
         config.getHeaderTextView().setTextColor(Color.WHITE);

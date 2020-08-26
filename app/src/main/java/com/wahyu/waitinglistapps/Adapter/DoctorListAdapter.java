@@ -31,7 +31,7 @@ import com.wahyu.waitinglistapps.Model.UserModel;
 import com.wahyu.waitinglistapps.R;
 import com.wahyu.waitinglistapps.View.Activity.AddUpdateDoctorActivity;
 import com.wahyu.waitinglistapps.View.Activity.DoctorDetailsActivity;
-import com.wahyu.waitinglistapps.View.Activity.RegisPatientActivity;
+import com.wahyu.waitinglistapps.View.Activity.PickQueuePatientActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
         }
 
         holder.tvNameDr.setText(doctorModel.getName());
-        holder.tvSpesialis.setText(doctorModel.getSpesialis());
+        holder.tvSpesialis.setText(doctorModel.getPoliDoctor());
 
         if (isDaftar != null) {
             holder.tvOpen.setText(doctorModel.getWorktimestart());
@@ -98,7 +98,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
             String doctorId = doctorModel.getId();
             String namedr = doctorModel.getName();
             String imgProfile = doctorModel.getImageURL();
-            String spesialis = doctorModel.getSpesialis();
+            String poliDoctor = doctorModel.getPoliDoctor();
             String workday = doctorModel.getWorkday();
             String timestart = doctorModel.getWorktimestart();
             String timefinish = doctorModel.getWorktimefinish();
@@ -121,11 +121,11 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                             getCurrentLocalTimeStamp(0).substring(3, 5));
 
                     if (convertCurrentTime >= convertTimeStart && convertCurrentTime <= convertTimeFinish) {
-                        Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
+                        Intent toRegis = new Intent(mActivity, PickQueuePatientActivity.class);
                         toRegis.putExtra("id_doctor", doctorId);
                         toRegis.putExtra("name_doctor", namedr);
                         toRegis.putExtra("image_doctor", imgProfile);
-                        toRegis.putExtra("spesialis", spesialis);
+                        toRegis.putExtra("poliDoctor", poliDoctor);
                         toRegis.putExtra("last_time", "kosong"); // update ke kosong
                         mActivity.startActivity(toRegis);
                         mActivity.finish();
@@ -143,11 +143,11 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                     if (convertCurrentTime >= convertTimeStart && convertCurrentTime <= convertTimeFinish) {
                         String lastTimePatient = doctorModel.getLastPatient();
 
-                        Intent toRegis = new Intent(mActivity, RegisPatientActivity.class);
+                        Intent toRegis = new Intent(mActivity, PickQueuePatientActivity.class);
                         toRegis.putExtra("id_doctor", doctorId);
                         toRegis.putExtra("name_doctor", namedr);
                         toRegis.putExtra("image_doctor", imgProfile);
-                        toRegis.putExtra("spesialis", spesialis);
+                        toRegis.putExtra("poliDoctor", poliDoctor);
                         toRegis.putExtra("last_time", lastTimePatient);
                         mActivity.startActivity(toRegis);
                         mActivity.finish();
@@ -160,7 +160,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                 toDetails.putExtra("id", doctorId);
                 toDetails.putExtra("name", namedr);
                 toDetails.putExtra("imgprofile", imgProfile);
-                toDetails.putExtra("spesialis", spesialis);
+                toDetails.putExtra("poliDoctor", poliDoctor);
                 toDetails.putExtra("workday", workday);
                 toDetails.putExtra("timestart", timestart);
                 toDetails.putExtra("timefinish", timefinish);
@@ -185,7 +185,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                             String doctorId = doctorModel.getId();
                             String namedr = doctorModel.getName();
                             String imgProfile = doctorModel.getImageURL();
-                            String spesialis = doctorModel.getSpesialis();
+                            String poliDoctor = doctorModel.getPoliDoctor();
                             String workday = doctorModel.getWorkday();
                             String timestart = doctorModel.getWorktimestart();
                             String timefinish = doctorModel.getWorktimefinish();
@@ -196,7 +196,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.Vi
                             toUpdate.putExtra("id", doctorId);
                             toUpdate.putExtra("name", namedr);
                             toUpdate.putExtra("imgprofile", imgProfile);
-                            toUpdate.putExtra("spesialis", spesialis);
+                            toUpdate.putExtra("poliDoctor", poliDoctor);
                             toUpdate.putExtra("workday", workday);
                             toUpdate.putExtra("timestart", timestart);
                             toUpdate.putExtra("timefinish", timefinish);

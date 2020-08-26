@@ -14,7 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DoctorDetailsActivity extends AppCompatActivity {
 
-    private String getDoctorId, getName, getImageURL, getSpesialis, getWorkday, getTimeStart, getTimeFinish, getPatientLimit;
+    private String getDoctorId, getNameDoctor, getImageURL, getPoliDoctor, getWorkday, getTimeStart, getTimeFinish, getPatientLimit;
 
 
     @Override
@@ -22,10 +22,10 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_details);
 
-        TextView titleBar = findViewById(R.id.titlebar_doctordetails);
         CircleImageView civProfileDoctor = findViewById(R.id.civ_profile_doctordetails);
 
-        TextView tvSpesialis = findViewById(R.id.tv_spesialis_doctordetails);
+        TextView tvNameDoctor = findViewById(R.id.tv_namedoctor_doctordetails);
+        TextView tvPoliDoctor = findViewById(R.id.tv_polidoctor_doctordetails);
         TextView tvWorkDay = findViewById(R.id.tv_workday_doctordetails);
         TextView tvTimeStart = findViewById(R.id.tv_worktimestart_doctordetails);
         TextView tvTimeFinish = findViewById(R.id.tv_worktimefinish_doctordetails);
@@ -35,16 +35,16 @@ public class DoctorDetailsActivity extends AppCompatActivity {
 
         getDataFromIntentList();
 
-        if (getName != null && getImageURL != null && getSpesialis != null && getWorkday != null &&
+        if (getNameDoctor != null && getImageURL != null && getPoliDoctor != null && getWorkday != null &&
                 getTimeStart != null && getTimeFinish != null && getPatientLimit != null) {
 
-            titleBar.setText(getName);
             if (getImageURL.substring(0, 4).equals("http")) {
                 Picasso.get().load(getImageURL).into(civProfileDoctor);
             } else {
                 Picasso.get().load(R.drawable.icon_default_profile).into(civProfileDoctor);
             }
-            tvSpesialis.setText(getSpesialis);
+            tvNameDoctor.setText(getNameDoctor);
+            tvPoliDoctor.setText(getPoliDoctor);
             tvWorkDay.setText(getWorkday);
             tvTimeStart.setText(getTimeStart);
             tvTimeFinish.setText(getTimeFinish);
@@ -66,9 +66,9 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     private void getDataFromIntentList() {
         Intent data = getIntent();
         getDoctorId = data.getStringExtra("id");
-        getName = data.getStringExtra("name");
+        getNameDoctor = data.getStringExtra("name");
         getImageURL = data.getStringExtra("imgprofile");
-        getSpesialis = data.getStringExtra("spesialis");
+        getPoliDoctor = data.getStringExtra("poliDoctor");
         getWorkday = data.getStringExtra("workday");
         getTimeStart = data.getStringExtra("timestart");
         getTimeFinish = data.getStringExtra("timefinish");

@@ -138,7 +138,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     if (checkInternet()) {
                         Toast.makeText(this, "Tolong hidupkan data koneksi Anda", Toast.LENGTH_SHORT).show();
                     }
-                    Intent toDaftar = new Intent(HomeActivity.this, RegisPatientActivity.class);
+                    Intent toDaftar = new Intent(HomeActivity.this, PickQueuePatientActivity.class);
                     toDaftar.putExtra("namapasien", name);
                     toDaftar.putExtra("usertype", userType);
                     toDaftar.putExtra("imagepasien", imageURL);

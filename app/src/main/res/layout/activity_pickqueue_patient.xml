@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Activity.RegisPatientActivity">
+    tools:context=".View.Activity.PickQueuePatientActivity">
 
     <include
         android:id="@+id/topbar_adddoctor"
@@ -85,8 +85,8 @@
                         android:id="@+id/ll_estimateAdmin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/input_estimateAdmin"
@@ -100,7 +100,7 @@
                                 android:layout_height="40dp"
                                 android:autofillHints=""
                                 android:background="@drawable/bg_round_white"
-                                android:hint="@string/str_estimasi"
+                                android:hint="@string/hint_estimasi"
                                 android:inputType="number"
                                 android:paddingStart="20dp"
                                 android:paddingEnd="10dp" />
@@ -133,15 +133,122 @@
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:enabled="true"
+                            android:enabled="false"
                             android:hint="@string/hint_nama_pasien"
                             android:inputType="textCapWords"
                             android:paddingStart="20dp"
-                            android:paddingEnd="10dp" />
+                            android:paddingEnd="10dp"
+                            android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <!--                    Data Sebelumnya -->
+
+                    <!--                    <com.google.android.material.textfield.TextInputLayout-->
+                    <!--                        android:id="@+id/input_numberphone"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_below="@id/input_patientname"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:layout_marginTop="10dp">-->
+
+                    <!--                        <EditText-->
+                    <!--                            android:id="@+id/et_numberphone"-->
+                    <!--                            android:layout_width="250dp"-->
+                    <!--                            android:layout_height="40dp"-->
+                    <!--                            android:autofillHints=""-->
+                    <!--                            android:background="@drawable/bg_round_white"-->
+                    <!--                            android:hint="@string/hint_nohp_pasien"-->
+                    <!--                            android:inputType="number"-->
+                    <!--                            android:paddingStart="20dp"-->
+                    <!--                            android:paddingEnd="10dp"-->
+                    <!--                            tools:ignore="TextFields" />-->
+                    <!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+                    <!--                    <com.google.android.material.textfield.TextInputLayout-->
+                    <!--                        android:id="@+id/input_patientcomplains"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_below="@id/input_numberphone"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:layout_marginTop="10dp">-->
+
+                    <!--                        <EditText-->
+                    <!--                            android:id="@+id/et_patientcomplains"-->
+                    <!--                            android:layout_width="250dp"-->
+                    <!--                            android:layout_height="40dp"-->
+                    <!--                            android:autofillHints=""-->
+                    <!--                            android:background="@drawable/bg_round_white"-->
+                    <!--                            android:hint="@string/str_keluhan_pasien"-->
+                    <!--                            android:inputType="textCapSentences"-->
+                    <!--                            android:paddingStart="20dp"-->
+                    <!--                            android:paddingEnd="10dp" />-->
+                    <!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+                    <!--                    <com.google.android.material.textfield.TextInputLayout-->
+                    <!--                        android:id="@+id/input_patientaddress"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_below="@id/input_patientcomplains"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:layout_marginTop="10dp">-->
+
+                    <!--                        <EditText-->
+                    <!--                            android:id="@+id/et_patientaddress"-->
+                    <!--                            android:layout_width="250dp"-->
+                    <!--                            android:layout_height="40dp"-->
+                    <!--                            android:autofillHints=""-->
+                    <!--                            android:background="@drawable/bg_round_white"-->
+                    <!--                            android:hint="@string/hint_alamat_pasien"-->
+                    <!--                            android:inputType="textCapSentences"-->
+                    <!--                            android:paddingStart="20dp"-->
+                    <!--                            android:paddingEnd="10dp" />-->
+                    <!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+                    <!--                    <com.google.android.material.textfield.TextInputLayout-->
+                    <!--                        android:id="@+id/input_patientage"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_below="@id/input_patientaddress"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:layout_marginTop="10dp">-->
+
+                    <!--                        <EditText-->
+                    <!--                            android:id="@+id/et_patientage"-->
+                    <!--                            android:layout_width="250dp"-->
+                    <!--                            android:layout_height="40dp"-->
+                    <!--                            android:autofillHints=""-->
+                    <!--                            android:background="@drawable/bg_round_white"-->
+                    <!--                            android:hint="@string/hint_umur_pasien"-->
+                    <!--                            android:inputType="textCapWords"-->
+                    <!--                            android:paddingStart="20dp"-->
+                    <!--                            android:paddingEnd="10dp" />-->
+                    <!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+                    <!--                    <com.google.android.material.textfield.TextInputLayout-->
+                    <!--                        android:id="@+id/input_patientgender"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_below="@id/input_patientage"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:layout_marginTop="10dp">-->
+
+                    <!--                        <EditText-->
+                    <!--                            android:id="@+id/et_patientgender"-->
+                    <!--                            android:layout_width="250dp"-->
+                    <!--                            android:layout_height="40dp"-->
+                    <!--                            android:autofillHints=""-->
+                    <!--                            android:background="@drawable/bg_round_white"-->
+                    <!--                            android:hint="@string/hint_jenis_pasien"-->
+                    <!--                            android:inputType="textCapWords"-->
+                    <!--                            android:paddingStart="20dp"-->
+                    <!--                            android:paddingEnd="10dp" />-->
+                    <!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+
+                    <!--                    Revisi ke 4 -->
+
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_numberphone"
+                        android:id="@+id/input_norekammedis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/input_patientname"
@@ -149,124 +256,88 @@
                         android:layout_marginTop="10dp">
 
                         <EditText
-                            android:id="@+id/et_numberphone"
+                            android:id="@+id/et_no_rekammedis"
                             android:layout_width="250dp"
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="@string/hint_nohp_pasien"
+                            android:hint="@string/hint_norekammedis_pasien"
                             android:inputType="number"
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp"
+                            android:textSize="15sp"
                             tools:ignore="TextFields" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_patientcomplains"
+                        android:id="@+id/input_cara_pembayaran"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/input_numberphone"
+                        android:layout_below="@id/input_norekammedis"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp">
 
                         <EditText
-                            android:id="@+id/et_patientcomplains"
+                            android:id="@+id/et_cara_pembayaran"
                             android:layout_width="250dp"
                             android:layout_height="40dp"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
-                            android:hint="@string/str_keluhan_pasien"
+                            android:hint="@string/hint_cara_pembayaran"
+                            android:inputType="textCapCharacters"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="10dp"
+                            android:textSize="15sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_asal_rujukan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/input_cara_pembayaran"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp">
+
+                        <EditText
+                            android:id="@+id/et_asal_rujukan"
+                            android:layout_width="250dp"
+                            android:layout_height="40dp"
+                            android:autofillHints=""
+                            android:background="@drawable/bg_round_white"
+                            android:hint="@string/hint_asal_rujukan"
                             android:inputType="textCapSentences"
                             android:paddingStart="20dp"
-                            android:paddingEnd="10dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_patientaddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/input_patientcomplains"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp">
-
-                        <EditText
-                            android:id="@+id/et_patientaddress"
-                            android:layout_width="250dp"
-                            android:layout_height="40dp"
-                            android:autofillHints=""
-                            android:background="@drawable/bg_round_white"
-                            android:hint="@string/hint_alamat_pasien"
-                            android:inputType="textCapSentences"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="10dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_patientage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/input_patientaddress"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp">
-
-                        <EditText
-                            android:id="@+id/et_patientage"
-                            android:layout_width="250dp"
-                            android:layout_height="40dp"
-                            android:autofillHints=""
-                            android:background="@drawable/bg_round_white"
-                            android:hint="@string/hint_umur_pasien"
-                            android:inputType="textCapWords"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="10dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_patientgender"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/input_patientage"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp">
-
-                        <EditText
-                            android:id="@+id/et_patientgender"
-                            android:layout_width="250dp"
-                            android:layout_height="40dp"
-                            android:autofillHints=""
-                            android:background="@drawable/bg_round_white"
-                            android:hint="@string/hint_jenis_pasien"
-                            android:inputType="textCapWords"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="10dp" />
+                            android:paddingEnd="10dp"
+                            android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
-                        android:id="@+id/pickdoctor"
+                        android:id="@+id/pickpoliklinik"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/input_patientgender"
+                        android:layout_below="@id/input_asal_rujukan"
                         android:layout_marginTop="20dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <EditText
-                            android:id="@+id/et_pickdoctor"
+                            android:id="@+id/et_pick_polindoctor"
                             android:layout_width="220dp"
                             android:layout_height="wrap_content"
                             android:autofillHints=""
                             android:background="@drawable/bg_round_white"
                             android:enabled="false"
-                            android:hint="@string/hint_pilih_dokter"
+                            android:hint="@string/hint_pilih_poliklinik"
                             android:inputType="text"
                             android:paddingStart="20dp"
                             android:paddingTop="7dp"
                             android:paddingEnd="20dp"
                             android:paddingBottom="7dp"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textSize="15sp" />
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/cv_btnpickdoctor"
+                            android:id="@+id/cv_btn_pickpoliklinik"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
@@ -289,7 +360,7 @@
                         android:id="@+id/cv_btnpatientregis"
                         android:layout_width="100dp"
                         android:layout_height="35dp"
-                        android:layout_below="@id/pickdoctor"
+                        android:layout_below="@id/pickpoliklinik"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"

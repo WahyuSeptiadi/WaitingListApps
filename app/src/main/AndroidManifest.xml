@@ -25,7 +25,7 @@
             tools:ignore="ManifestResource" />
 
         <activity android:name=".View.Activity.PatientDetailsActivity" />
-        <activity android:name=".View.Activity.RegisPatientActivity" />
+        <activity android:name=".View.Activity.PickQueuePatientActivity" />
         <activity android:name=".View.Activity.PatientListActivity" />
         <activity android:name=".View.Activity.DoctorDetailsActivity" />
         <activity

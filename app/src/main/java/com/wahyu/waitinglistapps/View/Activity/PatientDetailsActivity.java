@@ -18,8 +18,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PatientDetailsActivity extends AppCompatActivity {
 
-    private String getImage, getName, getKeluhan, getNomerHp, getAlamat, getUmur, getJenis, getDaftar, getSelesai;
-    private String getImageDoctor, getNameDoctor, getSpesialisDoctor, getDateRegist;
+    private String getImage, getName, getAsalRujukan, getNoRekamMedis, getCaraPembayaran, getDaftar, getSelesai;
+//    private String getUmur, getJenis;
+    private String getImageDoctor, getNameDoctor, getPoliDoctor, getDateRegist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,27 +29,28 @@ public class PatientDetailsActivity extends AppCompatActivity {
 
         CircleImageView civProfilePatient = findViewById(R.id.civ_profile_patientdetails);
         TextView tvName = findViewById(R.id.tv_nama_patientdetails);
-        TextView tvKeluhan = findViewById(R.id.tv_keluhan_patientdetails);
-        TextView tvNomerHp = findViewById(R.id.tv_nomerhp_patientdetails);
-        TextView tvAlamat = findViewById(R.id.tv_alamat_patientdetails);
-        TextView tvUmur = findViewById(R.id.tv_umur_patientdetails);
-        TextView tvJenis = findViewById(R.id.tv_jenis_patientdetails);
+        TextView tvNoRekamMedis = findViewById(R.id.tv_norekammedis_patientdetails);
+        TextView tvCaraPembayaran = findViewById(R.id.tv_carapembayaran_patientdetails);
+        TextView tvAsalRujukan = findViewById(R.id.tv_asalrujukan_patientdetails);
         TextView tvDaftar = findViewById(R.id.tv_waktu_daftar_patientdetails);
         TextView tvSelesai = findViewById(R.id.tv_estimasi_patientdetails);
         ImageView btnBack = findViewById(R.id.btnback_patientdetails);
         TextView tvTitle = findViewById(R.id.titlebar_patientdetails);
 
+//        TextView tvUmur = findViewById(R.id.tv_umur_patientdetails);
+//        TextView tvJenis = findViewById(R.id.tv_jenis_patientdetails);
+
         //details in home trigger
         CircleImageView civProfileDoctor = findViewById(R.id.civ_doctor_patientdetails);
         TextView tvNameDoctor = findViewById(R.id.tv_namedoctor_patientdetails);
-        TextView tvSpesialisDoctor = findViewById(R.id.tv_spesialisdoctor_patientdetails);
+        TextView tvSpesialisDoctor = findViewById(R.id.tv_polidoctor_patientdetails);
         TextView tvDateRegist = findViewById(R.id.tv_dateRegist_patientdetails);
 
         getDataIntent();
 
         //set init detail pasien
-        if (getImage != null && getName != null && getKeluhan != null && getNomerHp != null && getAlamat != null &&
-                getUmur != null && getJenis != null && getDaftar != null && getSelesai != null) {
+        if (getImage != null && getName != null && getAsalRujukan != null && getNoRekamMedis != null
+                && getCaraPembayaran != null && getDaftar != null && getSelesai != null) {
 
             if (!getImage.equals("")) {
                 if (getImage.substring(0, 4).equals("http")) {
@@ -62,20 +64,21 @@ public class PatientDetailsActivity extends AppCompatActivity {
             }
 
             tvName.setText(getName);
-            tvKeluhan.setText(getKeluhan);
-            tvNomerHp.setText(getNomerHp);
-            tvAlamat.setText(getAlamat);
-            tvUmur.setText(getUmur);
-            tvJenis.setText(getJenis);
+            tvAsalRujukan.setText(getAsalRujukan);
+            tvNoRekamMedis.setText(getNoRekamMedis);
+            tvCaraPembayaran.setText(getCaraPembayaran);
             tvDaftar.setText(getDaftar);
             tvSelesai.setText(getSelesai);
+
+//            tvUmur.setText(getUmur);
+//            tvJenis.setText(getJenis);
 
         } else {
             Toast.makeText(this, "Silahkan reload kembali untuk set data", Toast.LENGTH_SHORT).show();
         }
 
         //data dari myqueue home
-        if (getImageDoctor != null && getNameDoctor != null && getSpesialisDoctor != null && getDateRegist != null) {
+        if (getImageDoctor != null && getNameDoctor != null && getPoliDoctor != null && getDateRegist != null) {
             if (getImageDoctor.substring(0, 4).equals("http")) {
                 Picasso.get().load(getImageDoctor).into(civProfileDoctor);
             } else {
@@ -83,7 +86,7 @@ public class PatientDetailsActivity extends AppCompatActivity {
             }
 
             tvNameDoctor.setText(getNameDoctor);
-            tvSpesialisDoctor.setText(getSpesialisDoctor);
+            tvSpesialisDoctor.setText(getPoliDoctor);
             tvDateRegist.setText(getDateRegist);
             tvTitle.setText(R.string.str_data_register);
 
@@ -104,17 +107,18 @@ public class PatientDetailsActivity extends AppCompatActivity {
         Intent data = getIntent();
         getImage = data.getStringExtra("image");
         getName = data.getStringExtra("name");
-        getKeluhan = data.getStringExtra("keluhan");
-        getNomerHp = data.getStringExtra("nomerhp");
-        getAlamat = data.getStringExtra("alamat");
-        getUmur = data.getStringExtra("umur");
-        getJenis = data.getStringExtra("jenis");
+        getAsalRujukan = data.getStringExtra("asalRujukan");
+        getNoRekamMedis = data.getStringExtra("noRekamMedis");
+        getCaraPembayaran = data.getStringExtra("caraPembayaran");
         getDaftar = data.getStringExtra("daftar");
         getSelesai = data.getStringExtra("selesai");
         getImageDoctor = data.getStringExtra("imagedoctor");
         getNameDoctor = data.getStringExtra("namedoctor");
-        getSpesialisDoctor = data.getStringExtra("spesialisdoctor");
+        getPoliDoctor = data.getStringExtra("poliDoctor");
         getDateRegist = data.getStringExtra("dateregist");
+
+//        getUmur = data.getStringExtra("umur");
+//        getJenis = data.getStringExtra("jenis");
     }
 
 }
